@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="apache-log4j-2">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin" />
+      <root url="file://$PROJECT_DIR$/Libraries/commons-lang3-3.4" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="file://$PROJECT_DIR$/Libraries/commons-lang3-3.4/apidocs" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/Libraries/commons-lang3-3.4" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin" recursive="false" type="SOURCES" />
+  </library>
+</component>
