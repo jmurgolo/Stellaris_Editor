@@ -43,7 +43,8 @@ public class Main extends Application {
     //TODO:configure log4j
     //public static final org.apache.logging.log4j.Logger logger = LogManager.getLogger("Log");
 
-    public static SaveFileElement[] sfe_arraylist = new SaveFileElement[0];
+    public static SaveFileElement[] sfe_arraylist;
+    public static int sfe_arraylist_size = 0;
     public static List<Country> countries = new ArrayList<Country>();
     public static List<StellarObject> stellarobjects = new ArrayList<StellarObject>();
 
@@ -91,28 +92,6 @@ public class Main extends Application {
         //Add the Scene to the Stage
         primaryStage.setScene(appScene);
         primaryStage.show();
-
-//        appScene.widthProperty().addListener(new ChangeListener<Number>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-//                //System.out.println(vbox.getHeight() + " | " + scrollPane.getHeight() + " | " + vbox.getParent().getScene().getHeight());
-//                //vbox.setPrefSize(vbox.getParent().getScene().getWidth(), vbox.getParent().getScene().getHeight());
-//                //vbox.setMaxWidth(vbox.getParent().getScene().getWidth());
-//                //componentLayout.getChildren().get(1).resize(componentLayout.getWidth(),componentLayout.getHeight());
-//            }
-//        });
-//        appScene.heightProperty().addListener(new ChangeListener<Number>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
-//                //System.out.println(vbox.getHeight() + " | " + scrollPane.getHeight() + " | " + vbox.getParent().getScene().getHeight());
-//                //vbox.setPrefSize(vbox.getParent().getScene().getWidth(), vbox.getParent().getScene().getHeight());
-//                //vbox.setMaxHeight(vbox.getParent().getScene().getHeight());
-//                //componentLayout.getChildren().get(1).resize(componentLayout.getWidth(),componentLayout.getHeight());
-////                componentLayout.getChildren().get(1)
-//
-//
-//            }
- //       });
     }
 
     private void processSaveFile(Stage s) {
@@ -130,6 +109,7 @@ public class Main extends Application {
 
             int rows = 0;
             try {
+
                 //filter and get distinct elements for top observable list
 //                List<SaveFileElement> zero_level = sfe_arraylist.stream().filter(p -> p.nodelevel == 1).filter(p -> p.openorclose == "open").sorted(name_comparator).filter(new Predicate<SaveFileElement>() {
 //                    SaveFileElement previous;
@@ -148,6 +128,7 @@ public class Main extends Application {
 //                    progressbar.setValue(i);
 //                    progressbar.setString(zero_level.get(i).nodename);
 //                }
+
                 progressbar.setVisible(false);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -156,7 +137,7 @@ public class Main extends Application {
             e.printStackTrace();
         }
         processSfe_arraylist();
-        FileProcessor.createTempFileofArray(); //603688,603695); //"nodename","name");
+        //FileProcessor.createTempFileofArray(); //603688,603695); //"nodename","name");
     }
 
 //    private void getCountries() {

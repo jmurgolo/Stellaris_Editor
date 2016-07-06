@@ -12,6 +12,9 @@ import java.nio.file.Paths;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import static Stellaris.Main.sfe_arraylist;
+import static Stellaris.Main.sfe_arraylist_size;
+import static Stellaris.Utilities.fillSfeArrayList;
 import static Stellaris.Utilities.main_Progress_Bar;
 import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
 import static java.nio.file.StandardCopyOption.COPY_ATTRIBUTES;
@@ -52,16 +55,13 @@ public class FileProcessor {
 
         String f = file.getPath();
         long startTime = System.nanoTime();
-        String tempstring;
         BufferedReader rd = null;
         //boolean last = false;
-        XML_Node object_xmlnode = new XML_Node(0, 0, "");
-        String tempnodearray[];
         int filelinecount = 0;
         int counter = 1;
 
         try {
-            rd = new BufferedReader(new InputStreamReader(new FileInputStream(f), "UTF-8"),1024);
+            rd = new BufferedReader(new InputStreamReader(new FileInputStream(f), "UTF-8"), 1024);
         } catch (FileNotFoundException e1) {
             e1.printStackTrace();
         } catch (UnsupportedEncodingException e) {
@@ -70,6 +70,8 @@ public class FileProcessor {
 
         try {
             filelinecount = countLines(f);
+            sfe_arraylist = new SaveFileElement[filelinecount];
+            fillSfeArrayList();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -80,16 +82,12 @@ public class FileProcessor {
 
         try {
             if (rd != null) {
-                while ((object_xmlnode.line_text = rd.readLine()) != null) {
-                    tempnodearray = StringUtils.split(object_xmlnode.line_text, "\t");
-                    for (int q = 0; q < tempnodearray.length; q++) {
-//                        if (counter + 1 == filelinecount) {
-//                            last = true;
-//                        }
-                        object_xmlnode.xmlarize(counter, object_xmlnode.level, tempnodearray[q]);
-                        progressBar.setValue(counter);
-                        progressBar.setString(object_xmlnode.line_text);
-                    }
+                String temp = "";
+                XML_Node object_xmlnode = new XML_Node();
+                while ((temp = rd.readLine()) != null) {
+                    object_xmlnode.xmlarize(counter, object_xmlnode.level, temp);
+                    progressBar.setValue(counter);
+                    progressBar.setString(object_xmlnode.line_text);
                     counter++;
                 }
             }
@@ -139,16 +137,16 @@ public class FileProcessor {
         return f;
     }
 
-    public static void unZipIt(String zipFile, String outputFolder){
+    public static void unZipIt(String zipFile, String outputFolder) {
 
         byte[] buffer = new byte[1024];
-        System.out.println("file unzip : "+ zipFile);
+        System.out.println("file unzip : " + zipFile);
 
-        try{
+        try {
 
             //create output directory is not exists
-            File folder = new File(outputFolder + File.separator+ "temp");
-            if(!folder.exists()){
+            File folder = new File(outputFolder + File.separator + "temp");
+            if (!folder.exists()) {
                 folder.mkdir();
             }
 
@@ -158,7 +156,7 @@ public class FileProcessor {
             //get the zipped file list entry
             ZipEntry ze = zis.getNextEntry();
 
-            while(ze!=null){
+            while (ze != null) {
 
                 String fileName = ze.getName();
                 File newFile = new File(outputFolder + File.separator + "temp" + File.separator + fileName);
@@ -166,24 +164,17 @@ public class FileProcessor {
                 //create all non exists folders
                 //else you will hit FileNotFoundException for compressed folder
                 new File(newFile.getParent()).mkdirs();
-
                 FileOutputStream fos = new FileOutputStream(newFile);
-
                 int len;
                 while ((len = zis.read(buffer)) > 0) {
                     fos.write(buffer, 0, len);
                 }
-
                 fos.close();
                 ze = zis.getNextEntry();
             }
-
             zis.closeEntry();
             zis.close();
-
-            //System.out.println("Done");
-
-        }catch(IOException ex){
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
@@ -191,56 +182,24 @@ public class FileProcessor {
     public static void createTempFileofArray() {
         File tempfile = FileProcessor.createFile("temp.html");
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(tempfile), "utf-8"))) {
-            //ResultSet results = edb.selectRows("select * from main");
             writer.write("<table>");
             writer.write("<tr><td style='min-width:100px' >" + "linenumber"
                     + "</td><td style='min-width:100px'>" + "nodelevel"
                     + "</td><td style='min-width:100px'>" + "nodeparent"
                     + "</td><td style='min-width:100px'>" + "openorclose"
                     + "</td><td style='min-width:100px'>" + "nodename"
-                    + "</td><td style='min-width:100px'>" + "originalnodename"
+                    + "</td><td style='min-width:100px'>" + "nodevalue"
                     + "</td><td style='min-width:200px'>" + "originalnodevalue"
                     + "</td><td style='min-width:200px'>" + "nodedepth");
-            for (SaveFileElement temp : Main.sfe_arraylist) {
-                writer.write("<tr><td style='min-width:100px' >" + temp.linenumber
-                        + "</td><td style='min-width:100px'>" + temp.nodelevel
-                        + "</td><td style='min-width:100px'>" + temp.nodeparent
-                        + "</td><td style='min-width:100px'>" + temp.openorclose
-                        + "</td><td style='min-width:100px'>" + temp.nodename
-                        + "</td><td style='min-width:100px'>" + temp.nodename
-                        + "</td><td style='min-width:200px'>" + temp.originalnodevalue
-                        + "</td><td style='min-width:200px'>" + temp.nodedepth + "</td></tr>");
-            }//
-            writer.write("</table>");
-        } catch (IOException x) {
-            System.err.format("IOException: %s%n", x);
-        }
-    }
-
-    public static void createTempFileofArray(String array_element, String name) {
-        File tempfile = FileProcessor.createFile("temp.html");
-        try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(tempfile), "utf-8"))) {
-            //ResultSet results = edb.selectRows("select * from main");
-            writer.write("<table>");
-            writer.write("<tr><td style='min-width:100px' >" + "linenumber"
-                    + "</td><td style='min-width:100px'>" + "nodelevel"
-                    + "</td><td style='min-width:100px'>" + "nodeparent"
-                    + "</td><td style='min-width:100px'>" + "openorclose"
-                    + "</td><td style='min-width:100px'>" + "nodename"
-                    + "</td><td style='min-width:100px'>" + "originalnodename"
-                    + "</td><td style='min-width:200px'>" + "originalnodevalue"
-                    + "</td><td style='min-width:200px'>" + "nodedepth");
-            for (SaveFileElement temp : Main.sfe_arraylist) {
-                if(temp.getElement(array_element).equals(name)) {
-                    writer.write("<tr><td style='min-width:100px' >" + temp.linenumber
-                            + "</td><td style='min-width:100px'>" + temp.nodelevel
-                            + "</td><td style='min-width:100px'>" + temp.nodeparent
-                            + "</td><td style='min-width:100px'>" + temp.openorclose
-                            + "</td><td style='min-width:100px'>" + temp.nodename
-                            + "</td><td style='min-width:100px'>" + temp.nodename
-                            + "</td><td style='min-width:200px'>" + temp.originalnodevalue
-                            + "</td><td style='min-width:200px'>" + temp.nodedepth + "</td></tr>");
-                }
+            for (int i = 0; i < sfe_arraylist_size; i++) {
+                writer.write("<tr><td style='min-width:100px' >" + sfe_arraylist[i].linenumber
+                        + "</td><td style='min-width:100px'>" + sfe_arraylist[i].nodelevel
+                        + "</td><td style='min-width:100px'>" + sfe_arraylist[i].nodeparent
+                        + "</td><td style='min-width:100px'>" + sfe_arraylist[i].openorclose
+                        + "</td><td style='min-width:100px'>" + sfe_arraylist[i].nodename
+                        + "</td><td style='min-width:100px'>" + sfe_arraylist[i].nodevalue
+                        + "</td><td style='min-width:200px'>" + sfe_arraylist[i].originalnodevalue
+                        + "</td><td style='min-width:200px'>" + sfe_arraylist[i].nodedepth + "</td></tr>");
             }
             writer.write("</table>");
         } catch (IOException x) {
@@ -260,8 +219,8 @@ public class FileProcessor {
                     + "</td><td style='min-width:100px'>" + "nodename"
                     + "</td><td style='min-width:200px'>" + "originalnodevalue"
                     + "</td><td style='min-width:200px'>" + "nodedepth");
-            for (SaveFileElement temp : Main.sfe_arraylist) {
-                if(temp.getLineNumber() >= startlinenumber && temp.getLineNumber() <= endlinenumber) {
+            for (SaveFileElement temp : sfe_arraylist) {
+                if (temp.getLineNumber() >= startlinenumber && temp.getLineNumber() <= endlinenumber) {
                     writer.write("<tr><td style='min-width:100px' >" + temp.linenumber
                             + "</td><td style='min-width:100px'>" + temp.nodelevel
                             + "</td><td style='min-width:100px'>" + temp.nodeparent

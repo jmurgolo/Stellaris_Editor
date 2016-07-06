@@ -9,6 +9,8 @@ import java.awt.event.ComponentListener;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static Stellaris.Main.sfe_arraylist;
+
 /**
  * Created by jmm on 6/30/2016.
  */
@@ -36,11 +38,11 @@ public class Utilities {
 
     public static int notBetween(String inme, String findme) {
         int findinmematches = 0;
-        if(inme.contains(findme)) {
+        if (inme.contains(findme)) {
             findinmematches = StringUtils.countMatches(inme, findme);
-            String[] valuesInQuotes = StringUtils.substringsBetween(inme , "\"", "\"");
-            if(valuesInQuotes != null){
-                for(int i = 0 ; i < valuesInQuotes.length ; i++) {
+            String[] valuesInQuotes = StringUtils.substringsBetween(inme, "\"", "\"");
+            if (valuesInQuotes != null) {
+                for (int i = 0; i < valuesInQuotes.length; i++) {
                     findinmematches = findinmematches - (int) StringUtils.countMatches(valuesInQuotes[i], findme);
                 }
             }
@@ -48,30 +50,33 @@ public class Utilities {
         return findinmematches;
     }
 
+    public static void fillSfeArrayList() {
+        for (int i = 0 ; i < sfe_arraylist.length ; i ++) {
+            sfe_arraylist[i] = new SaveFileElement();
+        }
+    }
+
     public static Integer[] addArrayCapacity(Integer[] list, int amount) {
         Integer[] arr1 = new Integer[(int) (list.length + amount)];
-        for(int i = 0 ; i < list.length; i++){
+        for (int i = 0; i < list.length; i++) {
             arr1[i] = list[i];
         }
         return arr1;
     }
 
-    public static SaveFileElement[] addArrayCapacity(SaveFileElement[] list, int amount) {
-        SaveFileElement[] arr1 = new SaveFileElement[(int) (list.length + amount)];
-        arr1[arr1.length-1] = new SaveFileElement();
-        for(int i = 0 ; i < list.length; i++){
-            arr1[i] = list[i];
-            if(arr1[i] == null){
-                arr1[i] = new SaveFileElement();
-            }
+    public static void addArrayCapacity(int amount) {
+        SaveFileElement[] arr1 = new SaveFileElement[(int) (sfe_arraylist.length + amount)];
+        for(int i = sfe_arraylist.length ; i < arr1.length ; i ++){
+            arr1[i] = new SaveFileElement();
         }
-        return arr1;
+        System.arraycopy(sfe_arraylist, 0, arr1, 0, sfe_arraylist.length);
+        sfe_arraylist = arr1;
     }
 
-    public static Integer[] removeArrayCapacity(Integer[] original, int element){
+    public static Integer[] removeArrayCapacity(Integer[] original, int element) {
         Integer[] n = new Integer[original.length - 1];
-        System.arraycopy(original, 0, n, 0, element );
-        System.arraycopy(original, element+1, n, element, original.length - element-1);
+        System.arraycopy(original, 0, n, 0, element);
+        System.arraycopy(original, element + 1, n, element, original.length - element - 1);
         return n;
     }
 

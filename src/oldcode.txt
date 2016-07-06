@@ -1,3 +1,102 @@
+//        appScene.widthProperty().addListener(new ChangeListener<Number>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+//                //System.out.println(vbox.getHeight() + " | " + scrollPane.getHeight() + " | " + vbox.getParent().getScene().getHeight());
+//                //vbox.setPrefSize(vbox.getParent().getScene().getWidth(), vbox.getParent().getScene().getHeight());
+//                //vbox.setMaxWidth(vbox.getParent().getScene().getWidth());
+//                //componentLayout.getChildren().get(1).resize(componentLayout.getWidth(),componentLayout.getHeight());
+//            }
+//        });
+//        appScene.heightProperty().addListener(new ChangeListener<Number>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
+//                //System.out.println(vbox.getHeight() + " | " + scrollPane.getHeight() + " | " + vbox.getParent().getScene().getHeight());
+//                //vbox.setPrefSize(vbox.getParent().getScene().getWidth(), vbox.getParent().getScene().getHeight());
+//                //vbox.setMaxHeight(vbox.getParent().getScene().getHeight());
+//                //componentLayout.getChildren().get(1).resize(componentLayout.getWidth(),componentLayout.getHeight());
+////                componentLayout.getChildren().get(1)
+//
+//
+//            }
+ //       });
+
+ //    //TODO: this
+ //    public List getChildSingles() {
+ //        List<SaveFileElement> depth_length_corrected = Main.sfe_arraylist.parallelStream()
+ //                .filter(p -> (
+ //                        p.getNodeDepth().substring(0, p.nodedepth.length() - 1).length()
+ //                                >=
+ //                                nodedepth.length())
+ //                )
+ //                .collect(Collectors.toList());
+ //
+ //        List<SaveFileElement> child_singles = depth_length_corrected.parallelStream()
+ //                .filter(p -> (
+ //                        p.getNodeDepth().substring(0, nodedepth.length() - 1))
+ //                        .equals(
+ //                                nodedepth.substring(0, nodedepth.length() - 1)
+ //                        )
+ //                )
+ //                .filter(p -> (
+ //                        p.getOpenOrClose()).equals("none"))
+ //                .collect(Collectors.toList());
+ //
+ //        //System.out.println(child_singles);
+ //        return child_singles;
+ //    }
+
+ //    public List getChildParents() {
+ //        List<SaveFileElement> depth_length_corrected = Main.sfe_arraylist.parallelStream()
+ //                .filter(p -> (
+ //                        p.getNodeDepth().substring(0, p.nodedepth.length() - 1).length()
+ //                                >=
+ //                                nodedepth.length())
+ //                )
+ //                .collect(Collectors.toList());
+ //
+ //        List<SaveFileElement> child_parents = depth_length_corrected.parallelStream()
+ //                .filter(p -> (
+ //                        p.getNodeDepth().substring(0, nodedepth.length() - 1))
+ //                        .equals(
+ //                                nodedepth.substring(0, nodedepth.length() - 1)
+ //                        )
+ //                )
+ //                .collect(Collectors.toList());
+ //
+ //        //System.out.println(child_parents);
+ //        return child_parents;
+ //    }
+
+ //        SaveFileElement[] sublist1 = Main.sfe_arraylist.parallelStream()
+ //                .filter(p -> (
+ //                        p.nodelevel >= nodelevel)
+ //                )
+ //                .collect(Collectors.toList());
+ //
+ //        List<SaveFileElement> sublist2 = sublist1.parallelStream()
+ //                .filter(p -> (
+ //                        p.getNodeDepthAsIntegerList().get(getNodeDepthAsIntegerList().size() - 2).equals(parentelement))
+ //                )
+ //                .collect(Collectors.toList());
+ //
+ //                children = sublist2;
+
+ //        List<SaveFileElement> children = Main.sfe_arraylist.parallelStream()
+ //                .filter(p -> (
+ //                        p.nodelevel >= nodelevel)
+ //                )
+ //                .filter(p -> (
+ //                        p.getNodeDepthAsIntegerList().get(getNodeDepthAsIntegerList().size() - 2) == parentelement)
+ //                )
+ //                .filter(p -> {
+ //                        //System.out.println(p.getNodeDepthAsIntegerList().toString());
+ //                        return p.getNodeDepthAsIntegerList().get(getNodeDepthAsIntegerList().size() - 1) == childelement;
+ //                }
+ //                )
+ //                .collect(Collectors.toList());
+
+         //System.out.println(children.get(0).originalnodename.toString());
+
 //        String parent = null;
 //        line_text = lt;
 //        temp_text = lt.replaceAll("'", "''");

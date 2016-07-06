@@ -83,19 +83,28 @@ public  class  EditorDisplay {
     }
 
     private static void getCountries() {
-        //get the country node
-//        List<SaveFileElement> countriesnodes = Main.sfe_arraylist.parallelStream()
-//                .filter(p -> p.nodeparent.equals("country"))
-//                .filter(p -> p.openorclose.equals("open"))
-//                .collect(Collectors.toList());
-//
+
+        //get the country id index
+        List<Integer> countriesidarraylist = new ArrayList<>();
+        for(int i = 0 ; i < Main.sfe_arraylist.length ; i ++){
+            if(Main.sfe_arraylist[i].nodeparent.equals("country") && Main.sfe_arraylist[i].openorclose.equals("open")){
+                countriesidarraylist.add(i);
+            }
+        }
+
+        //get the countries names
+        Country[] countriesarray = new Country[countriesidarraylist.size()];
+        for(int i = 0 ; i < countriesidarraylist.size() ; i ++){
+            countriesarray[i]. = Main.sfe_arraylist[countriesidarraylist.get(i)].getChildren();
+            }
+//        }
+
 //        List<SaveFileElement> country = new ArrayList<SaveFileElement>();
 //        for (int i = 0 ; i < countriesnodes.size() ; i++) {
-//            System.out.println("c: " + countriesnodes.get(i).originalnodename);
 //            country = countriesnodes.get(i).getChildren();
-////            countries.add(new Country());
-////            countries.get(i).setCountry(countriesnodes.get(i).getLineNumber(),country.get(country.size()-1).getLineNumber());
-////            countries.get(i).setId(countriesnodes.get(i).originalnodename);
+//            countries.add(new Country());
+//            countries.get(i).setCountry(countriesnodes.get(i).getLineNumber(),country.get(country.size()-1).getLineNumber());
+//            countries.get(i).setId(countriesnodes.get(i).originalnodename);
 //        }
     }
 

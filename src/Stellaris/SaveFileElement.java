@@ -26,7 +26,8 @@ public class SaveFileElement {
 
     private int nodedepthlength;
 
-    public SaveFileElement(){}
+    public SaveFileElement() {
+    }
 
     public String getNodeName() {
         return nodename;
@@ -61,7 +62,6 @@ public class SaveFileElement {
     }
 
     public List<Integer> getNodeDepthAsIntegerList() {
-
         String[] temp = nodedepth.substring(1, getNodeDepth().length() - 1).split(",");
         List<Integer> numberList = new ArrayList<Integer>();
         if (temp.length > 0) {
@@ -90,28 +90,6 @@ public class SaveFileElement {
         return numberList;
     }
 
-//    public List getChildParents() {
-//        List<SaveFileElement> depth_length_corrected = Main.sfe_arraylist.parallelStream()
-//                .filter(p -> (
-//                        p.getNodeDepth().substring(0, p.nodedepth.length() - 1).length()
-//                                >=
-//                                nodedepth.length())
-//                )
-//                .collect(Collectors.toList());
-//
-//        List<SaveFileElement> child_parents = depth_length_corrected.parallelStream()
-//                .filter(p -> (
-//                        p.getNodeDepth().substring(0, nodedepth.length() - 1))
-//                        .equals(
-//                                nodedepth.substring(0, nodedepth.length() - 1)
-//                        )
-//                )
-//                .collect(Collectors.toList());
-//
-//        //System.out.println(child_parents);
-//        return child_parents;
-//    }
-
     public List getChildren() {
 
         int parentelement = getNodeDepthAsIntegerList().get(getNodeDepthAsIntegerList().size() - 2);
@@ -124,7 +102,7 @@ public class SaveFileElement {
         for (int i = 0; i < sfe_array.length; i++) {
             if (sfe_array[i].nodelevel >= nodelevel) {
                 int s = sfe_array[i].getNodeDepthAsIntegerList().get(getNodeDepthAsIntegerArray().length - 1);
-                if(s==childelement) {
+                if (s == childelement) {
                     if (counter == children.length) {
                         children = addCapacity(children, 10000);
                         System.out.println("counter " + counter);
@@ -134,63 +112,8 @@ public class SaveFileElement {
                 }
             }
         }
-
-//        SaveFileElement[] sublist1 = Main.sfe_arraylist.parallelStream()
-//                .filter(p -> (
-//                        p.nodelevel >= nodelevel)
-//                )
-//                .collect(Collectors.toList());
-//
-//        List<SaveFileElement> sublist2 = sublist1.parallelStream()
-//                .filter(p -> (
-//                        p.getNodeDepthAsIntegerList().get(getNodeDepthAsIntegerList().size() - 2).equals(parentelement))
-//                )
-//                .collect(Collectors.toList());
-//
-//                children = sublist2;
-
-//        List<SaveFileElement> children = Main.sfe_arraylist.parallelStream()
-//                .filter(p -> (
-//                        p.nodelevel >= nodelevel)
-//                )
-//                .filter(p -> (
-//                        p.getNodeDepthAsIntegerList().get(getNodeDepthAsIntegerList().size() - 2) == parentelement)
-//                )
-//                .filter(p -> {
-//                        //System.out.println(p.getNodeDepthAsIntegerList().toString());
-//                        return p.getNodeDepthAsIntegerList().get(getNodeDepthAsIntegerList().size() - 1) == childelement;
-//                }
-//                )
-//                .collect(Collectors.toList());
-
-        //System.out.println(children.get(0).originalnodename.toString());
         return new ArrayList<SaveFileElement>(Arrays.asList(children));
     }
-
-//    //TODO: this
-//    public List getChildSingles() {
-//        List<SaveFileElement> depth_length_corrected = Main.sfe_arraylist.parallelStream()
-//                .filter(p -> (
-//                        p.getNodeDepth().substring(0, p.nodedepth.length() - 1).length()
-//                                >=
-//                                nodedepth.length())
-//                )
-//                .collect(Collectors.toList());
-//
-//        List<SaveFileElement> child_singles = depth_length_corrected.parallelStream()
-//                .filter(p -> (
-//                        p.getNodeDepth().substring(0, nodedepth.length() - 1))
-//                        .equals(
-//                                nodedepth.substring(0, nodedepth.length() - 1)
-//                        )
-//                )
-//                .filter(p -> (
-//                        p.getOpenOrClose()).equals("none"))
-//                .collect(Collectors.toList());
-//
-//        //System.out.println(child_singles);
-//        return child_singles;
-//    }
 
     public static SaveFileElement[] addCapacity(SaveFileElement[] list, int amount) {
         SaveFileElement[] arr1 = new SaveFileElement[(int) (list.length + amount)];
