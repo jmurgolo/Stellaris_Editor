@@ -2,6 +2,8 @@ package Stellaris;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Menu;
@@ -9,6 +11,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,7 +32,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import static Stellaris.Utilities.printArray;
+import static Stellaris.Utilities.*;
+import static Stellaris.XML_Node.processSfe_arraylist;
 
 public class Main extends Application {
 
@@ -39,7 +43,7 @@ public class Main extends Application {
     //TODO:configure log4j
     //public static final org.apache.logging.log4j.Logger logger = LogManager.getLogger("Log");
 
-    public static List<SaveFileElement> sfe_arraylist = new ArrayList<SaveFileElement>();
+    public static SaveFileElement[] sfe_arraylist = new SaveFileElement[0];
     public static List<Country> countries = new ArrayList<Country>();
     public static List<StellarObject> stellarobjects = new ArrayList<StellarObject>();
 
@@ -77,16 +81,38 @@ public class Main extends Application {
 
         //put the vbox in the top area of the BorderPane
         componentLayout.getChildren().add(menuBar);
-        VBox vbox = new VBox();
+        //VBox vbox = new VBox();
 
-        componentLayout.getChildren().add(vbox);
+        //componentLayout.getChildren().add(vbox);
 
         //Add the BorderPane to the Scene
-        Scene appScene = new Scene(componentLayout, 1024, 500);
+        Scene appScene = new Scene(componentLayout, 1280, 768);
 
         //Add the Scene to the Stage
         primaryStage.setScene(appScene);
         primaryStage.show();
+
+//        appScene.widthProperty().addListener(new ChangeListener<Number>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+//                //System.out.println(vbox.getHeight() + " | " + scrollPane.getHeight() + " | " + vbox.getParent().getScene().getHeight());
+//                //vbox.setPrefSize(vbox.getParent().getScene().getWidth(), vbox.getParent().getScene().getHeight());
+//                //vbox.setMaxWidth(vbox.getParent().getScene().getWidth());
+//                //componentLayout.getChildren().get(1).resize(componentLayout.getWidth(),componentLayout.getHeight());
+//            }
+//        });
+//        appScene.heightProperty().addListener(new ChangeListener<Number>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight, Number newSceneHeight) {
+//                //System.out.println(vbox.getHeight() + " | " + scrollPane.getHeight() + " | " + vbox.getParent().getScene().getHeight());
+//                //vbox.setPrefSize(vbox.getParent().getScene().getWidth(), vbox.getParent().getScene().getHeight());
+//                //vbox.setMaxHeight(vbox.getParent().getScene().getHeight());
+//                //componentLayout.getChildren().get(1).resize(componentLayout.getWidth(),componentLayout.getHeight());
+////                componentLayout.getChildren().get(1)
+//
+//
+//            }
+ //       });
     }
 
     private void processSaveFile(Stage s) {
@@ -115,7 +141,6 @@ public class Main extends Application {
 //                        return true;
 //                    }
 //                }).collect(Collectors.toList());
-                //FileProcessor.createTempFileofArray(); //603688,603695); //"nodename","name");
 
                 JProgressBar progressbar = main_Progress_Bar(0, rows, "Filling GUI");
 //                for (int i = 0; i < zero_level.size(); i++) {
@@ -130,50 +155,52 @@ public class Main extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        processSfe_arraylist();
+        FileProcessor.createTempFileofArray(); //603688,603695); //"nodename","name");
     }
 
-    private void getCountries() {
-        //get the country node
-        List<SaveFileElement> countriesnodes = Main.sfe_arraylist.parallelStream()
-                .filter(p -> p.nodeparent.equals("country"))
-                .filter(p -> p.openorclose.equals("open"))
-                .collect(Collectors.toList());
+//    private void getCountries() {
+//        //get the country node
+//        List<SaveFileElement> countriesnodes = Main.sfe_arraylist.parallelStream()
+//                .filter(p -> p.nodeparent.equals("country"))
+//                .filter(p -> p.openorclose.equals("open"))
+//                .collect(Collectors.toList());
+//
+//        List<SaveFileElement> country = new ArrayList<SaveFileElement>();
+//        for (int i = 0 ; i < countriesnodes.size() ; i++) {
+//            System.out.println("c: " + countriesnodes.get(i).nodename);
+//            country = countriesnodes.get(i).getChildren();
+////            countries.add(new Country());
+////            countries.get(i).setCountry(countriesnodes.get(i).getLineNumber(),country.get(country.size()-1).getLineNumber());
+////            countries.get(i).setId(countriesnodes.get(i).originalnodename);
+//        }
+//    }
 
-        List<SaveFileElement> country = new ArrayList<SaveFileElement>();
-        for (int i = 0 ; i < countriesnodes.size() ; i++) {
-            System.out.println("c: " + countriesnodes.get(i).originalnodename);
-            country = countriesnodes.get(i).getChildren();
-//            countries.add(new Country());
-//            countries.get(i).setCountry(countriesnodes.get(i).getLineNumber(),country.get(country.size()-1).getLineNumber());
-//            countries.get(i).setId(countriesnodes.get(i).originalnodename);
-        }
-    }
+//    private void getStellarObjects() {
+//        //get the country node
+//        List<SaveFileElement> stellarobjectsnodes = Main.sfe_arraylist.parallelStream()
+//                .filter(p -> p.nodeparent.equals("galactic_object"))
+//                .filter(p -> p.openorclose.equals("open"))
+//                .collect(Collectors.toList());
+//
+//        List<SaveFileElement> stellarobject = new ArrayList<SaveFileElement>();
+//        for (int i = 0 ; i < stellarobjectsnodes.size() ; i++) {
+//            System.out.println("so: " + stellarobjectsnodes.get(i).nodename);
+//            stellarobject = stellarobjectsnodes.get(i).getChildren();
+//            stellarobjects.add(new StellarObject());
+////            stellarobjects.get(i).setStellarObject(stellarobjectsnodes.get(i).getLineNumber(),stellarobject.get(stellarobject.size()-1).getLineNumber());
+////            stellarobjects.get(i).setId(stellarobjectsnodes.get(i).originalnodename);
+//        }
+//    }
 
-    private void getStellarObjects() {
-        //get the country node
-        List<SaveFileElement> stellarobjectsnodes = Main.sfe_arraylist.parallelStream()
-                .filter(p -> p.nodeparent.equals("galactic_object"))
-                .filter(p -> p.openorclose.equals("open"))
-                .collect(Collectors.toList());
-
-        List<SaveFileElement> stellarobject = new ArrayList<SaveFileElement>();
-        for (int i = 0 ; i < stellarobjectsnodes.size() ; i++) {
-            System.out.println("so: " + stellarobjectsnodes.get(i).originalnodename);
-            stellarobject = stellarobjectsnodes.get(i).getChildren();
-            stellarobjects.add(new StellarObject());
-//            stellarobjects.get(i).setStellarObject(stellarobjectsnodes.get(i).getLineNumber(),stellarobject.get(stellarobject.size()-1).getLineNumber());
-//            stellarobjects.get(i).setId(stellarobjectsnodes.get(i).originalnodename);
-        }
-    }
-
-    private List<String> getCountryNames() {
-
-        List<String> countryList = new ArrayList<>();
-
-        //strip off equal sign and quotes
-        countryList.addAll(countries.parallelStream().map(countries -> countries.getName()).collect(Collectors.toList()));
-        return countryList;
-    }
+//    private List<String> getCountryNames() {
+//
+//        String[] countryList = new String[];
+//
+//        //strip off equal sign and quotes
+//        countryList.addAll(countries.parallelStream().map(countries -> countries.getName()).collect(Collectors.toList()));
+//        return countryList;
+//    }
 
     private MenuBar getMenuBar(Stage primaryStage, VBox componentLayout){
         final Menu fileMenu = new Menu("File");
@@ -191,7 +218,6 @@ public class Main extends Application {
             //TODO: fix error when x-ing out of file menu without selecting file
             processSaveFile(primaryStage);
             componentLayout.getChildren().add(EditorDisplay.creatTable());
-            //vbox.setMaxSize(primaryStage.getWidth(), primaryStage.getHeight());
         });
         //todo:why is this failing
         //stellar_menu_item.setDisable(true);
@@ -230,37 +256,7 @@ public class Main extends Application {
         return false;
     }
 
-    public static JProgressBar main_Progress_Bar(int start, int end, String title) {
-        JProgressBar progressBar = new JProgressBar(start, end);
-        progressBar.setValue(0);
-        progressBar.setStringPainted(true);
-        javax.swing.border.Border border = BorderFactory.createTitledBorder("Reading...");
-        progressBar.setBorder(border);
-        JFrame frame = new JFrame(title);
-        Container content = frame.getContentPane();
-        content.add(progressBar, BorderLayout.NORTH);
-        frame.setLocationRelativeTo(null);
-        frame.setSize(600, 100);
-        frame.setVisible(true);
-        progressBar.addComponentListener(new ComponentListener() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-            }
 
-            @Override
-            public void componentMoved(ComponentEvent e) {
-            }
-
-            @Override
-            public void componentShown(ComponentEvent e) {
-            }
-
-            public void componentHidden(ComponentEvent e) {
-                frame.dispose();
-            }
-        });
-        return progressBar;
-    }
 
     private void shutdown() {
         Platform.exit();

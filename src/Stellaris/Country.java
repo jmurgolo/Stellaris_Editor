@@ -32,46 +32,46 @@ public class Country {
         id = s;
     }
 
-    public String getName() {
-        List<SaveFileElement> countries_names = Main.sfe_arraylist.parallelStream()
-                .filter(p -> (
-                        p.getLineNumber() >= arraystart))
-                .filter(p -> (
-                        p.getLineNumber() <= arrayend))
-                .filter(p -> (
-                        p.originalnodename).equals("name")
-                ).filter(p -> (
-                        p.getOpenOrClose()).equals("none"))
-                .filter(p -> (
-                        p.nodelevel == 2))
-                .collect(Collectors.toList());
+//    public String getName() {
+//        List<SaveFileElement> countries_names = Main.sfe_arraylist.parallelStream()
+//                .filter(p -> (
+//                        p.getLineNumber() >= arraystart))
+//                .filter(p -> (
+//                        p.getLineNumber() <= arrayend))
+//                .filter(p -> (
+//                        p.nodename).equals("name")
+//                ).filter(p -> (
+//                        p.getOpenOrClose()).equals("none"))
+//                .filter(p -> (
+//                        p.nodelevel == 2))
+//                .collect(Collectors.toList());
+//
+//        name = countries_names.get(0).getOriginalNodeValue().substring(2, countries_names.get(0).originalnodevalue.length() - 1);
+//        return countries_names.get(0).getOriginalNodeValue().substring(2, countries_names.get(0).originalnodevalue.length() - 1);
+//    }
 
-        name = countries_names.get(0).getOriginalNodeValue().substring(2, countries_names.get(0).originalnodevalue.length() - 1);
-        return countries_names.get(0).getOriginalNodeValue().substring(2, countries_names.get(0).originalnodevalue.length() - 1);
-    }
-
-    public String[] getSurveyed() {
-        List<SaveFileElement> countries_names = Main.sfe_arraylist.parallelStream()
-                .filter(p -> (
-                        p.getLineNumber() >= arraystart))
-                .filter(p -> (
-                        p.getLineNumber() <= arrayend))
-                .filter(p -> (
-                        p.nodeparent).equals("surveyed")
-                ).filter(p -> (
-                        p.getOpenOrClose()).equals("none"))
-                .collect(Collectors.toList());
-        if (countries_names.size() > 0) {
-            //surveyed.addAll(Arrays.asList(countries_names.get(0).getOriginalNodeValue().split(" ")));
-            //System.out.println("stellarobjects array: ");
-            //printArray(countries_names.get(0).getOriginalNodeValue().split(" "));
-            Collections.addAll(surveyed, countries_names.get(0).getOriginalNodeValue().split(" "));
-            //getSurveyedObjects();
-            return countries_names.get(0).getOriginalNodeValue().split(" ");
-        } else {
-            return null;
-        }
-    }
+//    public String[] getSurveyed() {
+//        List<SaveFileElement> countries_names = Main.sfe_arraylist.parallelStream()
+//                .filter(p -> (
+//                        p.getLineNumber() >= arraystart))
+//                .filter(p -> (
+//                        p.getLineNumber() <= arrayend))
+//                .filter(p -> (
+//                        p.nodeparent).equals("surveyed")
+//                ).filter(p -> (
+//                        p.getOpenOrClose()).equals("none"))
+//                .collect(Collectors.toList());
+//        if (countries_names.size() > 0) {
+//            //surveyed.addAll(Arrays.asList(countries_names.get(0).getOriginalNodeValue().split(" ")));
+//            //System.out.println("stellarobjects array: ");
+//            //printArray(countries_names.get(0).getOriginalNodeValue().split(" "));
+//            Collections.addAll(surveyed, countries_names.get(0).getOriginalNodeValue().split(" "));
+//            //getSurveyedObjects();
+//            return countries_names.get(0).getOriginalNodeValue().split(" ");
+//        } else {
+//            return null;
+//        }
+//    }
 
 //    public void getSurveyedObjects() {
 //        List<SaveFileElement> object_names = Main.sfe_arraylist.parallelStream()

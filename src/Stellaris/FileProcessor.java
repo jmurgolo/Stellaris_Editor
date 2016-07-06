@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import static Stellaris.Utilities.main_Progress_Bar;
 import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
 import static java.nio.file.StandardCopyOption.COPY_ATTRIBUTES;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
@@ -53,7 +54,7 @@ public class FileProcessor {
         long startTime = System.nanoTime();
         String tempstring;
         BufferedReader rd = null;
-        boolean last = false;
+        //boolean last = false;
         XML_Node object_xmlnode = new XML_Node(0, 0, "");
         String tempnodearray[];
         int filelinecount = 0;
@@ -73,7 +74,7 @@ public class FileProcessor {
             e.printStackTrace();
         }
 
-        JProgressBar progressBar = Main.main_Progress_Bar(0, filelinecount, "Processing Save File");
+        JProgressBar progressBar = main_Progress_Bar(0, filelinecount, "Processing Save File");
 
         //TODO: fix file locations
 
@@ -82,9 +83,9 @@ public class FileProcessor {
                 while ((object_xmlnode.line_text = rd.readLine()) != null) {
                     tempnodearray = StringUtils.split(object_xmlnode.line_text, "\t");
                     for (int q = 0; q < tempnodearray.length; q++) {
-                        if (counter + 1 == filelinecount) {
-                            last = true;
-                        }
+//                        if (counter + 1 == filelinecount) {
+//                            last = true;
+//                        }
                         object_xmlnode.xmlarize(counter, object_xmlnode.level, tempnodearray[q]);
                         progressBar.setValue(counter);
                         progressBar.setString(object_xmlnode.line_text);
@@ -206,7 +207,7 @@ public class FileProcessor {
                         + "</td><td style='min-width:100px'>" + temp.nodeparent
                         + "</td><td style='min-width:100px'>" + temp.openorclose
                         + "</td><td style='min-width:100px'>" + temp.nodename
-                        + "</td><td style='min-width:100px'>" + temp.originalnodename
+                        + "</td><td style='min-width:100px'>" + temp.nodename
                         + "</td><td style='min-width:200px'>" + temp.originalnodevalue
                         + "</td><td style='min-width:200px'>" + temp.nodedepth + "</td></tr>");
             }//
@@ -236,7 +237,7 @@ public class FileProcessor {
                             + "</td><td style='min-width:100px'>" + temp.nodeparent
                             + "</td><td style='min-width:100px'>" + temp.openorclose
                             + "</td><td style='min-width:100px'>" + temp.nodename
-                            + "</td><td style='min-width:100px'>" + temp.originalnodename
+                            + "</td><td style='min-width:100px'>" + temp.nodename
                             + "</td><td style='min-width:200px'>" + temp.originalnodevalue
                             + "</td><td style='min-width:200px'>" + temp.nodedepth + "</td></tr>");
                 }
@@ -257,7 +258,6 @@ public class FileProcessor {
                     + "</td><td style='min-width:100px'>" + "nodeparent"
                     + "</td><td style='min-width:100px'>" + "openorclose"
                     + "</td><td style='min-width:100px'>" + "nodename"
-                    + "</td><td style='min-width:100px'>" + "originalnodename"
                     + "</td><td style='min-width:200px'>" + "originalnodevalue"
                     + "</td><td style='min-width:200px'>" + "nodedepth");
             for (SaveFileElement temp : Main.sfe_arraylist) {
@@ -267,7 +267,6 @@ public class FileProcessor {
                             + "</td><td style='min-width:100px'>" + temp.nodeparent
                             + "</td><td style='min-width:100px'>" + temp.openorclose
                             + "</td><td style='min-width:100px'>" + temp.nodename
-                            + "</td><td style='min-width:100px'>" + temp.originalnodename
                             + "</td><td style='min-width:200px'>" + temp.originalnodevalue
                             + "</td><td style='min-width:200px'>" + temp.nodedepth + "</td></tr>");
                 }

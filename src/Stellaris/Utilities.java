@@ -1,5 +1,14 @@
 package Stellaris;
 
+import org.apache.commons.lang3.StringUtils;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by jmm on 6/30/2016.
  */
@@ -23,6 +32,79 @@ public class Utilities {
             System.out.print(anArray[i]);
         }
         System.out.println("\r\n");
+    }
+
+    public static int notBetween(String inme, String findme) {
+        int findinmematches = 0;
+        if(inme.contains(findme)) {
+            findinmematches = StringUtils.countMatches(inme, findme);
+            String[] valuesInQuotes = StringUtils.substringsBetween(inme , "\"", "\"");
+            if(valuesInQuotes != null){
+                for(int i = 0 ; i < valuesInQuotes.length ; i++) {
+                    findinmematches = findinmematches - (int) StringUtils.countMatches(valuesInQuotes[i], findme);
+                }
+            }
+        }
+        return findinmematches;
+    }
+
+    public static Integer[] addArrayCapacity(Integer[] list, int amount) {
+        Integer[] arr1 = new Integer[(int) (list.length + amount)];
+        for(int i = 0 ; i < list.length; i++){
+            arr1[i] = list[i];
+        }
+        return arr1;
+    }
+
+    public static SaveFileElement[] addArrayCapacity(SaveFileElement[] list, int amount) {
+        SaveFileElement[] arr1 = new SaveFileElement[(int) (list.length + amount)];
+        arr1[arr1.length-1] = new SaveFileElement();
+        for(int i = 0 ; i < list.length; i++){
+            arr1[i] = list[i];
+            if(arr1[i] == null){
+                arr1[i] = new SaveFileElement();
+            }
+        }
+        return arr1;
+    }
+
+    public static Integer[] removeArrayCapacity(Integer[] original, int element){
+        Integer[] n = new Integer[original.length - 1];
+        System.arraycopy(original, 0, n, 0, element );
+        System.arraycopy(original, element+1, n, element, original.length - element-1);
+        return n;
+    }
+
+    public static JProgressBar main_Progress_Bar(int start, int end, String title) {
+        JProgressBar progressBar = new JProgressBar(start, end);
+        progressBar.setValue(0);
+        progressBar.setStringPainted(true);
+        javax.swing.border.Border border = BorderFactory.createTitledBorder("Reading...");
+        progressBar.setBorder(border);
+        JFrame frame = new JFrame(title);
+        Container content = frame.getContentPane();
+        content.add(progressBar, BorderLayout.NORTH);
+        frame.setLocationRelativeTo(null);
+        frame.setSize(600, 100);
+        frame.setVisible(true);
+        progressBar.addComponentListener(new ComponentListener() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+            }
+
+            @Override
+            public void componentMoved(ComponentEvent e) {
+            }
+
+            @Override
+            public void componentShown(ComponentEvent e) {
+            }
+
+            public void componentHidden(ComponentEvent e) {
+                frame.dispose();
+            }
+        });
+        return progressBar;
     }
 
 }

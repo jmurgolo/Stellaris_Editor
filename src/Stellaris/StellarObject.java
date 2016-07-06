@@ -34,7 +34,7 @@ public class StellarObject {
     public String getName(){
         List<SaveFileElement> countries_names = objectnodes.parallelStream()
                 .filter(p -> (
-                        p.originalnodename).equals("name")
+                        p.nodename).equals("name")
                 ).filter(p -> (
                         p.getOpenOrClose()).equals("none"))
                 .collect(Collectors.toList());
