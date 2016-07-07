@@ -4,8 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -13,11 +11,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static Stellaris.Main.countries;
 
 /**
  * Created by jmm on 7/1/2016.
@@ -85,18 +83,23 @@ public  class  EditorDisplay {
     private static void getCountries() {
 
         //get the country id index
-        List<Integer> countriesidarraylist = new ArrayList<>();
+        List<SaveFileElement> countrieslist = new ArrayList<>();
         for(int i = 0 ; i < Main.sfe_arraylist.length ; i ++){
-            if(Main.sfe_arraylist[i].nodeparent.equals("country") && Main.sfe_arraylist[i].openorclose.equals("open")){
-                countriesidarraylist.add(i);
+            if(Main.sfe_arraylist[i].nodeparent.trim().equals("country")) {
+                if (Main.sfe_arraylist[i].openorclose.equals("open")) {
+                    countrieslist.add(Main.sfe_arraylist[i]);
+                }
             }
         }
 
-        //get the countries names
-        Country[] countriesarray = new Country[countriesidarraylist.size()];
-        for(int i = 0 ; i < countriesidarraylist.size() ; i ++){
-            countriesarray[i]. = Main.sfe_arraylist[countriesidarraylist.get(i)].getChildren();
+        System.out.println(countrieslist.toString());
+
+        //get the countries nodes
+        for(int i = 0 ; i < countrieslist.size() ; i ++){
+            countries.add(new Country());
+            countries.get(i).setCountryNodes(countrieslist.get(i).getChildren());
             }
+        //System.out.println(countries.toString());
 //        }
 
 //        List<SaveFileElement> country = new ArrayList<SaveFileElement>();

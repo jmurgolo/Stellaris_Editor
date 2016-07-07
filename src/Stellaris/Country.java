@@ -1,9 +1,7 @@
 package Stellaris;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by jmm on 6/26/2016.
@@ -14,10 +12,14 @@ public class Country {
     private int arrayend;
 
     private String id;
-    private String name;
     private List<String> surveyed = new ArrayList<>();
     private String nodedepth;
+    private List<SaveFileElement> countrynodes = new ArrayList<>();
     private List<StellarObject> surveyedobjects = new ArrayList<>();
+
+    public void Country(List<SaveFileElement> list){
+        countrynodes = list;
+    }
 
     public void setCountry(int s, int e) {
         arraystart = s;
@@ -25,12 +27,44 @@ public class Country {
     }
 
     public void setEnd(int e) {
+
         arrayend = e;
     }
 
     public void setId(String s){
+
         id = s;
     }
+
+    public void setCountryNodes(List<SaveFileElement> list) {
+
+        countrynodes = list;
+    }
+
+    @Override
+    public String toString() {
+        return "id" + " = " + id + " | "
+                + "countrynodes" + " =  " + countrynodes.toString() + " | "
+//                + "countrynodes" + " =  " + countrynodes.toString() + " | "
+//                + "nodevalue" + " =  " + nodevalue + " | "
+//                + "nodeparent" + " =  " + nodeparent + " | "
+//                + "openorclose" + " =  " + openorclose + " | "
+//                + "originalnodename" + " =  " + originalnodename + " | "
+//                + "originalnodevalue" + " =  " + originalnodevalue + " | "
+//                + "nodepath" + " =  " + nodepath + " | "
+//                + "nodedepth" + " =  " + nodedepth
+                + "\r\n";
+    }
+
+
+
+
+
+
+
+
+
+
 
 //    public String getName() {
 //        List<SaveFileElement> countries_names = Main.sfe_arraylist.parallelStream()
@@ -98,18 +132,5 @@ public class Country {
 ////        }
 //    }
 
-    @Override
-    public String toString() {
-        return "id" + " = " + id + " | "
-                + "name" + " =  " + name + " | "
-//                + "countrynodes" + " =  " + countrynodes.toString() + " | "
-//                + "nodevalue" + " =  " + nodevalue + " | "
-//                + "nodeparent" + " =  " + nodeparent + " | "
-//                + "openorclose" + " =  " + openorclose + " | "
-//                + "originalnodename" + " =  " + originalnodename + " | "
-//                + "originalnodevalue" + " =  " + originalnodevalue + " | "
-//                + "nodepath" + " =  " + nodepath + " | "
-//                + "nodedepth" + " =  " + nodedepth
-                + "\r\n";
-    }
+
 }

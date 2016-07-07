@@ -5,7 +5,6 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static Stellaris.Utilities.addArrayCapacity;
 
@@ -96,18 +95,16 @@ public class SaveFileElement {
         int childelement = getNodeDepthAsIntegerList().get(getNodeDepthAsIntegerList().size() - 1);
         SaveFileElement[] children = new SaveFileElement[100000];
 
-        SaveFileElement[] sfe_array = new SaveFileElement[Main.sfe_arraylist.length];
-        //sfe_array = Main.sfe_arraylist.toArray(sfe_array);
         int counter = 0;
-        for (int i = 0; i < sfe_array.length; i++) {
-            if (sfe_array[i].nodelevel >= nodelevel) {
-                int s = sfe_array[i].getNodeDepthAsIntegerList().get(getNodeDepthAsIntegerArray().length - 1);
+        for (int i = 0; i < Main.sfe_arraylist.length; i++) {
+            if (Main.sfe_arraylist[i].nodelevel >= nodelevel) {
+                int s = Main.sfe_arraylist[i].getNodeDepthAsIntegerList().get(getNodeDepthAsIntegerArray().length - 1);
                 if (s == childelement) {
                     if (counter == children.length) {
                         children = addCapacity(children, 10000);
                         System.out.println("counter " + counter);
                     }
-                    children[counter] = sfe_array[i];
+                    children[counter] = Main.sfe_arraylist[i];
                     counter++;
                 }
             }
