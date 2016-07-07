@@ -1,35 +1,20 @@
 package Stellaris;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by jmm on 6/26/2016.
  */
 public class Country {
 
-    private int arraystart;
-    private int arrayend;
-
     private String id;
-    private List<String> surveyed = new ArrayList<>();
-    private String nodedepth;
+    private String name;
     private SaveFileElement[] countrynodes;
-    private List<StellarObject> surveyedobjects = new ArrayList<>();
+    private String[] surveyedobjects;
 
     public void Country(SaveFileElement[] list){
+
         countrynodes = list;
-    }
-
-    public void setCountry(int s, int e) {
-        arraystart = s;
-        arrayend = e;
-    }
-
-    public void setEnd(int e) {
-
-        arrayend = e;
     }
 
     public void setId(String s){
@@ -40,50 +25,60 @@ public class Country {
     public void setCountryNodes(SaveFileElement[] list) {
 
         countrynodes = list;
+        getName();
+        getSurveyed();
+    }
+
+    public String returnName() {
+        return name;
+    }
+
+    private void getName() {
+
+        String temp = "none";
+        int counter = 0;
+
+        while(!(countrynodes[counter].openorclose.equals("none") && countrynodes[counter].nodename.trim().equals("name") && countrynodes[counter].nodelevel == 3)){
+            if(countrynodes.length-1 == counter) {
+                break;
+            }
+            counter++;
+        }
+        if(countrynodes.length > counter && countrynodes[counter].openorclose.equals("none") && countrynodes[counter].nodename.trim().equals("name") && countrynodes[counter].nodelevel == 3) {
+            temp = countrynodes[counter].getNodeValue();
+        }
+        name = temp.replaceAll("\"","").replaceAll("=","");
+        //System.out.println("name: " + name);
+    }
+
+    private void getSurveyed() {
+
+        String[] temp = null;
+        int counter = 0;
+
+        while(!(countrynodes[counter].openorclose.equals("open") && countrynodes[counter].nodename.trim().equals("surveyed") && countrynodes[counter].nodelevel == 4)){
+            if(countrynodes.length-1 == counter) {
+                break;
+            }
+            counter++;
+        }
+        if(countrynodes.length > counter && countrynodes[counter].openorclose.equals("open") && countrynodes[counter].nodename.trim().equals("surveyed") && countrynodes[counter].nodelevel == 4) {
+            temp = countrynodes[counter+1].getNodeValue().split(" ");
+        }
+        surveyedobjects = temp;
+        //System.out.println("surveyed: " + Arrays.toString(surveyedobjects));
     }
 
     @Override
     public String toString() {
         return "id" + " = " + id + " | "
                 + "countrynodes" + " =  " + Arrays.toString(countrynodes) + " | "
-//                + "countrynodes" + " =  " + countrynodes.toString() + " | "
-//                + "nodevalue" + " =  " + nodevalue + " | "
-//                + "nodeparent" + " =  " + nodeparent + " | "
-//                + "openorclose" + " =  " + openorclose + " | "
-//                + "originalnodename" + " =  " + originalnodename + " | "
-//                + "originalnodevalue" + " =  " + originalnodevalue + " | "
-//                + "nodepath" + " =  " + nodepath + " | "
-//                + "nodedepth" + " =  " + nodedepth
                 + "\r\n";
     }
 
-
-
-
-
-
-
-
-
-
-
-//    public String getName() {
-//        List<SaveFileElement> countries_names = Main.sfe_arraylist.parallelStream()
-//                .filter(p -> (
-//                        p.getLineNumber() >= arraystart))
-//                .filter(p -> (
-//                        p.getLineNumber() <= arrayend))
-//                .filter(p -> (
-//                        p.nodename).equals("name")
-//                ).filter(p -> (
-//                        p.getOpenOrClose()).equals("none"))
-//                .filter(p -> (
-//                        p.nodelevel == 2))
-//                .collect(Collectors.toList());
-//
-//        name = countries_names.get(0).getOriginalNodeValue().substring(2, countries_names.get(0).originalnodevalue.length() - 1);
-//        return countries_names.get(0).getOriginalNodeValue().substring(2, countries_names.get(0).originalnodevalue.length() - 1);
-//    }
+    private void print(String s ){
+        System.out.println(s);
+    }
 
 //    public String[] getSurveyed() {
 //        List<SaveFileElement> countries_names = Main.sfe_arraylist.parallelStream()

@@ -2,21 +2,15 @@ package Stellaris;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -30,9 +24,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
-import static Stellaris.Utilities.*;
+import static Stellaris.Utilities.main_Progress_Bar;
 import static Stellaris.XML_Node.processSfe_arraylist;
 
 public class Main extends Application {
@@ -137,7 +130,7 @@ public class Main extends Application {
             e.printStackTrace();
         }
         processSfe_arraylist();
-        //FileProcessor.createTempFileofArray(); //603688,603695); //"nodename","name");
+        FileProcessor.createTempFileofArray(); //603688,603695); //"nodename","name");
     }
 
 //    private void getCountries() {

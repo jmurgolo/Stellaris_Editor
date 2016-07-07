@@ -23,14 +23,14 @@ import static Stellaris.Main.countries;
 public class EditorDisplay {
 
     private static TableView table = new TableView();
+    private static List<String> countrynames = new ArrayList<>();
 
     public static VBox creatTable() {
 
         getCountries();
         getStellarObjects();
 
-        List<String> countryList = new ArrayList<String>(); //getCountryNames();
-        ObservableList<String> options = FXCollections.observableArrayList(countryList);
+        ObservableList<String> options = FXCollections.observableArrayList(countrynames);
 
         Label label1 = new Label("Name:   ");
 
@@ -96,11 +96,21 @@ public class EditorDisplay {
         for (int i = 0; i < countrieslist.size(); i++) {
             countries.add(new Country());
             countries.get(i).setCountryNodes(countrieslist.get(i).getChildren());
-            System.out.println(i + " | " + countries.get(i).toString());
+            //System.out.println(i + " | " + countries.get(i).toString());
         }
+
+        for(int i = 0 ; i < countries.size() ; i++){
+            countrynames.add(countries.get(i).returnName());
+        }
+
     }
 
     private static void getStellarObjects() {
+
+
+
+    }
+
 //        //get the country node
 //        List<SaveFileElement> stellarobjectsnodes = Main.sfe_arraylist.parallelStream()
 //                .filter(p -> p.nodeparent.equals("galactic_object"))
@@ -115,7 +125,7 @@ public class EditorDisplay {
 ////            stellarobjects.get(i).setStellarObject(stellarobjectsnodes.get(i).getLineNumber(),stellarobject.get(stellarobject.size()-1).getLineNumber());
 ////            stellarobjects.get(i).setId(stellarobjectsnodes.get(i).originalnodename);
 //        }
-    }
+//    }
 
 //    private static List<String> getCountryNames() {
 //

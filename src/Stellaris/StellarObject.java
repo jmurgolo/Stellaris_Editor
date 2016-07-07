@@ -16,19 +16,11 @@ public class StellarObject {
     private String name = "";
     private String planet_class = "";
     private int planet_size = 0;
-    private List<SaveFileElement> objectnodes = new ArrayList<SaveFileElement>();
+    private SaveFileElement[] objectnodes;
 
     public void setStellarObject(int s, int e) {
         arraystart = s;
         arrayend = e;
-    }
-
-    public void setEnd(int e) {
-        arrayend = e;
-    }
-
-    public void setId(String s){
-        id = s;
     }
 
     public String getName(){

@@ -3,11 +3,9 @@ package Stellaris;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static Stellaris.Utilities.addArrayCapacity;
-import static Stellaris.Utilities.printArray;
 
 /**
  * Created by jmm on 6/16/2016.
@@ -25,9 +23,6 @@ public class SaveFileElement {
     public String nodedepth;
 
     private int nodedepthlength;
-
-    public SaveFileElement() {
-    }
 
     public String getNodeName() {
         return nodename;
