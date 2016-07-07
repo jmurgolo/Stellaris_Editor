@@ -20,7 +20,7 @@ import static Stellaris.Main.countries;
 /**
  * Created by jmm on 7/1/2016.
  */
-public  class  EditorDisplay {
+public class EditorDisplay {
 
     private static TableView table = new TableView();
 
@@ -40,7 +40,7 @@ public  class  EditorDisplay {
 
         HBox hb = new HBox();
         hb.getChildren().addAll(label1, comboBox);
-        hb.setPadding(new Insets(0,0,10,0));
+        hb.setPadding(new Insets(0, 0, 10, 0));
         hb.setAlignment(Pos.CENTER_LEFT);
 
         final Label label = new Label("Empire Scope");
@@ -49,7 +49,7 @@ public  class  EditorDisplay {
         table.setEditable(true);
         table.setPrefWidth(Double.MAX_VALUE);
         table.setPrefHeight(Double.MAX_VALUE);
-        table.setMinSize(400,400);
+        table.setMinSize(400, 400);
 
         TableColumn nameCol = new TableColumn("Name");
         TableColumn habitabilityCol = new TableColumn("Habitability");
@@ -82,33 +82,22 @@ public  class  EditorDisplay {
 
     private static void getCountries() {
 
-        //get the country id index
+        //get the country id index node
         List<SaveFileElement> countrieslist = new ArrayList<>();
-        for(int i = 0 ; i < Main.sfe_arraylist.length ; i ++){
-            if(Main.sfe_arraylist[i].nodeparent.trim().equals("country")) {
+        for (int i = 0; i < Main.sfe_arraylist.length; i++) {
+            if (Main.sfe_arraylist[i].nodeparent.trim().equals("country")) {
                 if (Main.sfe_arraylist[i].openorclose.equals("open")) {
                     countrieslist.add(Main.sfe_arraylist[i]);
                 }
             }
         }
 
-        System.out.println(countrieslist.toString());
-
-        //get the countries nodes
-        for(int i = 0 ; i < countrieslist.size() ; i ++){
+        //get all the countries' nodes
+        for (int i = 0; i < countrieslist.size(); i++) {
             countries.add(new Country());
             countries.get(i).setCountryNodes(countrieslist.get(i).getChildren());
-            }
-        //System.out.println(countries.toString());
-//        }
-
-//        List<SaveFileElement> country = new ArrayList<SaveFileElement>();
-//        for (int i = 0 ; i < countriesnodes.size() ; i++) {
-//            country = countriesnodes.get(i).getChildren();
-//            countries.add(new Country());
-//            countries.get(i).setCountry(countriesnodes.get(i).getLineNumber(),country.get(country.size()-1).getLineNumber());
-//            countries.get(i).setId(countriesnodes.get(i).originalnodename);
-//        }
+            System.out.println(i + " | " + countries.get(i).toString());
+        }
     }
 
     private static void getStellarObjects() {

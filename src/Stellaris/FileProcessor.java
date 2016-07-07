@@ -27,7 +27,7 @@ public class FileProcessor {
     public static File openSaveFile(Stage primaryStage) throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
-        fileChooser.setInitialDirectory(new File("C:\\Stellaris Save Game Editor\\Stellaris_Editor\\savegamefiles"));
+        fileChooser.setInitialDirectory(new File("C:\\Stellaris Save Game Editor"));
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("All Files", "*.*"));
         new FileChooser.ExtensionFilter("Text Files", "*.sav", "*.txt");

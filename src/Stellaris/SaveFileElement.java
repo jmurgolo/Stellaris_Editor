@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static Stellaris.Utilities.addArrayCapacity;
+import static Stellaris.Utilities.printArray;
 
 /**
  * Created by jmm on 6/16/2016.
@@ -89,32 +90,20 @@ public class SaveFileElement {
         return numberList;
     }
 
-    public List getChildren() {
+    public SaveFileElement[] getChildren() {
 
-        int parentelement = getNodeDepthAsIntegerList().get(getNodeDepthAsIntegerList().size() - 2);
-        int childelement = getNodeDepthAsIntegerList().get(getNodeDepthAsIntegerList().size() - 1);
-        SaveFileElement[] children = new SaveFileElement[100000];
-
+        int indextracker = linenumber;
         int counter = 0;
-        for (int i = 0; i < Main.sfe_arraylist.length; i++) {
-            if (Main.sfe_arraylist[i].nodelevel >= nodelevel) {
-                int s = Main.sfe_arraylist[i].getNodeDepthAsIntegerList().get(getNodeDepthAsIntegerArray().length - 1);
-                if (s == childelement) {
-                    if (counter == children.length) {
-                        children = addCapacity(children, 10000);
-                        System.out.println("counter " + counter);
-                    }
-                    children[counter] = Main.sfe_arraylist[i];
-                    counter++;
-                }
-            }
-        }
-        return new ArrayList<SaveFileElement>(Arrays.asList(children));
-    }
 
-    public static SaveFileElement[] addCapacity(SaveFileElement[] list, int amount) {
-        SaveFileElement[] arr1 = new SaveFileElement[(int) (list.length + amount)];
-        return arr1;
+        while(!(Main.sfe_arraylist[indextracker].openorclose.equals("close") && Main.sfe_arraylist[indextracker].nodeparent.trim().equals(nodename.trim()))){
+            counter++;
+            indextracker++;
+        }
+
+        SaveFileElement[] children = new SaveFileElement[counter];
+        System.arraycopy(Main.sfe_arraylist, linenumber, children, 0, counter);
+
+        return children;
     }
 
     public String getElement(String s) {

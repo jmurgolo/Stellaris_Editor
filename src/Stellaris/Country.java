@@ -1,6 +1,7 @@
 package Stellaris;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -14,10 +15,10 @@ public class Country {
     private String id;
     private List<String> surveyed = new ArrayList<>();
     private String nodedepth;
-    private List<SaveFileElement> countrynodes = new ArrayList<>();
+    private SaveFileElement[] countrynodes;
     private List<StellarObject> surveyedobjects = new ArrayList<>();
 
-    public void Country(List<SaveFileElement> list){
+    public void Country(SaveFileElement[] list){
         countrynodes = list;
     }
 
@@ -36,7 +37,7 @@ public class Country {
         id = s;
     }
 
-    public void setCountryNodes(List<SaveFileElement> list) {
+    public void setCountryNodes(SaveFileElement[] list) {
 
         countrynodes = list;
     }
@@ -44,7 +45,7 @@ public class Country {
     @Override
     public String toString() {
         return "id" + " = " + id + " | "
-                + "countrynodes" + " =  " + countrynodes.toString() + " | "
+                + "countrynodes" + " =  " + Arrays.toString(countrynodes) + " | "
 //                + "countrynodes" + " =  " + countrynodes.toString() + " | "
 //                + "nodevalue" + " =  " + nodevalue + " | "
 //                + "nodeparent" + " =  " + nodeparent + " | "
