@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static Stellaris.Main.countries;
+import static Stellaris.Main.stellarobjects;
 
 /**
  * Created by jmm on 7/1/2016.
@@ -23,7 +24,7 @@ import static Stellaris.Main.countries;
 public class EditorDisplay {
 
     private static TableView table = new TableView();
-    private static List<String> countrynames = new ArrayList<>();
+    private static String[] countrynames;
 
     public static VBox creatTable() {
 
@@ -59,6 +60,14 @@ public class EditorDisplay {
 
         comboBox.setOnAction((event) -> {
             String selectedCountry = comboBox.getSelectionModel().getSelectedItem();
+            getSelectedCountryStellarObjects(selectedCountry);
+            //            final ObservableList<Person> data = FXCollections.observableArrayList(
+//                    new Person("Jacob", "Smith", "jacob.smith@example.com"),
+//                    new Person("Isabella", "Johnson", "isabella.johnson@example.com"),
+//                    new Person("Ethan", "Williams", "ethan.williams@example.com"),
+//                    new Person("Emma", "Jones", "emma.jones@example.com"),
+//                    new Person("Michael", "Brown", "michael.brown@example.com")
+//            );
 
 //            List<Country> surveyednode = Main.countries.parallelStream()
 //                    .filter(p ->
@@ -92,49 +101,63 @@ public class EditorDisplay {
             }
         }
 
+        countries = new Country[countrieslist.size()];
+
         //get all the countries' nodes
         for (int i = 0; i < countrieslist.size(); i++) {
-            countries.add(new Country());
-            countries.get(i).setCountryNodes(countrieslist.get(i).getChildren());
+            countries[i] = new Country();
+            countries[i].setCountryNodes(countrieslist.get(i).getChildren());
             //System.out.println(i + " | " + countries.get(i).toString());
         }
-
-        for(int i = 0 ; i < countries.size() ; i++){
-            countrynames.add(countries.get(i).returnName());
+        countrynames = new String[countries.length];
+        for (int i = 0; i < countries.length; i++) {
+            countrynames[i] = countries[i].returnName();
         }
 
     }
 
     private static void getStellarObjects() {
 
+        List<SaveFileElement> stellarobjectslist = new ArrayList<>();
+        for (int i = 0; i < Main.sfe_arraylist.length; i++) {
+            if (Main.sfe_arraylist[i].nodeparent.trim().equals("galactic_object")) {
+                if (Main.sfe_arraylist[i].openorclose.equals("open")) {
+                    stellarobjectslist.add(Main.sfe_arraylist[i]);
+                }
+            }
+        }
 
+        stellarobjects = new StellarObject[stellarobjectslist.size()];
+
+        //get all the countries' nodes
+        for (int i = 0; i < stellarobjectslist.size(); i++) {
+            stellarobjects[i] = new StellarObject();
+            stellarobjects[i].setStellarObjectNodes(stellarobjectslist.get(i).getChildren());
+            //System.out.println(i + " | " + stellarobjects.get(i).toString());
+        }
 
     }
 
-//        //get the country node
-//        List<SaveFileElement> stellarobjectsnodes = Main.sfe_arraylist.parallelStream()
-//                .filter(p -> p.nodeparent.equals("galactic_object"))
-//                .filter(p -> p.openorclose.equals("open"))
-//                .collect(Collectors.toList());
-//
-//        List<SaveFileElement> stellarobject = new ArrayList<SaveFileElement>();
-//        for (int i = 0 ; i < stellarobjectsnodes.size() ; i++) {
-//            System.out.println("so: " + stellarobjectsnodes.get(i).originalnodename);
-//            stellarobject = stellarobjectsnodes.get(i).getChildren();
-//            Main.stellarobjects.add(new StellarObject());
-////            stellarobjects.get(i).setStellarObject(stellarobjectsnodes.get(i).getLineNumber(),stellarobject.get(stellarobject.size()-1).getLineNumber());
-////            stellarobjects.get(i).setId(stellarobjectsnodes.get(i).originalnodename);
-//        }
-//    }
+    private static void getSelectedCountryStellarObjects(String countryname) {
+        int i = 0;
+        for (i = 0; i < countries.length; i++) {
+            if (countries[i].returnName().equals(countryname)) {
+                break;
+            }
+        }
+        List<StellarObject> countriesobjects = new ArrayList<>();
+        String[] surveyed = countries[i].returnSurveyed();
+        for (int j = 0; j < surveyed.length; j++) {
+            //countriesobjects.get(j) = new StellarObject();
+            countriesobjects.add(j,stellarobjects[j]);
+            System.out.println(countriesobjects.toString());
+        }
 
-//    private static List<String> getCountryNames() {
-//
-//        List<String> countryList = new ArrayList<>();
-//
-//        //strip off equal sign and quotes
-//        countryList.addAll(Main.countries.parallelStream().map(countries -> countries.getName()).collect(Collectors.toList()));
-//        return countryList;
-//    }
-}
+        System.out.println(countriesobjects.toString());
+    }
+
+}// end class
+
+
 
 

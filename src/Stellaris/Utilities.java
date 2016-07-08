@@ -6,8 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static Stellaris.Main.sfe_arraylist;
 
@@ -110,6 +108,11 @@ public class Utilities {
             }
         });
         return progressBar;
+    }
+
+
+    public static void print(String s ){
+        System.out.println(s);
     }
 
 }

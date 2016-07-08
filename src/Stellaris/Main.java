@@ -38,8 +38,8 @@ public class Main extends Application {
 
     public static SaveFileElement[] sfe_arraylist;
     public static int sfe_arraylist_size = 0;
-    public static List<Country> countries = new ArrayList<Country>();
-    public static List<StellarObject> stellarobjects = new ArrayList<StellarObject>();
+    public static Country[] countries;
+    public static StellarObject[] stellarobjects;
 
     public static final Comparator<SaveFileElement> name_comparator = Comparator.comparing(SaveFileElement::getNodeName);
 
