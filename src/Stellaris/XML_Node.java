@@ -67,7 +67,7 @@ class XML_Node {
                     parent = level_name[level - 1];
                 }
                 setTreeLimb(0, i);
-                level_adjuster = +1;
+                level_adjuster +=1;
                 action = "open and close";
             } else if (notBetween(temp_text, "{") > 0) {
                 getNodeInfo(temp_text);
@@ -110,6 +110,7 @@ class XML_Node {
             progressbar.setValue(i);
             progressbar.setString(String.valueOf(i));
 
+            level_adjuster = 0;
         }
         progressbar.setVisible(false);
     }

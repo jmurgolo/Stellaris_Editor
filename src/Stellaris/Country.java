@@ -25,6 +25,7 @@ public class Country {
     public void setCountryNodes(SaveFileElement[] list) {
 
         countrynodes = list;
+        getId();
         getName();
         getSurveyed();
     }
@@ -39,17 +40,17 @@ public class Country {
         String temp = "none";
         int counter = 0;
 
-        while(!(countrynodes[counter].openorclose.equals("open") && countrynodes[counter].nodeparent.trim().equals("country") && countrynodes[counter].nodelevel == 4)){
+        while(!(countrynodes[counter].openorclose.equals("open") && countrynodes[counter].nodeparent.trim().equals("country") && countrynodes[counter].nodelevel == 2)){
             if(countrynodes.length-1 == counter) {
                 break;
             }
             counter++;
         }
-        if(countrynodes.length > counter && countrynodes[counter].openorclose.equals("open") && countrynodes[counter].nodeparent.trim().equals("country") && countrynodes[counter].nodelevel == 4) {
-            temp = countrynodes[counter].getNodeValue();
+        if(countrynodes.length > counter && countrynodes[counter].openorclose.equals("open") && countrynodes[counter].nodeparent.trim().equals("country") && countrynodes[counter].nodelevel == 2) {
+            temp = countrynodes[counter].getNodeName();
         }
         id = temp;
-        //System.out.println("id: " + name);
+        //System.out.println("id: " + id);
     }
 
     private void getName() {
@@ -57,13 +58,13 @@ public class Country {
         String temp = "none";
         int counter = 0;
 
-        while(!(countrynodes[counter].openorclose.equals("none") && countrynodes[counter].nodename.trim().equals("name") && countrynodes[counter].nodelevel == 3)){
+        while(!(countrynodes[counter].openorclose.equals("none") && countrynodes[counter].nodename.trim().equals("name") && countrynodes[counter].nodelevel == 2)){
             if(countrynodes.length-1 == counter) {
                 break;
             }
             counter++;
         }
-        if(countrynodes.length > counter && countrynodes[counter].openorclose.equals("none") && countrynodes[counter].nodename.trim().equals("name") && countrynodes[counter].nodelevel == 3) {
+        if(countrynodes.length > counter && countrynodes[counter].openorclose.equals("none") && countrynodes[counter].nodename.trim().equals("name") && countrynodes[counter].nodelevel == 2) {
             temp = countrynodes[counter].getNodeValue();
         }
         name = temp.replaceAll("\"","").replaceAll("=","");
@@ -75,14 +76,14 @@ public class Country {
         String[] temp = null;
         int counter = 0;
 
-        while(!(countrynodes[counter].openorclose.equals("open") && countrynodes[counter].nodename.trim().equals("surveyed") && countrynodes[counter].nodelevel == 4)){
+        while(!(countrynodes[counter].openorclose.equals("open") && countrynodes[counter].nodename.trim().equals("surveyed") && countrynodes[counter].nodelevel == 3)){
             if(countrynodes.length-1 == counter) {
                 break;
             }
             counter++;
         }
-        if(countrynodes.length > counter && countrynodes[counter].openorclose.equals("open") && countrynodes[counter].nodename.trim().equals("surveyed") && countrynodes[counter].nodelevel == 4) {
-            temp = countrynodes[counter+1].getNodeValue().split(" ");
+        if(countrynodes.length > counter && countrynodes[counter].openorclose.equals("open") && countrynodes[counter].nodename.trim().equals("surveyed") && countrynodes[counter].nodelevel == 3) {
+            temp = countrynodes[counter+1].getNodeValue().trim().split(" ");
         }
         surveyedobjects = temp;
         //System.out.println("surveyed: " + Arrays.toString(surveyedobjects));
@@ -90,8 +91,9 @@ public class Country {
 
     @Override
     public String toString() {
-        return "id" + " = " + id + " | "
-                + "countrynodes" + " =  " + Arrays.toString(countrynodes) + " | "
+        return  "id" + " =  " + id + " | "
+                + "name" + " =  " + name + " | "
+                + "surveyedobjects" + " =  " + Arrays.toString(surveyedobjects) + " | "
                 + "\r\n";
     }
 

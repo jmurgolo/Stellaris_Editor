@@ -8,11 +8,13 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static Stellaris.Main.countries;
@@ -23,8 +25,9 @@ import static Stellaris.Main.stellarobjects;
  */
 public class EditorDisplay {
 
-    private static TableView table = new TableView();
+    private static TableView<StellarObject> table = new TableView<StellarObject>();
     private static String[] countrynames;
+    private static List<StellarObject> countriesobjects = new ArrayList<>();
 
     public static VBox creatTable() {
 
@@ -51,32 +54,33 @@ public class EditorDisplay {
         table.setPrefWidth(Double.MAX_VALUE);
         table.setPrefHeight(Double.MAX_VALUE);
         table.setMinSize(400, 400);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        TableColumn idCol = new TableColumn("Id");
+        idCol.setMaxWidth(450);
+        idCol.setCellValueFactory(new PropertyValueFactory<StellarObject, Integer>("id"));
+
+        TableColumn sizeCol = new TableColumn("Size");
+        sizeCol.setMaxWidth(400);
+        sizeCol.setCellValueFactory(new PropertyValueFactory<StellarObject, Integer>("size"));
 
         TableColumn nameCol = new TableColumn("Name");
-        TableColumn habitabilityCol = new TableColumn("Habitability");
-        TableColumn sizeCol = new TableColumn("Size");
+        nameCol.setCellValueFactory(new PropertyValueFactory<StellarObject, String>("name"));
 
-        table.getColumns().addAll(nameCol, habitabilityCol, sizeCol);
+        TableColumn typeCol = new TableColumn("Type");
+        typeCol.setCellValueFactory(new PropertyValueFactory<StellarObject, String>("objecttype"));
+
+        TableColumn classCol = new TableColumn("Class");
+        classCol.setCellValueFactory(new PropertyValueFactory<StellarObject, String>("objectclass"));
 
         comboBox.setOnAction((event) -> {
+            table.getColumns().clear();
             String selectedCountry = comboBox.getSelectionModel().getSelectedItem();
             getSelectedCountryStellarObjects(selectedCountry);
-            //            final ObservableList<Person> data = FXCollections.observableArrayList(
-//                    new Person("Jacob", "Smith", "jacob.smith@example.com"),
-//                    new Person("Isabella", "Johnson", "isabella.johnson@example.com"),
-//                    new Person("Ethan", "Williams", "ethan.williams@example.com"),
-//                    new Person("Emma", "Jones", "emma.jones@example.com"),
-//                    new Person("Michael", "Brown", "michael.brown@example.com")
-//            );
-
-//            List<Country> surveyednode = Main.countries.parallelStream()
-//                    .filter(p ->
-//                            p.getName().equals(selectedCountry)
-//                    )
-//                    .collect(Collectors.toList());
-//            if(surveyednode.size() > 0) {
-//                Utilities.printArray(surveyednode.get(0).getSurveyed());
-//            }
+            ObservableList<StellarObject> data = FXCollections.observableArrayList(countriesobjects);
+            table.setItems(data);
+            table.getColumns().addAll(idCol, sizeCol, nameCol, typeCol, classCol);
+            System.out.println(table.getItems().size());
         });
 
         VBox vbox = new VBox();
@@ -107,7 +111,6 @@ public class EditorDisplay {
         for (int i = 0; i < countrieslist.size(); i++) {
             countries[i] = new Country();
             countries[i].setCountryNodes(countrieslist.get(i).getChildren());
-            //System.out.println(i + " | " + countries.get(i).toString());
         }
         countrynames = new String[countries.length];
         for (int i = 0; i < countries.length; i++) {
@@ -127,15 +130,21 @@ public class EditorDisplay {
             }
         }
 
+        for (int i = 0; i < Main.sfe_arraylist.length; i++) {
+            if (Main.sfe_arraylist[i].nodeparent.trim().equals("planet")) {
+                if (Main.sfe_arraylist[i].openorclose.equals("open")) {
+                    stellarobjectslist.add(Main.sfe_arraylist[i]);
+                }
+            }
+        }
+
         stellarobjects = new StellarObject[stellarobjectslist.size()];
 
         //get all the countries' nodes
         for (int i = 0; i < stellarobjectslist.size(); i++) {
             stellarobjects[i] = new StellarObject();
             stellarobjects[i].setStellarObjectNodes(stellarobjectslist.get(i).getChildren());
-            //System.out.println(i + " | " + stellarobjects.get(i).toString());
         }
-
     }
 
     private static void getSelectedCountryStellarObjects(String countryname) {
@@ -145,15 +154,19 @@ public class EditorDisplay {
                 break;
             }
         }
-        List<StellarObject> countriesobjects = new ArrayList<>();
-        String[] surveyed = countries[i].returnSurveyed();
-        for (int j = 0; j < surveyed.length; j++) {
-            //countriesobjects.get(j) = new StellarObject();
-            countriesobjects.add(j,stellarobjects[j]);
-            System.out.println(countriesobjects.toString());
-        }
+//todo: split up stars and planets searches and combine them later so index function works
 
-        System.out.println(countriesobjects.toString());
+
+        String[] surveyed = countries[i].returnSurveyed();
+
+        for (int j = 0; j < surveyed.length; j++) {
+            for(int k = 0 ; k < stellarobjects.length ; k++) {
+                if(stellarobjects[k].getid() == Integer.valueOf(surveyed[j].trim())) {
+                    //System.out.println(k + " = " + stellarobjects[k].getid() + " | " + Integer.valueOf(surveyed[j].trim()) + " | " + countriesobjects.size());
+                    countriesobjects.add(j, stellarobjects[k]);
+                }
+            }
+        }
     }
 
 }// end class
