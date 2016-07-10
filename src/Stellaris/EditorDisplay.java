@@ -14,25 +14,24 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import static Stellaris.Main.countries;
-import static Stellaris.Main.stellarobjects;
+import static Stellaris.Main.*;
+import static java.lang.Math.abs;
 
 /**
  * Created by jmm on 7/1/2016.
  */
 public class EditorDisplay {
 
-    private static TableView<StellarObject> table = new TableView<StellarObject>();
+    private static TableView<Planet> table = new TableView<Planet>();
     private static String[] countrynames;
-    private static List<StellarObject> countriesobjects = new ArrayList<>();
+    private static List<Planet> countriesobjects = new ArrayList<>();
 
     public static VBox creatTable() {
 
         getCountries();
-        getStellarObjects();
+        getPlanets();
 
         ObservableList<String> options = FXCollections.observableArrayList(countrynames);
 
@@ -58,26 +57,26 @@ public class EditorDisplay {
 
         TableColumn idCol = new TableColumn("Id");
         idCol.setMaxWidth(450);
-        idCol.setCellValueFactory(new PropertyValueFactory<StellarObject, Integer>("id"));
+        idCol.setCellValueFactory(new PropertyValueFactory<Planet, Integer>("id"));
 
         TableColumn sizeCol = new TableColumn("Size");
         sizeCol.setMaxWidth(400);
-        sizeCol.setCellValueFactory(new PropertyValueFactory<StellarObject, Integer>("size"));
+        sizeCol.setCellValueFactory(new PropertyValueFactory<Planet, Integer>("size"));
 
         TableColumn nameCol = new TableColumn("Name");
-        nameCol.setCellValueFactory(new PropertyValueFactory<StellarObject, String>("name"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<Planet, String>("name"));
 
         TableColumn typeCol = new TableColumn("Type");
-        typeCol.setCellValueFactory(new PropertyValueFactory<StellarObject, String>("objecttype"));
+        typeCol.setCellValueFactory(new PropertyValueFactory<Planet, String>("objecttype"));
 
         TableColumn classCol = new TableColumn("Class");
-        classCol.setCellValueFactory(new PropertyValueFactory<StellarObject, String>("objectclass"));
+        classCol.setCellValueFactory(new PropertyValueFactory<Planet, String>("objectclass"));
 
         comboBox.setOnAction((event) -> {
             table.getColumns().clear();
             String selectedCountry = comboBox.getSelectionModel().getSelectedItem();
             getSelectedCountryStellarObjects(selectedCountry);
-            ObservableList<StellarObject> data = FXCollections.observableArrayList(countriesobjects);
+            ObservableList<Planet> data = FXCollections.observableArrayList(countriesobjects);
             table.setItems(data);
             table.getColumns().addAll(idCol, sizeCol, nameCol, typeCol, classCol);
             System.out.println(table.getItems().size());
@@ -119,31 +118,42 @@ public class EditorDisplay {
 
     }
 
-    private static void getStellarObjects() {
+    private static void getPlanets() {
 
-        List<SaveFileElement> stellarobjectslist = new ArrayList<>();
-        for (int i = 0; i < Main.sfe_arraylist.length; i++) {
-            if (Main.sfe_arraylist[i].nodeparent.trim().equals("galactic_object")) {
-                if (Main.sfe_arraylist[i].openorclose.equals("open")) {
-                    stellarobjectslist.add(Main.sfe_arraylist[i]);
-                }
-            }
-        }
-
+        List<SaveFileElement> planetlist = new ArrayList<>();
         for (int i = 0; i < Main.sfe_arraylist.length; i++) {
             if (Main.sfe_arraylist[i].nodeparent.trim().equals("planet")) {
                 if (Main.sfe_arraylist[i].openorclose.equals("open")) {
-                    stellarobjectslist.add(Main.sfe_arraylist[i]);
+                    planetlist.add(Main.sfe_arraylist[i]);
                 }
             }
         }
 
-        stellarobjects = new StellarObject[stellarobjectslist.size()];
+        planetarray = new Planet[planetlist.size()];
 
-        //get all the countries' nodes
-        for (int i = 0; i < stellarobjectslist.size(); i++) {
-            stellarobjects[i] = new StellarObject();
-            stellarobjects[i].setStellarObjectNodes(stellarobjectslist.get(i).getChildren());
+        for (int i = 0; i < planetlist.size(); i++) {
+            planetarray[i] = new Planet();
+            planetarray[i].setStellarObjectNodes(planetlist.get(i).getChildren());
+        }
+    }
+
+    private static void getStars() {
+
+        List<SaveFileElement> starlist = new ArrayList<>();
+        for (int i = 0; i < Main.sfe_arraylist.length; i++) {
+            if (Main.sfe_arraylist[i].nodeparent.trim().equals("galactic_object")) {
+                if (Main.sfe_arraylist[i].openorclose.equals("open")) {
+                    starlist.add(Main.sfe_arraylist[i]);
+                }
+            }
+        }
+
+        stararray = new Star[starlist.size()];
+
+        //get all the stars' nodes
+        for (int i = 0; i < starlist.size(); i++) {
+            stararray[i] = new Star();
+            stararray[i].setStellarObjectNodes(starlist.get(i).getChildren());
         }
     }
 
@@ -160,15 +170,9 @@ public class EditorDisplay {
         String[] surveyed = countries[i].returnSurveyed();
 
         for (int j = 0; j < surveyed.length; j++) {
-            for(int k = 0 ; k < stellarobjects.length ; k++) {
-                if(stellarobjects[k].getid() == Integer.valueOf(surveyed[j].trim())) {
-                    //System.out.println(k + " = " + stellarobjects[k].getid() + " | " + Integer.valueOf(surveyed[j].trim()) + " | " + countriesobjects.size());
-                    countriesobjects.add(j, stellarobjects[k]);
-                }
-            }
+            countriesobjects.add(j, planetarray[Integer.valueOf(surveyed[j].trim())]);
         }
     }
-
 }// end class
 
 

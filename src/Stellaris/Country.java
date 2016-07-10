@@ -108,7 +108,7 @@ public class Country {
 //
 //        for (int i = 0; i < object_names.size(); i++) {
 //            if(surveyed.contains(surveyedobjects.get(i).getId())) {
-//                surveyedobjects.add(new StellarObject());
+//                surveyedobjects.add(new Planet());
 //                surveyedobjects.get(i).setObject(object_names.get(i).getChildren());
 //                System.out.println(surveyedobjects.get(i).getName());
 //            }

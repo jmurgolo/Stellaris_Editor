@@ -62,6 +62,22 @@ public class Utilities {
         return arr1;
     }
 
+    public static SaveFileElement[] addArrayCapacity(SaveFileElement[] list, int amount) {
+        SaveFileElement[] arr1 = new SaveFileElement[(int) (list.length + amount)];
+        for (int i = 0; i < list.length; i++) {
+            arr1[i] = list[i];
+        }
+        return arr1;
+    }
+
+    public static Planet[] addArrayCapacity(Planet[] list, int amount) {
+        Planet[] arr1 = new Planet[(int) (list.length + amount)];
+        for (int i = 0; i < list.length; i++) {
+            arr1[i] = list[i];
+        }
+        return arr1;
+    }
+
     public static void addArrayCapacity(int amount) {
         SaveFileElement[] arr1 = new SaveFileElement[(int) (sfe_arraylist.length + amount)];
         for(int i = sfe_arraylist.length ; i < arr1.length ; i ++){

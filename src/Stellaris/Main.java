@@ -39,13 +39,11 @@ public class Main extends Application {
     public static SaveFileElement[] sfe_arraylist;
     public static int sfe_arraylist_size = 0;
     public static Country[] countries;
-    public static StellarObject[] stellarobjects;
+    public static Star[] stararray;
+    public static Planet[] planetarray;
+    public String savefilename;
 
     public static final Comparator<SaveFileElement> name_comparator = Comparator.comparing(SaveFileElement::getNodeName);
-
-    //private ListView<String> systems_objects = new ListView<>();
-    //private ObservableList<String> systems_items = FXCollections.observableArrayList("");
-    //private ListView<String> TopNodeElements = new ListView<>();
 
     Path current_relative_path = Paths.get("");
     String current_absolute_path = current_relative_path.toAbsolutePath().toString();
@@ -77,8 +75,6 @@ public class Main extends Application {
         componentLayout.getChildren().add(menuBar);
         //VBox vbox = new VBox();
 
-        //componentLayout.getChildren().add(vbox);
-
         //Add the BorderPane to the Scene
         Scene appScene = new Scene(componentLayout, 1280, 768);
 
@@ -95,6 +91,8 @@ public class Main extends Application {
 
         try {
             result_file = FileProcessor.openSaveFile(s);
+            savefilename = result_file.getName();
+            System.out.println(savefilename);
             FileProcessor.backupFile(result_file);
             FileProcessor.unZipIt(result_file.getPath(), result_file.getPath().replace(result_file.getName(), ""));
             FileProcessor.createXmlFileAndDb(result_file);
@@ -103,25 +101,7 @@ public class Main extends Application {
             int rows = 0;
             try {
 
-                //filter and get distinct elements for top observable list
-//                List<SaveFileElement> zero_level = sfe_arraylist.stream().filter(p -> p.nodelevel == 1).filter(p -> p.openorclose == "open").sorted(name_comparator).filter(new Predicate<SaveFileElement>() {
-//                    SaveFileElement previous;
-//
-//                    public boolean test(SaveFileElement p) {
-//                        if (previous != null && name_comparator.compare(previous, p) == 0)
-//                            return false;
-//                        previous = p;
-//                        return true;
-//                    }
-//                }).collect(Collectors.toList());
-
                 JProgressBar progressbar = main_Progress_Bar(0, rows, "Filling GUI");
-//                for (int i = 0; i < zero_level.size(); i++) {
-//                    parentList.add(i, zero_level.get(i).nodename);
-//                    progressbar.setValue(i);
-//                    progressbar.setString(zero_level.get(i).nodename);
-//                }
-
                 progressbar.setVisible(false);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -132,49 +112,6 @@ public class Main extends Application {
         processSfe_arraylist();
         FileProcessor.createTempFileofArray(); //603688,603695); //"nodename","name");
     }
-
-//    private void getCountries() {
-//        //get the country node
-//        List<SaveFileElement> countriesnodes = Main.sfe_arraylist.parallelStream()
-//                .filter(p -> p.nodeparent.equals("country"))
-//                .filter(p -> p.openorclose.equals("open"))
-//                .collect(Collectors.toList());
-//
-//        List<SaveFileElement> country = new ArrayList<SaveFileElement>();
-//        for (int i = 0 ; i < countriesnodes.size() ; i++) {
-//            System.out.println("c: " + countriesnodes.get(i).nodename);
-//            country = countriesnodes.get(i).getChildren();
-////            countries.add(new Country());
-////            countries.get(i).setCountry(countriesnodes.get(i).getLineNumber(),country.get(country.size()-1).getLineNumber());
-////            countries.get(i).setId(countriesnodes.get(i).originalnodename);
-//        }
-//    }
-
-//    private void getStellarObjects() {
-//        //get the country node
-//        List<SaveFileElement> stellarobjectsnodes = Main.sfe_arraylist.parallelStream()
-//                .filter(p -> p.nodeparent.equals("galactic_object"))
-//                .filter(p -> p.openorclose.equals("open"))
-//                .collect(Collectors.toList());
-//
-//        List<SaveFileElement> stellarobject = new ArrayList<SaveFileElement>();
-//        for (int i = 0 ; i < stellarobjectsnodes.size() ; i++) {
-//            System.out.println("so: " + stellarobjectsnodes.get(i).nodename);
-//            stellarobject = stellarobjectsnodes.get(i).getChildren();
-//            stellarobjects.add(new StellarObject());
-////            stellarobjects.get(i).setStellarObject(stellarobjectsnodes.get(i).getLineNumber(),stellarobject.get(stellarobject.size()-1).getLineNumber());
-////            stellarobjects.get(i).setId(stellarobjectsnodes.get(i).originalnodename);
-//        }
-//    }
-
-//    private List<String> getCountryNames() {
-//
-//        String[] countryList = new String[];
-//
-//        //strip off equal sign and quotes
-//        countryList.addAll(countries.parallelStream().map(countries -> countries.getName()).collect(Collectors.toList()));
-//        return countryList;
-//    }
 
     private MenuBar getMenuBar(Stage primaryStage, VBox componentLayout){
         final Menu fileMenu = new Menu("File");
@@ -193,6 +130,13 @@ public class Main extends Application {
             processSaveFile(primaryStage);
             componentLayout.getChildren().add(EditorDisplay.creatTable());
         });
+
+        saveMenuItem.setOnAction((event) -> {
+            //TODO: fix error when x-ing out of file menu without selecting file
+            FileProcessor.zipupFiles();
+            componentLayout.getChildren().add(EditorDisplay.creatTable());
+        });
+
         //todo:why is this failing
         //stellar_menu_item.setDisable(true);
 

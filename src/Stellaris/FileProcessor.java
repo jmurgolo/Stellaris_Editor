@@ -50,6 +50,13 @@ public class FileProcessor {
         //TODO:get the unzipped files and choose the one I need
     }
 
+    public static String zipupFiles() {
+        String result = "";
+
+        return result;
+        //TODO:get the unzipped files and choose the one I need
+    }
+
     public static void createXmlFileAndDb(File file) {
 
         String f = file.getPath();

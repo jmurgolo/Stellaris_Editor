@@ -7,7 +7,7 @@ import java.util.Arrays;
 /**
  * Created by jmm on 6/25/2016.
  */
-public class StellarObject {
+public class Planet {
 
     private int arraystart;
     private int arrayend;
