@@ -146,7 +146,7 @@ public class FileProcessor {
     public static void unZipIt(String zipFile, String outputFolder) {
 
         byte[] buffer = new byte[1024];
-        System.out.println("file unzip : " + zipFile);
+        //System.out.println("file unzip : " + zipFile);
 
         try {
 

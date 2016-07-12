@@ -92,10 +92,10 @@ public class Main extends Application {
         try {
             result_file = FileProcessor.openSaveFile(s);
             savefilename = result_file.getName();
-            System.out.println(savefilename);
             FileProcessor.backupFile(result_file);
             FileProcessor.unZipIt(result_file.getPath(), result_file.getPath().replace(result_file.getName(), ""));
-            FileProcessor.createXmlFileAndDb(result_file);
+            File filetoprocess = new File(result_file.getPath().replace(result_file.getName(), "") + File.separator + "temp" + File.separator + "gamestate");
+            FileProcessor.createXmlFileAndDb(filetoprocess);
             //TODO: SPECIFY FILE LOCATIONS
 
             int rows = 0;
