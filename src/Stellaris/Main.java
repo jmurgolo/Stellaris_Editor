@@ -41,7 +41,7 @@ public class Main extends Application {
     public static Country[] countries;
     public static Star[] stararray;
     public static Planet[] planetarray;
-    public String savefilename;
+    //public static String savefilename;
 
     public static final Comparator<SaveFileElement> name_comparator = Comparator.comparing(SaveFileElement::getNodeName);
 
@@ -91,7 +91,7 @@ public class Main extends Application {
 
         try {
             result_file = FileProcessor.openSaveFile(s);
-            savefilename = result_file.getName();
+            String savefilename = result_file.getName();
             FileProcessor.backupFile(result_file);
             FileProcessor.unZipIt(result_file.getPath(), result_file.getPath().replace(result_file.getName(), ""));
             File filetoprocess = new File(result_file.getPath().replace(result_file.getName(), "") + File.separator + "temp" + File.separator + "gamestate");
