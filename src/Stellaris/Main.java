@@ -9,6 +9,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.apache.commons.compress.archivers.ArchiveException;
 
 import javax.swing.*;
 import java.io.File;
@@ -41,7 +42,7 @@ public class Main extends Application {
     public static Country[] countries;
     public static Star[] stararray;
     public static Planet[] planetarray;
-    //public static String savefilename;
+    public static String savefilename;
 
     public static final Comparator<SaveFileElement> name_comparator = Comparator.comparing(SaveFileElement::getNodeName);
 
@@ -91,7 +92,7 @@ public class Main extends Application {
 
         try {
             result_file = FileProcessor.openSaveFile(s);
-            String savefilename = result_file.getName();
+            savefilename = result_file.getName();
             FileProcessor.backupFile(result_file);
             FileProcessor.unZipIt(result_file.getPath(), result_file.getPath().replace(result_file.getName(), ""));
             File filetoprocess = new File(result_file.getPath().replace(result_file.getName(), "") + File.separator + "temp" + File.separator + "gamestate");
@@ -107,6 +108,8 @@ public class Main extends Application {
                 e.printStackTrace();
             }
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ArchiveException e) {
             e.printStackTrace();
         }
         processSfe_arraylist();
@@ -133,7 +136,7 @@ public class Main extends Application {
 
         saveMenuItem.setOnAction((event) -> {
             //TODO: fix error when x-ing out of file menu without selecting file
-            FileProcessor.zipupFiles();
+            FileProcessor.zipIt(savefilename);
             componentLayout.getChildren().add(EditorDisplay.creatTable());
         });
 

@@ -2,6 +2,11 @@ package Stellaris;
 
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.apache.commons.compress.archivers.ArchiveEntry;
+import org.apache.commons.compress.archivers.ArchiveException;
+import org.apache.commons.compress.archivers.ArchiveInputStream;
+import org.apache.commons.compress.archivers.ArchiveStreamFactory;
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 
 import javax.swing.*;
 import java.io.*;
@@ -9,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -18,6 +24,7 @@ import static Stellaris.Main.sfe_arraylist;
 import static Stellaris.Main.sfe_arraylist_size;
 import static Stellaris.Utilities.fillSfeArrayList;
 import static Stellaris.Utilities.main_Progress_Bar;
+import static java.lang.Math.toIntExact;
 import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
 import static java.nio.file.StandardCopyOption.COPY_ATTRIBUTES;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
@@ -50,13 +57,6 @@ public class FileProcessor {
             }
         }
         return f;
-        //TODO:get the unzipped files and choose the one I need
-    }
-
-    public static String zipupFiles() {
-        String result = "";
-
-        return result;
         //TODO:get the unzipped files and choose the one I need
     }
 
@@ -146,52 +146,22 @@ public class FileProcessor {
         return f;
     }
 
-    public static void unZipIt(String zipFile, String outputFolder) {
+    public static void unZipIt(String zipFile, String outputFolder) throws IOException, ArchiveException {
 
-        byte[] buffer = new byte[1024];
-        //System.out.println("file unzip : " + zipFile);
+        FileInputStream fistream = new FileInputStream(zipFile);
 
-        try {
+        ArchiveInputStream input = new ArchiveStreamFactory()
+                .createArchiveInputStream(fistream);
 
-            //create output directory is not exists
-            File folder = new File(outputFolder + File.separator + "temp");
-            if (!folder.exists()) {
-                folder.mkdir();
-            }
+        ArchiveEntry entry = input.getNextEntry();
+        byte[] content = new byte[toIntExact(entry.getSize())];
 
-            //get the zip file content
-            ZipInputStream zis =
-                    new ZipInputStream(new FileInputStream(zipFile));
-            //get the zipped file list entry
-            ZipEntry ze = zis.getNextEntry();
-
-            while (ze != null) {
-
-                String fileName = ze.getName();
-                File newFile = new File(outputFolder + File.separator + "temp" + File.separator + fileName);
-
-                //create all non exists folders
-                //else you will hit FileNotFoundException for compressed folder
-                new File(newFile.getParent()).mkdirs();
-                FileOutputStream fos = new FileOutputStream(newFile);
-                int len;
-                while ((len = zis.read(buffer)) > 0) {
-                    fos.write(buffer, 0, len);
-                }
-                fos.close();
-                ze = zis.getNextEntry();
-            }
-            zis.closeEntry();
-            zis.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
     }
 
-    public void zipIt(String zipFile, String savefilename){
+    public static void zipIt(String zipFile){ //, String savefilename){
 
         List<String> fileList;
-        final String OUTPUT_ZIP_FILE = savefilename;
+        //final String OUTPUT_ZIP_FILE = savefilename;
         final String SOURCE_FOLDER = "C:\\testzip";
 
         byte[] buffer = new byte[1024];
@@ -238,7 +208,7 @@ public class FileProcessor {
      * and add the file into fileList
      * @param node file or directory
      */
-    public void generateFileList(File node, List<String> fileList, String SOURCE_FOLDER){
+    public static void generateFileList(File node, List<String> fileList, String SOURCE_FOLDER){
 
         //add file only
         if(node.isFile()){
@@ -259,7 +229,7 @@ public class FileProcessor {
      * @param file file path
      * @return Formatted file path
      */
-    private String generateZipEntry(String file, String SOURCE_FOLDER){
+    private static String generateZipEntry(String file, String SOURCE_FOLDER){
         return file.substring(SOURCE_FOLDER.length()+1, file.length());
     }
 

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="commons-compress-1.12">
+    <CLASSES>
+      <root url="jar://C:/Stellaris Save Game Editor/Libraries/commons-compress-1.12/commons-compress-1.12.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://C:/Stellaris Save Game Editor/Libraries/commons-compress-1.12/commons-compress-1.12-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>
