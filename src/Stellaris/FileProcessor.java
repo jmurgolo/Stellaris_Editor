@@ -2,11 +2,12 @@ package Stellaris;
 
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.ArchiveException;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
 import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipArchiveOutputStream;
+import org.apache.commons.compress.utils.IOUtils;
 
 import javax.swing.*;
 import java.io.*;
@@ -14,17 +15,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
 
 import static Stellaris.Main.sfe_arraylist;
 import static Stellaris.Main.sfe_arraylist_size;
 import static Stellaris.Utilities.fillSfeArrayList;
 import static Stellaris.Utilities.main_Progress_Bar;
-import static java.lang.Math.toIntExact;
 import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
 import static java.nio.file.StandardCopyOption.COPY_ATTRIBUTES;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
@@ -148,76 +144,80 @@ public class FileProcessor {
 
     public static void unZipIt(String zipFile, String outputFolder) throws IOException, ArchiveException {
 
+        //create output directory is not exists
+        File folder = new File(outputFolder + File.separator + "temp");
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
+
+        List<File> archiveContents = new ArrayList<File>();
         FileInputStream fistream = new FileInputStream(zipFile);
+        BufferedInputStream bistream = new BufferedInputStream(fistream);
+        ArchiveInputStream ais = new ArchiveStreamFactory().createArchiveInputStream(bistream);
 
-        ArchiveInputStream input = new ArchiveStreamFactory()
-                .createArchiveInputStream(fistream);
+        ZipArchiveEntry entry = (ZipArchiveEntry) ais.getNextEntry();
+        while (entry != null) {
+            File tmpFile = null;
+            File outputFile = new File(tmpFile, entry.getName());   // don't do this anonymously, need it for the list
+            OutputStream os = new FileOutputStream(outputFolder + File.separator + "temp" + File.separator + outputFile);
 
-        ArchiveEntry entry = input.getNextEntry();
-        byte[] content = new byte[toIntExact(entry.getSize())];
+            IOUtils.copy(ais, os);  // copy from the archiveinputstream to the output stream
+            os.close();     // close the output stream
 
+            archiveContents.add(outputFile);
+
+            entry = (ZipArchiveEntry) ais.getNextEntry();
+        }
+        ais.close();
+        fistream.close();
     }
 
-    public static void zipIt(String zipFile){ //, String savefilename){
+    public static void zipIt(File zipFile) {
 
-        List<String> fileList;
-        //final String OUTPUT_ZIP_FILE = savefilename;
-        final String SOURCE_FOLDER = "C:\\testzip";
+        try {
+            OutputStream zipOutput = new FileOutputStream(new File(zipFile.getPath() + ".zip"));
+            ZipArchiveOutputStream logicalZip = new ZipArchiveOutputStream(zipOutput);
+            //logicalZip.setLevel(5);
+            logicalZip.setMethod(ZipArchiveOutputStream.DEFLATED);
+            logicalZip.setLevel(5);
 
-        byte[] buffer = new byte[1024];
+            List<String> fileList;
+            final String SOURCE_FOLDER = zipFile.getPath().replace(zipFile.getName(), "") + "temp" + File.separator;
+            fileList = new ArrayList<String>();
+            generateFileList(new File(SOURCE_FOLDER), fileList, SOURCE_FOLDER);
 
-        fileList = new ArrayList<String>();
-        generateFileList(new File(SOURCE_FOLDER), fileList, SOURCE_FOLDER);
-
-                try{
-
-            FileOutputStream fos = new FileOutputStream(zipFile);
-            ZipOutputStream zos = new ZipOutputStream(fos);
-
-            System.out.println("Output to Zip : " + zipFile);
-
-            for(String file : fileList){
-
-                System.out.println("File Added : " + file);
-                ZipEntry ze= new ZipEntry(file);
-                zos.putNextEntry(ze);
-
-                FileInputStream in =
-                        new FileInputStream(SOURCE_FOLDER + File.separator + file);
-
-                int len;
-                while ((len = in.read(buffer)) > 0) {
-                    zos.write(buffer, 0, len);
-                }
-
-                in.close();
+            for (String file : fileList) {
+                System.out.println(SOURCE_FOLDER + file);
+                logicalZip.putArchiveEntry(new ZipArchiveEntry(file));
+                IOUtils.copy(new FileInputStream(new File(SOURCE_FOLDER + file)), logicalZip);
+                logicalZip.closeArchiveEntry();
             }
 
-            zos.closeEntry();
-            //remember close it
-            zos.close();
-
-            System.out.println("Done");
-        }catch(IOException ex){
-            ex.printStackTrace();
+            logicalZip.finish();
+            zipOutput.close();
+            logicalZip.close();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            //return null;
         }
     }
 
     /**
      * Traverse a directory and get all files,
      * and add the file into fileList
+     *
      * @param node file or directory
      */
-    public static void generateFileList(File node, List<String> fileList, String SOURCE_FOLDER){
+    public static void generateFileList(File node, List<String> fileList, String SOURCE_FOLDER) {
 
         //add file only
-        if(node.isFile()){
+        if (node.isFile()) {
             fileList.add(generateZipEntry(node.getAbsoluteFile().toString(), SOURCE_FOLDER));
         }
 
-        if(node.isDirectory()){
+        if (node.isDirectory()) {
             String[] subNote = node.list();
-            for(String filename : subNote){
+            for (String filename : subNote) {
                 generateFileList(new File(node, filename), fileList, SOURCE_FOLDER);
             }
         }
@@ -226,11 +226,12 @@ public class FileProcessor {
 
     /**
      * Format the file path for zip
+     *
      * @param file file path
      * @return Formatted file path
      */
-    private static String generateZipEntry(String file, String SOURCE_FOLDER){
-        return file.substring(SOURCE_FOLDER.length()+1, file.length());
+    private static String generateZipEntry(String file, String SOURCE_FOLDER) {
+        return file.substring(SOURCE_FOLDER.length(), file.length());
     }
 
     public static void createTempFileofArray() {

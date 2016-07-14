@@ -42,7 +42,7 @@ public class Main extends Application {
     public static Country[] countries;
     public static Star[] stararray;
     public static Planet[] planetarray;
-    public static String savefilename;
+    public static File savefile;
 
     public static final Comparator<SaveFileElement> name_comparator = Comparator.comparing(SaveFileElement::getNodeName);
 
@@ -91,11 +91,10 @@ public class Main extends Application {
         List<String> parentList = new ArrayList<String>();
 
         try {
-            result_file = FileProcessor.openSaveFile(s);
-            savefilename = result_file.getName();
-            FileProcessor.backupFile(result_file);
-            FileProcessor.unZipIt(result_file.getPath(), result_file.getPath().replace(result_file.getName(), ""));
-            File filetoprocess = new File(result_file.getPath().replace(result_file.getName(), "") + File.separator + "temp" + File.separator + "gamestate");
+            savefile = FileProcessor.openSaveFile(s);
+            FileProcessor.backupFile(savefile);
+            FileProcessor.unZipIt(savefile.getPath(), savefile.getPath().replace(savefile.getName(), ""));
+            File filetoprocess = new File(savefile.getPath().replace(savefile.getName(), "") + File.separator + "temp" + File.separator + "gamestate");
             FileProcessor.createXmlFileAndDb(filetoprocess);
             //TODO: SPECIFY FILE LOCATIONS
 
@@ -136,7 +135,7 @@ public class Main extends Application {
 
         saveMenuItem.setOnAction((event) -> {
             //TODO: fix error when x-ing out of file menu without selecting file
-            FileProcessor.zipIt(savefilename);
+            FileProcessor.zipIt(savefile);
             componentLayout.getChildren().add(EditorDisplay.creatTable());
         });
 
