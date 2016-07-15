@@ -136,7 +136,7 @@ public class Main extends Application {
         saveMenuItem.setOnAction((event) -> {
             //TODO: fix error when x-ing out of file menu without selecting file
             FileProcessor.zipIt(savefile);
-            componentLayout.getChildren().add(EditorDisplay.creatTable());
+            //componentLayout.getChildren().add(EditorDisplay.creatTable());
         });
 
         //todo:why is this failing

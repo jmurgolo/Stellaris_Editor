@@ -18,6 +18,7 @@ public class Planet {
     private StringProperty objectclass = new SimpleStringProperty();
     private StringProperty objecttype = new SimpleStringProperty();
     private int planet_size = 0;
+    //private int planet_size = 0;
     private SaveFileElement[] objectnodes;
 
     public Integer getid(){ return id.get(); }
