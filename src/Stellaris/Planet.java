@@ -2,7 +2,11 @@ package Stellaris;
 
 import javafx.beans.property.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
+import static Stellaris.Main.planetarray;
 
 /**
  * Created by jmm on 6/25/2016.
@@ -68,6 +72,7 @@ public class Planet {
         findObjectClass();
         findOwner();
         findOrbitalDepositTile();
+        getTiles();
 
     }
 
@@ -178,7 +183,7 @@ public class Planet {
 
     private void findOrbitalDepositTile() {
 
-        Integer temp = null;
+        Integer temp = 0;
         int counter = 0;
 
         while(!(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodelevel == 2 && objectnodes[counter].nodename.trim().equals("orbital_deposit_tile"))){
@@ -193,6 +198,26 @@ public class Planet {
         setorbitaldeposittile(temp);
     }
 
+    private void getTiles() {
+
+        List<SaveFileElement> tilelist = new ArrayList<>();
+        for (int i = 0; i < objectnodes.length; i++) {
+            if (objectnodes[i].nodeparent.trim().equals("tiles")) {
+                if (objectnodes[i].openorclose.equals("open")) {
+                    tilelist.add(objectnodes[i]);
+                }
+            }
+        }
+
+        planettiles = new Tile[tilelist.size()];
+
+        for (int i = 0; i < tilelist.size(); i++) {
+            planettiles[i] = new Tile();
+            planettiles[i].setTileObjectNode(tilelist.get(i).getChildren());
+
+        }
+    }
+    
     public String toString() {
         return "name" + " = " + name + " | "
                 + "id" + " =  " + id + " | "
