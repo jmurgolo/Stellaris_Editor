@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * Created by jmm on 6/26/2016.
  */
-public class Country {
+public class ObjectCountry {
 
     private String id;
     private String name;

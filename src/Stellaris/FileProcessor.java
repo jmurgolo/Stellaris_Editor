@@ -272,17 +272,19 @@ public class FileProcessor {
                     + "</td><td style='min-width:100px'>" + "nodeparent"
                     + "</td><td style='min-width:100px'>" + "openorclose"
                     + "</td><td style='min-width:100px'>" + "nodename"
+                    + "</td><td style='min-width:100px'>" + "nodevalue"
                     + "</td><td style='min-width:200px'>" + "originalnodevalue"
                     + "</td><td style='min-width:200px'>" + "nodedepth");
-            for (SaveFileElement temp : sfe_arraylist) {
-                if (temp.getLineNumber() >= startlinenumber && temp.getLineNumber() <= endlinenumber) {
-                    writer.write("<tr><td style='min-width:100px' >" + temp.linenumber
-                            + "</td><td style='min-width:100px'>" + temp.nodelevel
-                            + "</td><td style='min-width:100px'>" + temp.nodeparent
-                            + "</td><td style='min-width:100px'>" + temp.openorclose
-                            + "</td><td style='min-width:100px'>" + temp.nodename
-                            + "</td><td style='min-width:200px'>" + temp.originalnodevalue
-                            + "</td><td style='min-width:200px'>" + temp.nodedepth + "</td></tr>");
+            for (int i = 0; i < sfe_arraylist_size; i++) {
+                if (sfe_arraylist[i].getLineNumber() >= startlinenumber && sfe_arraylist[i].getLineNumber() <= endlinenumber) {
+                    writer.write("<tr><td style='min-width:100px' >" + sfe_arraylist[i].linenumber
+                            + "</td><td style='min-width:100px'>" + sfe_arraylist[i].nodelevel
+                            + "</td><td style='min-width:100px'>" + sfe_arraylist[i].nodeparent
+                            + "</td><td style='min-width:100px'>" + sfe_arraylist[i].openorclose
+                            + "</td><td style='min-width:100px'>" + sfe_arraylist[i].nodename
+                            + "</td><td style='min-width:100px'>" + sfe_arraylist[i].nodevalue
+                            + "</td><td style='min-width:200px'>" + sfe_arraylist[i].originalnodevalue
+                            + "</td><td style='min-width:200px'>" + sfe_arraylist[i].nodedepth + "</td></tr>");
                 }
             }
             writer.write("</table>");

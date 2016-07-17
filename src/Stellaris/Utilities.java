@@ -71,8 +71,8 @@ public class Utilities {
         return arr1;
     }
 
-    public static Planet[] addArrayCapacity(Planet[] list, int amount) {
-        Planet[] arr1 = new Planet[(int) (list.length + amount)];
+    public static ObjectPlanet[] addArrayCapacity(ObjectPlanet[] list, int amount) {
+        ObjectPlanet[] arr1 = new ObjectPlanet[(int) (list.length + amount)];
         for (int i = 0; i < list.length; i++) {
             arr1[i] = list[i];
         }

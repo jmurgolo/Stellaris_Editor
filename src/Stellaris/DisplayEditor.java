@@ -22,11 +22,11 @@ import static java.lang.Math.abs;
 /**
  * Created by jmm on 7/1/2016.
  */
-public class EditorDisplay {
+public class DisplayEditor {
 
-    private static TableView<Planet> table = new TableView<Planet>();
+    private static TableView<ObjectPlanet> table = new TableView<ObjectPlanet>();
     private static String[] countrynames;
-    private static List<Planet> countriesobjects = new ArrayList<>();
+    private static List<ObjectPlanet> countriesobjects = new ArrayList<>();
 
     public static VBox creatTable() {
 
@@ -57,26 +57,26 @@ public class EditorDisplay {
 
         TableColumn idCol = new TableColumn("Id");
         idCol.setMaxWidth(450);
-        idCol.setCellValueFactory(new PropertyValueFactory<Planet, Integer>("id"));
+        idCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Integer>("id"));
 
         TableColumn sizeCol = new TableColumn("Size");
         sizeCol.setMaxWidth(400);
-        sizeCol.setCellValueFactory(new PropertyValueFactory<Planet, Integer>("size"));
+        sizeCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Integer>("size"));
 
         TableColumn nameCol = new TableColumn("Name");
-        nameCol.setCellValueFactory(new PropertyValueFactory<Planet, String>("name"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("name"));
 
         TableColumn typeCol = new TableColumn("Type");
-        typeCol.setCellValueFactory(new PropertyValueFactory<Planet, String>("objecttype"));
+        typeCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("objecttype"));
 
         TableColumn classCol = new TableColumn("Class");
-        classCol.setCellValueFactory(new PropertyValueFactory<Planet, String>("objectclass"));
+        classCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("objectclass"));
 
         comboBox.setOnAction((event) -> {
             table.getColumns().clear();
             String selectedCountry = comboBox.getSelectionModel().getSelectedItem();
             getSelectedCountryStellarObjects(selectedCountry);
-            ObservableList<Planet> data = FXCollections.observableArrayList(countriesobjects);
+            ObservableList<ObjectPlanet> data = FXCollections.observableArrayList(countriesobjects);
             table.setItems(data);
             table.getColumns().addAll(idCol, sizeCol, nameCol, typeCol, classCol);
             System.out.println(table.getItems().size());
@@ -104,11 +104,11 @@ public class EditorDisplay {
             }
         }
 
-        countries = new Country[countrieslist.size()];
+        countries = new ObjectCountry[countrieslist.size()];
 
         //get all the countries' nodes
         for (int i = 0; i < countrieslist.size(); i++) {
-            countries[i] = new Country();
+            countries[i] = new ObjectCountry();
             countries[i].setCountryNodes(countrieslist.get(i).getChildren());
         }
         countrynames = new String[countries.length];
@@ -129,10 +129,10 @@ public class EditorDisplay {
             }
         }
 
-        planetarray = new Planet[planetlist.size()];
+        planetarray = new ObjectPlanet[planetlist.size()];
 
         for (int i = 0; i < planetlist.size(); i++) {
-            planetarray[i] = new Planet();
+            planetarray[i] = new ObjectPlanet();
             planetarray[i].setStellarObjectNodes(planetlist.get(i).getChildren());
         }
     }
@@ -148,11 +148,11 @@ public class EditorDisplay {
             }
         }
 
-        stararray = new Star[starlist.size()];
+        stararray = new ObjectStar[starlist.size()];
 
         //get all the stars' nodes
         for (int i = 0; i < starlist.size(); i++) {
-            stararray[i] = new Star();
+            stararray[i] = new ObjectStar();
             stararray[i].setStellarObjectNodes(starlist.get(i).getChildren());
         }
     }

@@ -8,7 +8,7 @@ import javafx.beans.property.StringProperty;
 /**
  * Created by jmm on 7/9/2016.
  */
-public class Star {
+public class ObjectStar {
 
     private int arraystart;
     private int arrayend;

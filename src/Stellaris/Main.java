@@ -39,9 +39,9 @@ public class Main extends Application {
 
     public static SaveFileElement[] sfe_arraylist;
     public static int sfe_arraylist_size = 0;
-    public static Country[] countries;
-    public static Star[] stararray;
-    public static Planet[] planetarray;
+    public static ObjectCountry[] countries;
+    public static ObjectStar[] stararray;
+    public static ObjectPlanet[] planetarray;
     public static File savefile;
 
     public static final Comparator<SaveFileElement> name_comparator = Comparator.comparing(SaveFileElement::getNodeName);
@@ -112,7 +112,7 @@ public class Main extends Application {
             e.printStackTrace();
         }
         processSfe_arraylist();
-        FileProcessor.createTempFileofArray(); //603688,603695); //"nodename","name");
+        FileProcessor.createTempFileofArray(57662,745219); //"nodename","name");
     }
 
     private MenuBar getMenuBar(Stage primaryStage, VBox componentLayout){
@@ -130,7 +130,7 @@ public class Main extends Application {
         openMenuItem.setOnAction((event) -> {
             //TODO: fix error when x-ing out of file menu without selecting file
             processSaveFile(primaryStage);
-            componentLayout.getChildren().add(EditorDisplay.creatTable());
+            componentLayout.getChildren().add(DisplayEditor.creatTable());
         });
 
         saveMenuItem.setOnAction((event) -> {

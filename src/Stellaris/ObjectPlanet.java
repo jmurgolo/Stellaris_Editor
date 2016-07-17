@@ -3,19 +3,16 @@ package Stellaris;
 import javafx.beans.property.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import static Stellaris.Main.planetarray;
 
 /**
  * Created by jmm on 6/25/2016.
  */
-public class Planet {
+public class ObjectPlanet {
 
     private IntegerProperty id = new SimpleIntegerProperty();
     private IntegerProperty size = new SimpleIntegerProperty();
-    private IntegerProperty orbitaldeposittile = new SimpleIntegerProperty();
+    private StringProperty orbitaldeposittile = new SimpleStringProperty();
     private StringProperty name = new SimpleStringProperty();
     private StringProperty objectclass = new SimpleStringProperty();
     private StringProperty objecttype = new SimpleStringProperty();
@@ -28,7 +25,7 @@ public class Planet {
     private StringProperty spaceport = new SimpleStringProperty();
 
     private SaveFileElement[] objectnodes;
-    private Tile[] planettiles;
+    private ObjectTile[] planettiles;
 
     public Integer getid(){ return id.get(); }
     public void setid(Integer i){ id.set(i); }
@@ -54,9 +51,9 @@ public class Planet {
     public void setobjecttype(String s){ objecttype.set(s); }
     public StringProperty objecttypeProperty() { return objecttype; }
 
-    public Integer getorbitaldeposittile(){ return orbitaldeposittile.get(); }
-    public void setorbitaldeposittile(Integer i){ orbitaldeposittile.set(i); }
-    public IntegerProperty orbitaldeposittileProperty() { return orbitaldeposittile; }
+    public String getorbitaldeposittile(){ return orbitaldeposittile.get(); }
+    public void setorbitaldeposittile(String i){ orbitaldeposittile.set(i); }
+    public StringProperty orbitaldeposittileProperty() { return orbitaldeposittile; }
 
     public String getowner(){ return owner.get(); }
     public void setowner(String s){ owner.set(s); }
@@ -73,6 +70,7 @@ public class Planet {
         findOwner();
         findOrbitalDepositTile();
         getTiles();
+        //figureoutorbitaldeposittile();
 
     }
 
@@ -182,8 +180,8 @@ public class Planet {
     }
 
     private void findOrbitalDepositTile() {
-
-        Integer temp = 0;
+        //todo: need to handle two equal signs on same line
+        String temp = "";
         int counter = 0;
 
         while(!(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodelevel == 2 && objectnodes[counter].nodename.trim().equals("orbital_deposit_tile"))){
@@ -193,7 +191,9 @@ public class Planet {
             counter++;
         }
         if(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodelevel == 2 && objectnodes[counter].nodename.trim().equals("orbital_deposit_tile")) {
-            temp = Integer.valueOf(objectnodes[counter].getNodeValue().trim().replace("=",""));
+            System.out.println(id);
+            System.out.println(objectnodes[counter].getNodeValue());
+            temp = objectnodes[counter].nodevalue.trim().replace("=","");
         }
         setorbitaldeposittile(temp);
     }
@@ -209,22 +209,32 @@ public class Planet {
             }
         }
 
-        planettiles = new Tile[tilelist.size()];
+        planettiles = new ObjectTile[tilelist.size()];
 
         for (int i = 0; i < tilelist.size(); i++) {
-            planettiles[i] = new Tile();
+            planettiles[i] = new ObjectTile();
             planettiles[i].setTileObjectNode(tilelist.get(i).getChildren());
 
         }
     }
     
-    public String toString() {
-        return "name" + " = " + name + " | "
-                + "id" + " =  " + id + " | "
-                + "name" + " =  " + name + " | "
-                + "objecttype" + " =  " + objecttype + " | "
-                + "objectclass" + " =  " + objectclass + " | "
-                //+ "objectnodes" + " =  " + Arrays.toString(objectnodes) + " | "
-                + "\r\n";
+    public void figureoutorbitaldeposittile() {
+        System.out.println(  "\r\n"
+                + " " + getid() + " | "
+                + " " + getobjectclass() + " | "
+                + " " + getobjecttype() + " | "
+                + " " + getsize() + " | "
+                + " " + getTileInfo() + " | "
+                + " " + getorbitaldeposittile()
+                );
     }
+
+    private String getTileInfo(){
+        String temp = "";
+        for(int i = 0 ; i < planettiles.length ; i++){
+            temp = temp + planettiles[i].getid() + planettiles[i].getdeposit() + " | ";
+        }
+        return temp;
+    }
+
 }

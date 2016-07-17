@@ -10,7 +10,7 @@ import java.util.Arrays;
 /**
  * Created by jmm on 7/16/2016.
  */
-public class Tile {
+public class ObjectTile {
 
     private IntegerProperty id = new SimpleIntegerProperty();
     private StringProperty active = new SimpleStringProperty();
