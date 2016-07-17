@@ -9,17 +9,22 @@ import java.util.Arrays;
  */
 public class Planet {
 
-    private int arraystart;
-    private int arrayend;
-
     private IntegerProperty id = new SimpleIntegerProperty();
     private IntegerProperty size = new SimpleIntegerProperty();
+    private IntegerProperty orbitaldeposittile = new SimpleIntegerProperty();
     private StringProperty name = new SimpleStringProperty();
     private StringProperty objectclass = new SimpleStringProperty();
     private StringProperty objecttype = new SimpleStringProperty();
-    private int planet_size = 0;
-    //private int planet_size = 0;
+    private StringProperty owner = new SimpleStringProperty();
+    private StringProperty controller = new SimpleStringProperty();
+    private StringProperty pop = new SimpleStringProperty();
+    private StringProperty orbitals = new SimpleStringProperty();
+    private StringProperty entity = new SimpleStringProperty();
+    private StringProperty prevent_anomaly = new SimpleStringProperty();
+    private StringProperty spaceport = new SimpleStringProperty();
+
     private SaveFileElement[] objectnodes;
+    private Tile[] planettiles;
 
     public Integer getid(){ return id.get(); }
     public void setid(Integer i){ id.set(i); }
@@ -41,11 +46,17 @@ public class Planet {
     public void setobjectclass(String s){ objectclass.set(s); }
     public StringProperty objectclassProperty() { return objectclass; }
 
-    public String getobjecttype(){
-        return objecttype.get();
-    }
+    public String getobjecttype(){ return objecttype.get(); }
     public void setobjecttype(String s){ objecttype.set(s); }
     public StringProperty objecttypeProperty() { return objecttype; }
+
+    public Integer getorbitaldeposittile(){ return orbitaldeposittile.get(); }
+    public void setorbitaldeposittile(Integer i){ orbitaldeposittile.set(i); }
+    public IntegerProperty orbitaldeposittileProperty() { return orbitaldeposittile; }
+
+    public String getowner(){ return owner.get(); }
+    public void setowner(String s){ owner.set(s); }
+    public StringProperty ownerProperty() { return owner; }
 
     public void setStellarObjectNodes(SaveFileElement[] list) {
 
@@ -55,6 +66,9 @@ public class Planet {
         findName();
         findType();
         findObjectClass();
+        findOwner();
+        findOrbitalDepositTile();
+
     }
 
     private void findId() {
@@ -77,7 +91,7 @@ public class Planet {
 
     private void findName() {
 
-        String temp = "none";
+        String temp = "";
         int counter = 0;
 
         while(!(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodename.trim().equals("name") && objectnodes[counter].nodelevel == 2)){
@@ -92,9 +106,26 @@ public class Planet {
         setname(temp.replaceAll("\"","").replaceAll("=",""));
     }
 
+    private void findOwner() {
+
+        String temp = "";
+        int counter = 0;
+
+        while(!(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodename.trim().equals("owner") && objectnodes[counter].nodelevel == 2)){
+            if(objectnodes.length-1 == counter) {
+                break;
+            }
+            counter++;
+        }
+        if(objectnodes.length > counter && objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodename.trim().equals("owner") && objectnodes[counter].nodelevel == 2) {
+            temp = objectnodes[counter].getNodeValue();
+        }
+        setname(temp.replaceAll("\"","").replaceAll("=",""));
+    }
+
     private void findObjectClass() {
 
-        String temp = "none";
+        String temp = "";
         int counter = 0;
 
         while(!(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodelevel == 2 && (objectnodes[counter].nodename.trim().equals("star_class") || objectnodes[counter].nodename.trim().equals("planet_class")))){
@@ -111,7 +142,7 @@ public class Planet {
 
     private void findSize() {
 
-        Integer temp = 0;
+        Integer temp = null;
         int counter = 0;
 
         while(!(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodelevel == 2 && objectnodes[counter].nodename.trim().equals("planet_size"))){
@@ -130,7 +161,7 @@ public class Planet {
 
     private void findType() {
 
-        String temp = "none";
+        String temp = "";
         int counter = 0;
 
         while(!(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodelevel == 2 && (objectnodes[counter].nodename.trim().equals("type") || objectnodes[counter].nodename.trim().equals("planet_class")))){
@@ -143,6 +174,23 @@ public class Planet {
             temp = objectnodes[counter].getNodeValue();
         }
         setobjecttype(temp.replaceAll("\"","").replaceAll("=",""));
+    }
+
+    private void findOrbitalDepositTile() {
+
+        Integer temp = null;
+        int counter = 0;
+
+        while(!(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodelevel == 2 && objectnodes[counter].nodename.trim().equals("orbital_deposit_tile"))){
+            if(objectnodes.length-1 == counter) {
+                break;
+            }
+            counter++;
+        }
+        if(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodelevel == 2 && objectnodes[counter].nodename.trim().equals("orbital_deposit_tile")) {
+            temp = Integer.valueOf(objectnodes[counter].getNodeValue().trim().replace("=",""));
+        }
+        setorbitaldeposittile(temp);
     }
 
     public String toString() {

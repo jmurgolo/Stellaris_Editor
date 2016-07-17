@@ -1,5 +1,6 @@
 package Stellaris;
 
+import javafx.beans.property.StringProperty;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
@@ -92,6 +93,14 @@ public class Utilities {
         System.arraycopy(original, 0, n, 0, element);
         System.arraycopy(original, element + 1, n, element, original.length - element - 1);
         return n;
+    }
+
+    public static StringProperty[] addArrayCapacity(StringProperty[] list, int amount) {
+        StringProperty[] arr1 = new StringProperty[(int) (list.length + amount)];
+        for (int i = 0; i < list.length; i++) {
+            arr1[i] = list[i];
+        }
+        return arr1;
     }
 
     public static JProgressBar main_Progress_Bar(int start, int end, String title) {
