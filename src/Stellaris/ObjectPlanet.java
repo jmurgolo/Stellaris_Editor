@@ -191,8 +191,8 @@ public class ObjectPlanet {
             counter++;
         }
         if(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodelevel == 2 && objectnodes[counter].nodename.trim().equals("orbital_deposit_tile")) {
-            System.out.println(id);
-            System.out.println(objectnodes[counter].getNodeValue());
+            //System.out.println(id);
+            //System.out.println(objectnodes[counter].getNodeValue());
             temp = objectnodes[counter].nodevalue.trim().replace("=","");
         }
         setorbitaldeposittile(temp);

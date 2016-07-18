@@ -71,6 +71,8 @@ public class SaveFileElement {
 
     public Integer[] getNodeDepthAsIntegerArray() {
 
+        System.out.println(this.toString());
+
         String[] temp = nodedepth.substring(1, getNodeDepth().length() - 1).split(",");
         Integer[] numberList = new Integer[0];
         int counter = 0;

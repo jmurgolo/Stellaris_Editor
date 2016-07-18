@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.util.Arrays;
 
 import static Stellaris.Main.sfe_arraylist;
 
@@ -79,6 +80,21 @@ public class Utilities {
         return arr1;
     }
 
+    static SaveFileElement[] addElement(SaveFileElement[] originalarray, SaveFileElement elementcontents, int e) {
+        SaveFileElement[] a  = Arrays.copyOf(originalarray, originalarray.length + 1);
+        int i = 0;
+        for (i = 0 ; i < e; i++){
+            a[i] = originalarray[i];
+        }
+
+        a[i] = elementcontents;
+
+        for (i = i ; i < originalarray.length; i++){
+            a[i+1] = originalarray[i];
+        }
+        return a;
+    }
+
     public static void addArrayCapacity(int amount) {
         SaveFileElement[] arr1 = new SaveFileElement[(int) (sfe_arraylist.length + amount)];
         for(int i = sfe_arraylist.length ; i < arr1.length ; i ++){
@@ -90,6 +106,13 @@ public class Utilities {
 
     public static Integer[] removeArrayCapacity(Integer[] original, int element) {
         Integer[] n = new Integer[original.length - 1];
+        System.arraycopy(original, 0, n, 0, element);
+        System.arraycopy(original, element + 1, n, element, original.length - element - 1);
+        return n;
+    }
+
+    public static String[] removeArrayCapacity(String[] original, int element) {
+        String[] n = new String[original.length - 1];
         System.arraycopy(original, 0, n, 0, element);
         System.arraycopy(original, element + 1, n, element, original.length - element - 1);
         return n;

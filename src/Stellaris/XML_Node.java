@@ -52,69 +52,153 @@ class XML_Node {
         String parent = null;
         int level_holder = 0;
 
-        //so I only have one insert statement but need to do a shift for the {} at condition 0
+
+        //so I only have one insert statement but need to do a shift for the {} at condition 0 where level goes up and down on same line
         int level_adjuster = 0;
 
         for (int i = 0; i < sfe_arraylist_size; i++) {
             String temp_text = sfe_arraylist[i].getOriginalNodeValue();
-            if (notBetween(temp_text, "{") > 0 && notBetween(temp_text, "}") > 0) {
-                getNodeInfo(temp_text);
-                if (level == 0) {
-                    parent = "none";
-                    root_node_tracker = root_node_tracker + 1;
-                    level_holder = root_node_tracker;
-                } else {
+            if (notBetween(temp_text, "=") <= 1) {
+                if (notBetween(temp_text, "{") > 0 && notBetween(temp_text, "}") > 0) {
+                    getNodeInfo(temp_text);
+                    if (level == 0) {
+                        parent = "none";
+                        root_node_tracker = root_node_tracker + 1;
+                        level_holder = root_node_tracker;
+                    } else {
+                        parent = level_name[level - 1];
+                    }
+                    setTreeLimb(0, i);
+                    level_adjuster += 1;
+                    action = "open and close";
+                } else if (notBetween(temp_text, "{") > 0) {
+                    getNodeInfo(temp_text);
+                    if (level == 0) {
+                        parent = "none";
+                        root_node_tracker = root_node_tracker + 1;
+                        level_holder = root_node_tracker;
+                    } else {
+                        parent = level_name[level - 1];
+                        level_holder = root_node_tracker;
+                    }
+                    setTreeLimb(1, i);
+                    action = "open";
+                    level = level + 1;
+                } else if (notBetween(temp_text, "}") > 0) {
+                    getNodeInfo(temp_text);
                     parent = level_name[level - 1];
-                }
-                setTreeLimb(0, i);
-                level_adjuster +=1;
-                action = "open and close";
-            } else if (notBetween(temp_text, "{") > 0) {
-                getNodeInfo(temp_text);
-                if (level == 0) {
-                    parent = "none";
-                    root_node_tracker = root_node_tracker + 1;
-                    level_holder = root_node_tracker;
+                    action = "close";
+                    level = level - 1;
+                    level_holder = level;
+                    setTreeLimb(-1, i);
                 } else {
-                    parent = level_name[level - 1];
-                    level_holder = root_node_tracker;
+                    getNodeInfo(temp_text);
+                    if (level == 0) {
+                        parent = "none";
+                    } else {
+                        parent = level_name[level - 1];
+                    }
+                    action = "none";
                 }
-                setTreeLimb(1, i);
-                action = "open";
-                level = level + 1;
-            } else if (notBetween(temp_text, "}") > 0) {
-                getNodeInfo(temp_text);
-                parent = level_name[level - 1];
-                action = "close";
-                level = level - 1;
-                level_holder = level;
-                setTreeLimb(-1, i);
+
+                Main.sfe_arraylist[i].nodelevel = level + level_adjuster;
+                Main.sfe_arraylist[i].nodename = ((node_name == null) ? "" : node_name);
+                Main.sfe_arraylist[i].nodevalue = node_value;
+                Main.sfe_arraylist[i].nodeparent = parent;
+                Main.sfe_arraylist[i].openorclose = action;
+                Main.sfe_arraylist[i].nodepath = level_holder;
+                Main.sfe_arraylist[i].nodedepth = Arrays.toString(leveldepthlist);
+
+                level_adjuster = 0;
+
             } else {
-                getNodeInfo(temp_text);
-                if (level == 0) {
-                    parent = "none";
-                } else {
-                    parent = level_name[level - 1];
+
+                SaveFileElement tempsfe;
+                String[] temparray = temp_text.split("\t");
+                for (int j = 0; j < temparray.length; j++) {
+                    if (temparray[j].trim().equals("")) {
+                        temparray = removeArrayCapacity(temparray, j);
+                        j--;
+                    }
                 }
-                action = "none";
+
+                for (int j = 0; j < temparray.length; j++) {
+
+                    tempsfe = new SaveFileElement();
+                    i = i + j;
+//                    System.out.println(i);
+
+                    if (notBetween(temparray[j], "{") > 0 && notBetween(temparray[j], "}") > 0) {
+                        getNodeInfo(temparray[j]);
+                        if (level == 0) {
+                            parent = "none";
+                            root_node_tracker = root_node_tracker + 1;
+                            level_holder = root_node_tracker;
+                        } else {
+                            parent = level_name[level - 1];
+                        }
+                        setTreeLimb(0, i + j);
+                        level_adjuster += 1;
+                        action = "open and close";
+                    } else if (notBetween(temparray[j], "{") > 0) {
+                        getNodeInfo(temparray[j]);
+                        if (level == 0) {
+                            parent = "none";
+                            root_node_tracker = root_node_tracker + 1;
+                            level_holder = root_node_tracker;
+                        } else {
+                            parent = level_name[level - 1];
+                            level_holder = root_node_tracker;
+                        }
+                        setTreeLimb(1, i + j);
+                        action = "open";
+                        level = level + 1;
+                    } else if (notBetween(temparray[j], "}") > 0) {
+                        getNodeInfo(temparray[j]);
+                        parent = level_name[level - 1];
+                        action = "close";
+                        level = level - 1;
+                        level_holder = level;
+                        setTreeLimb(-1, i + j);
+                    } else {
+                        getNodeInfo(temparray[j]);
+                        if (level == 0) {
+                            parent = "none";
+                        } else {
+                            parent = level_name[level - 1];
+                        }
+                        action = "none";
+                    }
+
+                    if (j == 0) {
+                        Main.sfe_arraylist[i].nodelevel = level + level_adjuster;
+                        Main.sfe_arraylist[i].nodename = ((node_name == null) ? "" : node_name);
+                        Main.sfe_arraylist[i].nodevalue = node_value;
+                        Main.sfe_arraylist[i].nodeparent = parent;
+                        Main.sfe_arraylist[i].openorclose = action;
+                        Main.sfe_arraylist[i].nodepath = level_holder;
+                        Main.sfe_arraylist[i].nodedepth = Arrays.toString(leveldepthlist);
+                    } else {
+                        tempsfe.originalnodevalue = Main.sfe_arraylist[i].getOriginalNodeValue();
+                        tempsfe.linenumber = Main.sfe_arraylist[i].linenumber;
+                        tempsfe.nodelevel = level + level_adjuster;
+                        tempsfe.nodename = ((node_name == null) ? "" : node_name);
+                        tempsfe.nodevalue = node_value;
+                        tempsfe.nodeparent = parent;
+                        tempsfe.openorclose = action;
+                        tempsfe.nodepath = level_holder;
+                        tempsfe.nodedepth = Arrays.toString(leveldepthlist);
+                        System.out.println(tempsfe.toString());
+                        Main.sfe_arraylist = addElement(Main.sfe_arraylist, tempsfe, i);
+                    }
+                }
+                level_adjuster = 0;
             }
-
-            Main.sfe_arraylist[i].nodelevel = level + level_adjuster;
-            Main.sfe_arraylist[i].nodename = ((node_name == null) ? "" : node_name);
-            Main.sfe_arraylist[i].nodevalue = node_value;
-            Main.sfe_arraylist[i].nodeparent = parent;
-            Main.sfe_arraylist[i].openorclose = action;
-            Main.sfe_arraylist[i].nodepath = level_holder;
-            Main.sfe_arraylist[i].nodedepth = Arrays.toString(leveldepthlist);
-
             progressbar.setValue(i);
             progressbar.setString(String.valueOf(i));
-
-            level_adjuster = 0;
         }
         progressbar.setVisible(false);
     }
-
 
     private static void getNodeInfo(String nn) {
 
@@ -179,13 +263,13 @@ class XML_Node {
     }
 
 
-    private static int notBetweenQuotes(String findme, String inme) {
-        int char_count = StringUtils.countMatches(inme, findme);
-        Pattern p = Pattern.compile("/(,)(?=(?:[^\"]|\"[^\"]*\")*$)/");
-        Matcher m = p.matcher(inme);
-        while (m.find()) {
-            char_count = char_count - 1;
-        }
-        return char_count;
-    }
+//    private static int notBetweenQuotes(String findme, String inme) {
+//        int char_count = StringUtils.countMatches(inme, findme);
+//        Pattern p = Pattern.compile("/(,)(?=(?:[^\"]|\"[^\"]*\")*$)/");
+//        Matcher m = p.matcher(inme);
+//        while (m.find()) {
+//            char_count = char_count - 1;
+//        }
+//        return char_count;
+//    }
 }
