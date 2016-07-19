@@ -24,6 +24,18 @@ public class SaveFileElement {
 
     private int nodedepthlength;
 
+    public SaveFileElement(){
+        linenumber = 0;
+        nodelevel = 0;
+        nodename = "";
+        nodevalue = "";
+        nodeparent = "";
+        openorclose = "";
+        originalnodevalue = "";
+        nodepath = 0;
+        nodedepth = "";
+    }
+
     public String getNodeName() {
         return nodename;
     }
@@ -99,7 +111,7 @@ public class SaveFileElement {
             counter++;
             indextracker++;
         }
-
+//todo:error here
         SaveFileElement[] children = new SaveFileElement[counter];
         System.arraycopy(Main.sfe_arraylist, linenumber-1, children, 0, counter);
 
