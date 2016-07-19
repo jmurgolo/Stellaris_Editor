@@ -170,6 +170,7 @@ public class Main extends Application {
                 return true;
             }
         } catch (Exception e) {
+            System.out.println("lock file error");
             e.printStackTrace();
             //logger.error("Unable to create and/or lock file: " + lockFile, e);
         }

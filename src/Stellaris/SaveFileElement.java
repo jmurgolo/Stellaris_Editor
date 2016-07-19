@@ -71,20 +71,23 @@ public class SaveFileElement {
 
     public Integer[] getNodeDepthAsIntegerArray() {
 
-        System.out.println(this.toString());
-
-        String[] temp = nodedepth.substring(1, getNodeDepth().length() - 1).split(",");
         Integer[] numberList = new Integer[0];
-        int counter = 0;
-        if (temp.length > 0) {
-            for (int z = 0; z < temp.length; z++) {
-                if (StringUtils.isNumeric(temp[z].trim())) {
-                    numberList = addArrayCapacity(numberList, 1);
-                    numberList[counter] = Integer.parseInt(temp[z].trim());
+        try {
+            String[] temp = nodedepth.substring(1, getNodeDepth().length() - 1).split(",");
+            int counter = 0;
+            if (temp.length > 0) {
+                for (int z = 0; z < temp.length; z++) {
+                    if (StringUtils.isNumeric(temp[z].trim())) {
+                        numberList = addArrayCapacity(numberList, 1);
+                        numberList[counter] = Integer.parseInt(temp[z].trim());
+                    }
                 }
             }
+        }catch(Exception e){
+            System.out.println(this.toString());
+            e.printStackTrace();
         }
-        return numberList;
+            return numberList;
     }
 
     public SaveFileElement[] getChildren() {

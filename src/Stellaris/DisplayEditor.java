@@ -17,16 +17,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static Stellaris.Main.*;
-import static java.lang.Math.abs;
 
 /**
  * Created by jmm on 7/1/2016.
  */
 public class DisplayEditor {
 
-    private static TableView<ObjectPlanet> table = new TableView<ObjectPlanet>();
+    private static final TableView<ObjectPlanet> table = new TableView<>();
     private static String[] countrynames;
-    private static List<ObjectPlanet> countriesobjects = new ArrayList<>();
+    private static final List<ObjectPlanet> countriesobjects = new ArrayList<>();
 
     public static VBox creatTable() {
 
@@ -37,7 +36,7 @@ public class DisplayEditor {
 
         Label label1 = new Label("Name:   ");
 
-        final ComboBox<String> comboBox = new ComboBox<String>(options);
+        final ComboBox<String> comboBox = new ComboBox<>(options);
         comboBox.setMinWidth(200);
         // Handle ComboBox event.
 
@@ -93,29 +92,33 @@ public class DisplayEditor {
     }
 
     private static void getCountries() {
-
-        //get the country id index node
-        List<SaveFileElement> countrieslist = new ArrayList<>();
-        for (int i = 0; i < Main.sfe_arraylist.length; i++) {
-            if (Main.sfe_arraylist[i].nodeparent.trim().equals("country")) {
-                if (Main.sfe_arraylist[i].openorclose.equals("open")) {
-                    countrieslist.add(Main.sfe_arraylist[i]);
+        int i=0;
+        try {
+            //get the country id index node
+            List<SaveFileElement> countrieslist = new ArrayList<>();
+            for (i = 0; i < Main.sfe_arraylist.length; i++) {
+                if (Main.sfe_arraylist[i].nodeparent.trim().equals("country")) {
+                    if (Main.sfe_arraylist[i].openorclose.equals("open")) {
+                        countrieslist.add(Main.sfe_arraylist[i]);
+                    }
                 }
             }
-        }
 
-        countries = new ObjectCountry[countrieslist.size()];
+            countries = new ObjectCountry[countrieslist.size()];
 
-        //get all the countries' nodes
-        for (int i = 0; i < countrieslist.size(); i++) {
-            countries[i] = new ObjectCountry();
-            countries[i].setCountryNodes(countrieslist.get(i).getChildren());
+            //get all the countries' nodes
+            for (i = 0; i < countrieslist.size(); i++) {
+                countries[i] = new ObjectCountry();
+                countries[i].setCountryNodes(countrieslist.get(i).getChildren());
+            }
+            countrynames = new String[countries.length];
+            for (i = 0; i < countries.length; i++) {
+                countrynames[i] = countries[i].returnName();
+            }
+        }catch(Exception e){
+            System.out.println(Main.sfe_arraylist[i].toString());
+            e.printStackTrace();
         }
-        countrynames = new String[countries.length];
-        for (int i = 0; i < countries.length; i++) {
-            countrynames[i] = countries[i].returnName();
-        }
-
     }
 
     private static void getPlanets() {
@@ -137,29 +140,29 @@ public class DisplayEditor {
         }
     }
 
-    private static void getStars() {
-
-        List<SaveFileElement> starlist = new ArrayList<>();
-        for (int i = 0; i < Main.sfe_arraylist.length; i++) {
-            if (Main.sfe_arraylist[i].nodeparent.trim().equals("galactic_object")) {
-                if (Main.sfe_arraylist[i].openorclose.equals("open")) {
-                    starlist.add(Main.sfe_arraylist[i]);
-                }
-            }
-        }
-
-        stararray = new ObjectStar[starlist.size()];
-
-        //get all the stars' nodes
-        for (int i = 0; i < starlist.size(); i++) {
-            stararray[i] = new ObjectStar();
-            stararray[i].setStellarObjectNodes(starlist.get(i).getChildren());
-        }
-    }
+//    private static void getStars() {
+//
+//        List<SaveFileElement> starlist = new ArrayList<>();
+//        for (int i = 0; i < Main.sfe_arraylist.length; i++) {
+//            if (Main.sfe_arraylist[i].nodeparent.trim().equals("galactic_object")) {
+//                if (Main.sfe_arraylist[i].openorclose.equals("open")) {
+//                    starlist.add(Main.sfe_arraylist[i]);
+//                }
+//            }
+//        }
+//
+//        stararray = new ObjectStar[starlist.size()];
+//
+//        //get all the stars' nodes
+//        for (int i = 0; i < starlist.size(); i++) {
+//            stararray[i] = new ObjectStar();
+//            stararray[i].setStellarObjectNodes(starlist.get(i).getChildren());
+//        }
+//    }
 
     private static void getSelectedCountryStellarObjects(String countryname) {
         int i = 0;
-        for (i = 0; i < countries.length; i++) {
+        for (i = 0 ; i < countries.length; i++) {
             if (countries[i].returnName().equals(countryname)) {
                 break;
             }
