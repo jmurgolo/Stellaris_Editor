@@ -107,11 +107,19 @@ public class SaveFileElement {
         int indextracker = linenumber-1;
         int counter = 0;
 
+        if(Main.sfe_arraylist[indextracker].nodename == null){
+            System.out.println(Main.sfe_arraylist[indextracker].toString());
+        }
+
         while(!(Main.sfe_arraylist[indextracker].openorclose.equals("close") && Main.sfe_arraylist[indextracker].nodeparent.trim().equals(nodename.trim()))){
             counter++;
             indextracker++;
         }
-//todo:error here
+
+
+        //todo:error here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
         SaveFileElement[] children = new SaveFileElement[counter];
         System.arraycopy(Main.sfe_arraylist, linenumber-1, children, 0, counter);
 

@@ -1,6 +1,9 @@
 package Stellaris;
 
-import javafx.beans.property.*;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,22 @@ public class ObjectPlanet {
 
     private SaveFileElement[] objectnodes;
     private ObjectTile[] planettiles;
+
+    public ObjectPlanet() {
+        setid               (0);
+        setsize                (0);
+        setorbitaldeposittile  ("");
+        setname                ("");
+        setobjectclass         ("");
+        setobjecttype          ("");
+        setowner               ("");
+        //setcontroller          ("");
+        //setpop                 ("");
+        //setorbitals            ("");
+        //setentity              ("");
+        //setprevent_anomaly     ("");
+        //setspaceport           ("");
+    }
 
     public Integer getid(){ return id.get(); }
     public void setid(Integer i){ id.set(i); }
@@ -76,7 +95,7 @@ public class ObjectPlanet {
 
     private void findId() {
 
-        Integer temp = null;
+        Integer temp = 0;
         int counter = 0;
 
         while (!(objectnodes[counter].openorclose.equals("open") && objectnodes[counter].nodelevel == 2) && (objectnodes[counter].nodeparent.trim().equals("galactic_object") || objectnodes[counter].nodeparent.trim().equals("planet"))) {
@@ -145,15 +164,13 @@ public class ObjectPlanet {
 
     private void findSize() {
 
-        Integer temp = null;
+        Integer temp = 0;
         int counter = 0;
 
         while(!(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodelevel == 2 && objectnodes[counter].nodename.trim().equals("planet_size"))){
                         if(objectnodes.length-1 == counter) {
                 break;
             }
-            //System.out.println(objectnodes[counter].openorclose + " " + objectnodes[counter].nodelevel + " " + objectnodes[counter].nodename.trim());
-
             counter++;
         }
         if(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodelevel == 2 && objectnodes[counter].nodename.trim().equals("planet_size")) {
@@ -191,8 +208,6 @@ public class ObjectPlanet {
             counter++;
         }
         if(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodelevel == 2 && objectnodes[counter].nodename.trim().equals("orbital_deposit_tile")) {
-            //System.out.println(id);
-            //System.out.println(objectnodes[counter].getNodeValue());
             temp = objectnodes[counter].nodevalue.trim().replace("=","");
         }
         setorbitaldeposittile(temp);
@@ -214,7 +229,7 @@ public class ObjectPlanet {
         for (int i = 0; i < tilelist.size(); i++) {
             planettiles[i] = new ObjectTile();
             planettiles[i].setTileObjectNode(tilelist.get(i).getChildren());
-
+            //System.out.println(Arrays.toString(planettiles[i].getTileObjectNode()));
         }
     }
     

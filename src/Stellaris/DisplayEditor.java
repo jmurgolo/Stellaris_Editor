@@ -140,6 +140,26 @@ public class DisplayEditor {
         }
     }
 
+    private static void getSelectedCountryStellarObjects(String countryname) {
+        int i = 0;
+        for (i = 0 ; i < countries.length; i++) {
+            if (countries[i].returnName().equals(countryname)) {
+                break;
+            }
+        }
+
+        //todo: split up stars and planets searches and combine them later so index function works
+
+        String[] surveyed = countries[i].returnSurveyed();
+        if(surveyed != null && surveyed.length > 0) {
+            for (int j = 0; j < surveyed.length; j++) {
+                countriesobjects.add(j, planetarray[Integer.valueOf(surveyed[j].trim())]);
+            }
+        }
+    }
+}// end class
+
+
 //    private static void getStars() {
 //
 //        List<SaveFileElement> starlist = new ArrayList<>();
@@ -159,24 +179,6 @@ public class DisplayEditor {
 //            stararray[i].setStellarObjectNodes(starlist.get(i).getChildren());
 //        }
 //    }
-
-    private static void getSelectedCountryStellarObjects(String countryname) {
-        int i = 0;
-        for (i = 0 ; i < countries.length; i++) {
-            if (countries[i].returnName().equals(countryname)) {
-                break;
-            }
-        }
-//todo: split up stars and planets searches and combine them later so index function works
-
-
-        String[] surveyed = countries[i].returnSurveyed();
-
-        for (int j = 0; j < surveyed.length; j++) {
-            countriesobjects.add(j, planetarray[Integer.valueOf(surveyed[j].trim())]);
-        }
-    }
-}// end class
 
 
 

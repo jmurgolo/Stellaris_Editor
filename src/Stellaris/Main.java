@@ -112,7 +112,7 @@ public class Main extends Application {
             e.printStackTrace();
         }
         processSfe_arraylist();
-        FileProcessor.createTempFileofArray(57662,745219); //"nodename","name");
+        //FileProcessor.createTempFileofArray();;//(57662,745219); //"nodename","name");
     }
 
     private MenuBar getMenuBar(Stage primaryStage, VBox componentLayout){

@@ -103,7 +103,7 @@ public class FileProcessor {
         progressBar.setVisible(false);
         long endTime = System.nanoTime();
         long duration = (endTime - startTime);
-        System.out.println("File Processed" + " Duration: " + (double) duration / 1000000000.0);
+        //System.out.println("File Processed" + " Duration: " + (double) duration / 1000000000.0);
     }
 
     public static int countLines(String filename) throws IOException {
