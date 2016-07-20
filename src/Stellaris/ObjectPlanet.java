@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -90,6 +91,7 @@ public class ObjectPlanet {
         findOrbitalDepositTile();
         getTiles();
         //figureoutorbitaldeposittile();
+        //System.out.println(Arrays.toString(this.objectnodes));
 
     }
 
@@ -106,9 +108,13 @@ public class ObjectPlanet {
             counter++;
         }
         if (objectnodes[counter].openorclose.equals("open") && objectnodes[counter].nodelevel == 2 && (objectnodes[counter].nodeparent.trim().equals("galactic_object") || objectnodes[counter].nodeparent.trim().equals("planet"))) {
+            //System.out.println(objectnodes[counter].getNodeName());
             temp = Integer.valueOf(objectnodes[counter].getNodeName().trim());
+            //System.out.println(temp);
         }
+        System.out.println(Arrays.toString(objectnodes));
         setid(temp);
+        System.out.println(" id ------------------------------------------------" + id);
     }
 
     private void findName() {
