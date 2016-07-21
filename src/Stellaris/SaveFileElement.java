@@ -12,6 +12,7 @@ import static Stellaris.Utilities.addArrayCapacity;
  */
 public class SaveFileElement {
 
+    public int id;
     public int linenumber;
     public int nodelevel;
     public String nodename;
@@ -104,18 +105,17 @@ public class SaveFileElement {
 
     public SaveFileElement[] getChildren() {
 
-        int indextracker = linenumber-1;
+        int indextracker = id-1;
         int counter = 0;
 
-        if(Main.sfe_arraylist[indextracker].nodename == null){
-            System.out.println(Main.sfe_arraylist[indextracker].toString());
-        }
-
-        while(!(Main.sfe_arraylist[indextracker].openorclose.equals("close") && Main.sfe_arraylist[indextracker].nodeparent.trim().equals(nodename.trim()))){
+        while(!(Main.sfe_arraylist[indextracker].openorclose.equals("close") && Main.sfe_arraylist[indextracker].nodeparent.trim().equals(nodename.trim()) &&  Main.sfe_arraylist[indextracker].nodelevel == nodelevel)){
             counter++;
             indextracker++;
         }
 
+//                if(Main.sfe_arraylist[indextracker].openorclose.equals("close") && Main.sfe_arraylist[indextracker].nodeparent.trim().equals(nodename.trim()) && Main.sfe_arraylist[indextracker].nodelevel == 1){
+//                    System.out.println(Main.sfe_arraylist[indextracker].toString());
+//                }
 
         //todo:error here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         //todo: NO . . . REALLY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -136,7 +136,8 @@ public class SaveFileElement {
 
     @Override
     public String toString() {
-        return "linenumber" + " = " + linenumber + " \t | "
+        return "id" + " = " + id + " \t | "
+                + "linenumber" + " = " + linenumber + " \t | "
                 + "nodelevel" + " =  " + nodelevel + " \t | "
                 + "nodename" + " =  " + nodename + " \t | "
                 + "nodevalue" + " =  " + nodevalue + " | "

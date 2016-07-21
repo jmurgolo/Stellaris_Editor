@@ -10,7 +10,6 @@ import javax.swing.*;
 import java.util.Arrays;
 
 import static Stellaris.Main.sfe_arraylist;
-import static Stellaris.Main.sfe_arraylist_size;
 import static Stellaris.Utilities.*;
 
 class XML_Node {
@@ -29,18 +28,9 @@ class XML_Node {
     private static Integer[] leveldepthlist = new Integer[1];
     private static Integer[] previousleveldepthlist = new Integer[leveldepthlist.length];
 
-    XML_Node() {
-        leveldepthlist[0] = 0;
-    }
-
-    void xmlarize(int line, int lvl, String lt) {
-        if (sfe_arraylist_size == sfe_arraylist.length) {
-            addArrayCapacity(1);
-        }
-        sfe_arraylist[sfe_arraylist_size].linenumber = line;
-        sfe_arraylist[sfe_arraylist_size].originalnodevalue = lt;
-        sfe_arraylist_size++;
-    }
+    //XML_Node() {
+    //    leveldepthlist[0] = 0;
+    //}
 
     public static void processSfe_arraylist() {
 
@@ -52,7 +42,7 @@ class XML_Node {
         //so I only have one insert statement but need to do a shift for the {} at condition 0 where level goes up and down on same line
         int level_adjuster = 0;
 
-        for (int i = 0; i < sfe_arraylist_size; i++) {
+        for (int i = 0; i < sfe_arraylist.length; i++) {
             String temp_text = sfe_arraylist[i].getOriginalNodeValue();
             if (notBetween(temp_text, "=") <= 1) {
                 if (notBetween(temp_text, "{") > 0 && notBetween(temp_text, "}") > 0) {
@@ -97,13 +87,14 @@ class XML_Node {
                     action = "none";
                 }
 
-                Main.sfe_arraylist[i].nodelevel = level + level_adjuster;
-                Main.sfe_arraylist[i].nodename = ((node_name == null) ? "" : node_name);
-                Main.sfe_arraylist[i].nodevalue = node_value;
-                Main.sfe_arraylist[i].nodeparent = parent;
-                Main.sfe_arraylist[i].openorclose = action;
-                Main.sfe_arraylist[i].nodepath = level_holder;
-                Main.sfe_arraylist[i].nodedepth = Arrays.toString(leveldepthlist);
+                sfe_arraylist[i].id = i;
+                sfe_arraylist[i].nodelevel = level + level_adjuster;
+                sfe_arraylist[i].nodename = ((node_name == null) ? "" : node_name);
+                sfe_arraylist[i].nodevalue = node_value;
+                sfe_arraylist[i].nodeparent = parent;
+                sfe_arraylist[i].openorclose = action;
+                sfe_arraylist[i].nodepath = level_holder;
+                sfe_arraylist[i].nodedepth = Arrays.toString(leveldepthlist);
 
                 level_adjuster = 0;
 
@@ -119,7 +110,10 @@ class XML_Node {
                 }
 
                 for (int j = 0; j < temparray.length; j++) {
-
+                    if(sfe_arraylist.length-1 == i){
+                        addArrayCapacity(1);
+                        System.out.println(i);
+                    }
                     tempsfe = new SaveFileElement();
 
                     if (notBetween(temparray[j], "{") > 0 && notBetween(temparray[j], "}") > 0) {
@@ -165,17 +159,20 @@ class XML_Node {
                     }
 
                     if (j == 0) {
-                        Main.sfe_arraylist[i].nodelevel = level + level_adjuster;
-                        Main.sfe_arraylist[i].nodename = ((node_name == null) ? "" : node_name);
-                        Main.sfe_arraylist[i].nodevalue = node_value;
-                        Main.sfe_arraylist[i].nodeparent = parent;
-                        Main.sfe_arraylist[i].openorclose = action;
-                        Main.sfe_arraylist[i].nodepath = level_holder;
-                        Main.sfe_arraylist[i].nodedepth = Arrays.toString(leveldepthlist);
-                    } else {
-                        i++;
-                        tempsfe.originalnodevalue = Main.sfe_arraylist[i].getOriginalNodeValue();
-                        tempsfe.linenumber = Main.sfe_arraylist[i].linenumber;
+                        sfe_arraylist[i].id = i;
+                        sfe_arraylist[i].nodelevel = level + level_adjuster;
+                        sfe_arraylist[i].nodename = ((node_name == null) ? "" : node_name);
+                        sfe_arraylist[i].nodevalue = node_value;
+                        sfe_arraylist[i].nodeparent = parent;
+                        sfe_arraylist[i].openorclose = action;
+                        sfe_arraylist[i].nodepath = level_holder;
+                        sfe_arraylist[i].nodedepth = Arrays.toString(leveldepthlist);
+                    }
+                    else {
+
+                        tempsfe.id = i+j;
+                        tempsfe.originalnodevalue = sfe_arraylist[i].getOriginalNodeValue();
+                        tempsfe.linenumber = sfe_arraylist[i].linenumber;
                         tempsfe.nodelevel = level + level_adjuster;
                         tempsfe.nodename = ((node_name == null) ? "" : node_name);
                         tempsfe.nodevalue = node_value;
@@ -183,12 +180,13 @@ class XML_Node {
                         tempsfe.openorclose = action;
                         tempsfe.nodepath = level_holder;
                         tempsfe.nodedepth = Arrays.toString(leveldepthlist);
-
+                        i++;
                         //System.out.println(tempsfe.toString());
-                        Main.sfe_arraylist = addElement(Main.sfe_arraylist, tempsfe, i);
+                        sfe_arraylist = addElement(sfe_arraylist, tempsfe, i);
                     }
                 }
                 level_adjuster = 0;
+
             }
             progressbar.setValue(i);
             //progressbar.setString(String.valueOf(i));

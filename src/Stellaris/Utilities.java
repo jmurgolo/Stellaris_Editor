@@ -69,6 +69,7 @@ public class Utilities {
         for (int i = 0; i < list.length; i++) {
             arr1[i] = list[i];
         }
+//        arr1[arr1.length-1] = new SaveFileElement();
         return arr1;
     }
 

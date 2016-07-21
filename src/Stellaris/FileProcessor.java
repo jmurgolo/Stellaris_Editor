@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static Stellaris.Main.sfe_arraylist;
-import static Stellaris.Main.sfe_arraylist_size;
 import static Stellaris.Utilities.fillSfeArrayList;
 import static Stellaris.Utilities.main_Progress_Bar;
 import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
@@ -90,9 +89,10 @@ public class FileProcessor {
                 String temp = "";
                 XML_Node object_xmlnode = new XML_Node();
                 while ((temp = rd.readLine()) != null) {
-                    object_xmlnode.xmlarize(counter, object_xmlnode.level, temp);
+                    sfe_arraylist[counter-1].linenumber = counter;
+                    sfe_arraylist[counter-1].originalnodevalue = temp;
                     progressBar.setValue(counter);
-                    progressBar.setString(object_xmlnode.line_text);
+                    //progressBar.setString(object_xmlnode.line_text);
                     counter++;
                 }
             }
@@ -246,7 +246,7 @@ public class FileProcessor {
                     + "</td><td style='min-width:100px'>" + "nodevalue"
                     + "</td><td style='min-width:200px'>" + "originalnodevalue"
                     + "</td><td style='min-width:200px'>" + "nodedepth");
-            for (int i = 0; i < sfe_arraylist_size; i++) {
+            for (int i = 0; i < sfe_arraylist.length; i++) {
                 writer.write("<tr><td style='min-width:100px' >" + sfe_arraylist[i].linenumber
                         + "</td><td style='min-width:100px'>" + sfe_arraylist[i].nodelevel
                         + "</td><td style='min-width:100px'>" + sfe_arraylist[i].nodeparent
@@ -275,7 +275,7 @@ public class FileProcessor {
                     + "</td><td style='min-width:100px'>" + "nodevalue"
                     + "</td><td style='min-width:200px'>" + "originalnodevalue"
                     + "</td><td style='min-width:200px'>" + "nodedepth");
-            for (int i = 0; i < sfe_arraylist_size; i++) {
+            for (int i = 0; i < sfe_arraylist.length; i++) {
                 if (sfe_arraylist[i].getLineNumber() >= startlinenumber && sfe_arraylist[i].getLineNumber() <= endlinenumber) {
                     writer.write("<tr><td style='min-width:100px' >" + sfe_arraylist[i].linenumber
                             + "</td><td style='min-width:100px'>" + sfe_arraylist[i].nodelevel

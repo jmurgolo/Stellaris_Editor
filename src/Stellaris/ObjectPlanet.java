@@ -28,7 +28,7 @@ public class ObjectPlanet {
     private StringProperty prevent_anomaly = new SimpleStringProperty();
     private StringProperty spaceport = new SimpleStringProperty();
 
-    private SaveFileElement[] objectnodes;
+    public SaveFileElement[] objectnodes;
     private ObjectTile[] planettiles;
 
     public ObjectPlanet() {
@@ -108,13 +108,9 @@ public class ObjectPlanet {
             counter++;
         }
         if (objectnodes[counter].openorclose.equals("open") && objectnodes[counter].nodelevel == 2 && (objectnodes[counter].nodeparent.trim().equals("galactic_object") || objectnodes[counter].nodeparent.trim().equals("planet"))) {
-            //System.out.println(objectnodes[counter].getNodeName());
             temp = Integer.valueOf(objectnodes[counter].getNodeName().trim());
-            //System.out.println(temp);
         }
-        System.out.println(Arrays.toString(objectnodes));
         setid(temp);
-        System.out.println(" id ------------------------------------------------" + id);
     }
 
     private void findName() {

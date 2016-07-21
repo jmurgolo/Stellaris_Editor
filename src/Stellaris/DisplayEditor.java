@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static Stellaris.Main.*;
@@ -96,10 +97,10 @@ public class DisplayEditor {
         try {
             //get the country id index node
             List<SaveFileElement> countrieslist = new ArrayList<>();
-            for (i = 0; i < Main.sfe_arraylist.length; i++) {
-                if (Main.sfe_arraylist[i].nodeparent.trim().equals("country")) {
-                    if (Main.sfe_arraylist[i].openorclose.equals("open")) {
-                        countrieslist.add(Main.sfe_arraylist[i]);
+            for (i = 0; i < sfe_arraylist.length; i++) {
+                if (sfe_arraylist[i].nodeparent.trim().equals("country")) {
+                    if (sfe_arraylist[i].openorclose.equals("open")) {
+                        countrieslist.add(sfe_arraylist[i]);
                     }
                 }
             }
@@ -116,7 +117,7 @@ public class DisplayEditor {
                 countrynames[i] = countries[i].returnName();
             }
         }catch(Exception e){
-            System.out.println(Main.sfe_arraylist[i].toString());
+            System.out.println(sfe_arraylist[i].toString());
             e.printStackTrace();
         }
     }
@@ -124,10 +125,10 @@ public class DisplayEditor {
     private static void getPlanets() {
 
         List<SaveFileElement> planetlist = new ArrayList<>();
-        for (int i = 0; i < Main.sfe_arraylist.length; i++) {
-            if (Main.sfe_arraylist[i].nodeparent.trim().equals("planet")) {
-                if (Main.sfe_arraylist[i].openorclose.equals("open")) {
-                    planetlist.add(Main.sfe_arraylist[i]);
+        for (int i = 0; i < sfe_arraylist.length; i++) {
+            if (sfe_arraylist[i].nodeparent.trim().equals("planet")) {
+                if (sfe_arraylist[i].openorclose.equals("open")) {
+                    planetlist.add(sfe_arraylist[i]);
                 }
             }
         }
@@ -137,6 +138,8 @@ public class DisplayEditor {
         for (int i = 0; i < planetlist.size(); i++) {
             planetarray[i] = new ObjectPlanet();
             planetarray[i].setStellarObjectNodes(planetlist.get(i).getChildren());
+            System.out.println("Start ------------------- " + Arrays.toString(planetarray[i].objectnodes));
+
         }
     }
 
@@ -163,10 +166,10 @@ public class DisplayEditor {
 //    private static void getStars() {
 //
 //        List<SaveFileElement> starlist = new ArrayList<>();
-//        for (int i = 0; i < Main.sfe_arraylist.length; i++) {
-//            if (Main.sfe_arraylist[i].nodeparent.trim().equals("galactic_object")) {
-//                if (Main.sfe_arraylist[i].openorclose.equals("open")) {
-//                    starlist.add(Main.sfe_arraylist[i]);
+//        for (int i = 0; i < sfe_arraylist.length; i++) {
+//            if (sfe_arraylist[i].nodeparent.trim().equals("galactic_object")) {
+//                if (sfe_arraylist[i].openorclose.equals("open")) {
+//                    starlist.add(sfe_arraylist[i]);
 //                }
 //            }
 //        }

@@ -38,7 +38,7 @@ public class Main extends Application {
     //public static final org.apache.logging.log4j.Logger logger = LogManager.getLogger("Log");
 
     public static SaveFileElement[] sfe_arraylist;
-    public static int sfe_arraylist_size = 0;
+    //public static int sfe_arraylist_size = 0];
     public static ObjectCountry[] countries;
     public static ObjectStar[] stararray;
     public static ObjectPlanet[] planetarray;
