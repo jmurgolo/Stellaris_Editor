@@ -25,7 +25,7 @@ public class SaveFileElement {
 
     private int nodedepthlength;
 
-    public SaveFileElement(){
+    public SaveFileElement() {
         linenumber = 0;
         nodelevel = 0;
         nodename = "";
@@ -96,32 +96,36 @@ public class SaveFileElement {
                     }
                 }
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(this.toString());
             e.printStackTrace();
         }
-            return numberList;
+        return numberList;
     }
 
     public SaveFileElement[] getChildren() {
 
-        int indextracker = id-1;
+        int indextracker = id;
         int counter = 0;
+        SaveFileElement[] children = null;
 
-        while(!(Main.sfe_arraylist[indextracker].openorclose.equals("close") && Main.sfe_arraylist[indextracker].nodeparent.trim().equals(nodename.trim()) &&  Main.sfe_arraylist[indextracker].nodelevel == nodelevel)){
-            counter++;
-            indextracker++;
+        try {
+            while (!(Main.sfe_arraylist[indextracker].openorclose.equals("close") && Main.sfe_arraylist[indextracker].nodelevel == nodelevel-1 &&  Main.sfe_arraylist[indextracker].nodeparent.trim().equals(nodename.trim()))){ //Main.sfe_arraylist[indextracker].nodedepth.equals(nodedepth))) { //&&
+                counter++;
+                indextracker++;
+                if (Main.sfe_arraylist.length == indextracker) {
+                    System.out.println("Error: DisplayEditor 2: " + this.toString());
+                    break;
+                }
+            }
+
+            children = new SaveFileElement[counter];
+
+            System.arraycopy(Main.sfe_arraylist, id, children, 0, counter);
+        } catch (Exception e) {
+            System.out.println("Error: DisplayEditor 2: " + this.toString());
+            e.printStackTrace();
         }
-
-//                if(Main.sfe_arraylist[indextracker].openorclose.equals("close") && Main.sfe_arraylist[indextracker].nodeparent.trim().equals(nodename.trim()) && Main.sfe_arraylist[indextracker].nodelevel == 1){
-//                    System.out.println(Main.sfe_arraylist[indextracker].toString());
-//                }
-
-        //todo:error here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //todo: NO . . . REALLY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-        SaveFileElement[] children = new SaveFileElement[counter];
-        System.arraycopy(Main.sfe_arraylist, linenumber-1, children, 0, counter);
 
         return children;
     }

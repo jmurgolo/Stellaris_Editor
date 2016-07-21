@@ -37,6 +37,7 @@ class XML_Node {
         JProgressBar progressbar = main_Progress_Bar(0, sfe_arraylist.length, "Proccessing Nodes");
         String parent = "";
         int level_holder = 0;
+        leveldepthlist[0] = 0;
 
 
         //so I only have one insert statement but need to do a shift for the {} at condition 0 where level goes up and down on same line
@@ -112,7 +113,7 @@ class XML_Node {
                 for (int j = 0; j < temparray.length; j++) {
                     if(sfe_arraylist.length-1 == i){
                         addArrayCapacity(1);
-                        System.out.println(i);
+                        //System.out.println(i);
                     }
                     tempsfe = new SaveFileElement();
 

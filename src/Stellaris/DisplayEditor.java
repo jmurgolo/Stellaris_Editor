@@ -14,7 +14,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static Stellaris.Main.*;
@@ -64,7 +63,7 @@ public class DisplayEditor {
         sizeCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Integer>("size"));
 
         TableColumn nameCol = new TableColumn("Name");
-        nameCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("name"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("objectname"));
 
         TableColumn typeCol = new TableColumn("Type");
         typeCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("objecttype"));
@@ -112,12 +111,13 @@ public class DisplayEditor {
                 countries[i] = new ObjectCountry();
                 countries[i].setCountryNodes(countrieslist.get(i).getChildren());
             }
+
             countrynames = new String[countries.length];
             for (i = 0; i < countries.length; i++) {
                 countrynames[i] = countries[i].returnName();
             }
         }catch(Exception e){
-            System.out.println(sfe_arraylist[i].toString());
+            System.out.println("Error: DisplayEditor 1: " + sfe_arraylist[i].toString());
             e.printStackTrace();
         }
     }
@@ -138,8 +138,7 @@ public class DisplayEditor {
         for (int i = 0; i < planetlist.size(); i++) {
             planetarray[i] = new ObjectPlanet();
             planetarray[i].setStellarObjectNodes(planetlist.get(i).getChildren());
-            System.out.println("Start ------------------- " + Arrays.toString(planetarray[i].objectnodes));
-
+            //System.out.println("Start ------------------- " + Arrays.toString(planetarray[i].objectnodes));
         }
     }
 

@@ -17,7 +17,7 @@ public class ObjectPlanet {
     private IntegerProperty id = new SimpleIntegerProperty();
     private IntegerProperty size = new SimpleIntegerProperty();
     private StringProperty orbitaldeposittile = new SimpleStringProperty();
-    private StringProperty name = new SimpleStringProperty();
+    private StringProperty objectname = new SimpleStringProperty();
     private StringProperty objectclass = new SimpleStringProperty();
     private StringProperty objecttype = new SimpleStringProperty();
     private StringProperty owner = new SimpleStringProperty();
@@ -35,7 +35,7 @@ public class ObjectPlanet {
         setid               (0);
         setsize                (0);
         setorbitaldeposittile  ("");
-        setname                ("");
+        setobjectname          ("");
         setobjectclass         ("");
         setobjecttype          ("");
         setowner               ("");
@@ -55,11 +55,11 @@ public class ObjectPlanet {
     public void setsize(Integer i){ size.set(i); }
     public IntegerProperty sizeProperty() { return size; }
 
-    public String getname(){
-        return name.get();
+    public String getobjectname(){
+        return objectname.get();
     }
-    public void setname(String s){ name.set(s); }
-    public StringProperty nameProperty() { return name; }
+    public void setobjectname(String s){ objectname.set(s); }
+    public StringProperty objectnameProperty() { return objectname; }
 
     public String getobjectclass(){
         return objectclass.get();
@@ -100,17 +100,22 @@ public class ObjectPlanet {
         Integer temp = 0;
         int counter = 0;
 
-        while (!(objectnodes[counter].openorclose.equals("open") && objectnodes[counter].nodelevel == 2) && (objectnodes[counter].nodeparent.trim().equals("galactic_object") || objectnodes[counter].nodeparent.trim().equals("planet"))) {
-            if (objectnodes.length - 1 == counter) {
-                Utilities.print("break");
-                break;
+        try {
+            while (!(objectnodes[counter].openorclose.equals("open") && objectnodes[counter].nodelevel == 2) && (objectnodes[counter].nodeparent.trim().equals("galactic_object") || objectnodes[counter].nodeparent.trim().equals("planet"))) {
+                if (objectnodes.length - 1 == counter) {
+                    Utilities.print("break");
+                    break;
+                }
+                counter++;
             }
-            counter++;
+            if (objectnodes[counter].openorclose.equals("open") && objectnodes[counter].nodelevel == 2 && (objectnodes[counter].nodeparent.trim().equals("galactic_object") || objectnodes[counter].nodeparent.trim().equals("planet"))) {
+                temp = Integer.valueOf(objectnodes[counter].getNodeName().trim());
+            }
+            setid(temp);
+        }catch(Exception e){
+            System.out.println("Error: ObjectPlanet 1: " + this.toString());
+            e.printStackTrace();
         }
-        if (objectnodes[counter].openorclose.equals("open") && objectnodes[counter].nodelevel == 2 && (objectnodes[counter].nodeparent.trim().equals("galactic_object") || objectnodes[counter].nodeparent.trim().equals("planet"))) {
-            temp = Integer.valueOf(objectnodes[counter].getNodeName().trim());
-        }
-        setid(temp);
     }
 
     private void findName() {
@@ -118,16 +123,17 @@ public class ObjectPlanet {
         String temp = "";
         int counter = 0;
 
+        //System.out.println("---------------------------------------" + Arrays.toString(objectnodes));
         while(!(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodename.trim().equals("name") && objectnodes[counter].nodelevel == 2)){
             if(objectnodes.length-1 == counter) {
                 break;
             }
             counter++;
         }
-        if(objectnodes.length > counter && objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodename.trim().equals("name") && objectnodes[counter].nodelevel == 2) {
+        if(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodename.trim().equals("name") && objectnodes[counter].nodelevel == 2) {
             temp = objectnodes[counter].getNodeValue();
         }
-        setname(temp.replaceAll("\"","").replaceAll("=",""));
+        setobjectname(temp.replaceAll("\"","").replaceAll("=",""));
     }
 
     private void findOwner() {
@@ -144,7 +150,7 @@ public class ObjectPlanet {
         if(objectnodes.length > counter && objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodename.trim().equals("owner") && objectnodes[counter].nodelevel == 2) {
             temp = objectnodes[counter].getNodeValue();
         }
-        setname(temp.replaceAll("\"","").replaceAll("=",""));
+        setowner(temp.replaceAll("\"","").replaceAll("=",""));
     }
 
     private void findObjectClass() {
@@ -254,4 +260,16 @@ public class ObjectPlanet {
         return temp;
     }
 
+    @Override
+    public String toString() {
+        return  "id" + " = " + getid() + " \t | "
+                + "size" + " =  " + getsize() + " \t | "
+                + "orbitaldeposittile" + " =  " + getorbitaldeposittile() + " \t | "
+                + "name" + " =  " + getobjectname() + " | "
+                + "objectclass" + " =  " + getobjectclass() + " | "
+                + "objecttype" + " =  " + getobjecttype() + " | "
+                + "owner" + " =  " + getowner() + " | "
+                + "objectnodes = " + Arrays.toString(objectnodes)
+                + "\r\n";
+    }
 }
