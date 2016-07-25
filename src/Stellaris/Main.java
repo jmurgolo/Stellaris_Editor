@@ -7,6 +7,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.apache.commons.compress.archivers.ArchiveException;
@@ -43,7 +44,8 @@ public class Main extends Application {
     public static ObjectStar[] stararray;
     public static ObjectPlanet[] planetarray;
     public static File savefile;
-
+    public static final BorderPane componentLayout = new BorderPane();
+    public static Stage pstage;
     public static final Comparator<SaveFileElement> name_comparator = Comparator.comparing(SaveFileElement::getNodeName);
 
     Path current_relative_path = Paths.get("");
@@ -62,7 +64,7 @@ public class Main extends Application {
 
         primaryStage.setTitle("Stellaris Save Game Editor");
 
-        VBox componentLayout = new VBox();
+        //VBox componentLayout = new VBox();
         //componentLayout.setPadding(new Insets(10, 10, 10, 10));
         Path this_path = Paths.get((current_absolute_path +"\\Art\\").toString());
         Path this_path_string = this_path.resolve("clusters_2_ritter.jpg");
@@ -70,10 +72,10 @@ public class Main extends Application {
                 "-fx-background-position: center center; " +
                 "-fx-background-repeat: no-repeat;");
 
-        MenuBar menuBar = getMenuBar(primaryStage, componentLayout);
+        MenuBar menuBar = getMenuBar(primaryStage,componentLayout);
 
         //put the vbox in the top area of the BorderPane
-        componentLayout.getChildren().add(menuBar);
+        componentLayout.setTop(menuBar);
         //VBox vbox = new VBox();
 
         //Add the BorderPane to the Scene
@@ -82,6 +84,8 @@ public class Main extends Application {
         //Add the Scene to the Stage
         primaryStage.setScene(appScene);
         primaryStage.show();
+        pstage = primaryStage;
+
     }
 
     private void processSaveFile(Stage s) {
@@ -96,26 +100,14 @@ public class Main extends Application {
             FileProcessor.unZipIt(savefile.getPath(), savefile.getPath().replace(savefile.getName(), ""));
             File filetoprocess = new File(savefile.getPath().replace(savefile.getName(), "") + File.separator + "temp" + File.separator + "gamestate");
             FileProcessor.createXmlFileAndDb(filetoprocess);
-            //TODO: SPECIFY FILE LOCATIONS
-
-            int rows = 0;
-            try {
-
-                JProgressBar progressbar = main_Progress_Bar(0, rows, "Filling GUI");
-                progressbar.setVisible(false);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ArchiveException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         processSfe_arraylist();
-        FileProcessor.createTempFileofArray(56461,745219); //"nodename","name");
+        FileProcessor.createTempFileofArray(56461,745219);
     }
 
-    private MenuBar getMenuBar(Stage primaryStage, VBox componentLayout){
+    private MenuBar getMenuBar(Stage primaryStage, BorderPane componentLayout){
         final Menu fileMenu = new Menu("File");
         MenuItem openMenuItem = new MenuItem("Open");
 
@@ -130,7 +122,7 @@ public class Main extends Application {
         openMenuItem.setOnAction((event) -> {
             //TODO: fix error when x-ing out of file menu without selecting file
             processSaveFile(primaryStage);
-            componentLayout.getChildren().add(DisplayEditor.creatTable());
+            componentLayout.setCenter(DisplayEditor.creatTable());
         });
 
         saveMenuItem.setOnAction((event) -> {

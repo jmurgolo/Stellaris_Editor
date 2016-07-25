@@ -127,6 +127,27 @@ public class ObjectTile {
         }
     }
 
+    private void findResources(){
+        String temp = "";
+        int counter = 0;
+
+        if (objectnodes.length > counter) {
+            while (!(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodelevel == 4 && objectnodes[counter].getNodeName().trim().equals("deposit"))) {
+                if (objectnodes.length - 1 == counter) {
+                    //Utilities.print("break");
+                    break;
+                }
+                counter++;
+            }
+            if (objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodelevel == 4 && objectnodes[counter].getNodeName().trim().equals("deposit")) {
+                temp = objectnodes[counter].nodevalue.trim().replace("=", "");
+            }
+            setdeposit(temp);
+        } else {
+            //System.out.println(this.toString());
+        }
+    }
+
     public String toString() {
         return "\r\n" +
                 "id" + " = " + getid() + " | "

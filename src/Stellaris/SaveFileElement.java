@@ -119,9 +119,9 @@ public class SaveFileElement {
                 }
             }
 
-            children = new SaveFileElement[counter];
+            children = new SaveFileElement[counter+1];
 
-            System.arraycopy(Main.sfe_arraylist, id, children, 0, counter);
+            System.arraycopy(Main.sfe_arraylist, id, children, 0, counter+1);
         } catch (Exception e) {
             System.out.println("Error: DisplayEditor 2: " + this.toString());
             e.printStackTrace();

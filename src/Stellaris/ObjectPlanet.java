@@ -1,9 +1,6 @@
 package Stellaris;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +13,7 @@ public class ObjectPlanet {
 
     private IntegerProperty id = new SimpleIntegerProperty();
     private IntegerProperty size = new SimpleIntegerProperty();
+    private LongProperty orbitaldeposittileinteger = new SimpleLongProperty();
     private StringProperty orbitaldeposittile = new SimpleStringProperty();
     private StringProperty objectname = new SimpleStringProperty();
     private StringProperty objectclass = new SimpleStringProperty();
@@ -50,6 +48,10 @@ public class ObjectPlanet {
     public Integer getid(){ return id.get(); }
     public void setid(Integer i){ id.set(i); }
     public IntegerProperty idProperty() { return id; }
+
+    public Long getorbitaldeposittileinteger(){ return orbitaldeposittileinteger.get(); }
+    public void setorbitaldeposittileinteger(Long i){ orbitaldeposittileinteger.set(i); }
+    public LongProperty orbitaldeposittileintegerProperty() { return orbitaldeposittileinteger; }
 
     public Integer getsize(){ return size.get(); }
     public void setsize(Integer i){ size.set(i); }
@@ -90,6 +92,7 @@ public class ObjectPlanet {
         findOwner();
         findOrbitalDepositTile();
         getTiles();
+        System.out.println(this.getid() + " | " + this.getorbitaldeposittile()); // + " | " +  Arrays.toString(planettiles));
         //figureoutorbitaldeposittile();
         //System.out.println(Arrays.toString(this.objectnodes));
 
@@ -205,20 +208,21 @@ public class ObjectPlanet {
     }
 
     private void findOrbitalDepositTile() {
-        //todo: need to handle two equal signs on same line
         String temp = "";
         int counter = 0;
 
-        while(!(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodelevel == 2 && objectnodes[counter].nodename.trim().equals("orbital_deposit_tile"))){
+        while(!(objectnodes[counter].nodename.trim().equals("orbital_deposit_tile"))){
             if(objectnodes.length-1 == counter) {
+                System.out.println("Error: ObjectPlanet 214: " + this.toString());
                 break;
             }
             counter++;
         }
-        if(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodelevel == 2 && objectnodes[counter].nodename.trim().equals("orbital_deposit_tile")) {
-            temp = objectnodes[counter].nodevalue.trim().replace("=","");
+        if(objectnodes[counter].nodename.trim().equals("orbital_deposit_tile")) {
+            temp = objectnodes[counter].getNodeValue();
         }
-        setorbitaldeposittile(temp);
+        setorbitaldeposittile(temp.replaceAll("\"","").replaceAll("=","").replaceAll("}",""));
+        setorbitaldeposittileinteger(Long.parseLong(temp.replaceAll("\"","").replaceAll("=","").replaceAll("}","").trim()));
     }
 
     private void getTiles() {

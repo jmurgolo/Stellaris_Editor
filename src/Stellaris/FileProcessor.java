@@ -17,6 +17,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import static Stellaris.Main.pstage;
 import static Stellaris.Main.sfe_arraylist;
 import static Stellaris.Utilities.fillSfeArrayList;
 import static Stellaris.Utilities.main_Progress_Bar;
@@ -80,7 +81,7 @@ public class FileProcessor {
             e.printStackTrace();
         }
 
-        JProgressBar progressBar = main_Progress_Bar(0, filelinecount, "Processing Save File");
+        JProgressBar progressBar = main_Progress_Bar(0, filelinecount, "Processing Save File", pstage);
 
         //TODO: fix file locations
 

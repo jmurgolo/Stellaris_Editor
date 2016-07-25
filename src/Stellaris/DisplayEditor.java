@@ -4,14 +4,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import Stellaris.UtilitiesTable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ public class DisplayEditor {
     private static String[] countrynames;
     private static final List<ObjectPlanet> countriesobjects = new ArrayList<>();
 
-    public static VBox creatTable() {
+    public static BorderPane creatTable() {
 
         getCountries();
         getPlanets();
@@ -49,10 +49,10 @@ public class DisplayEditor {
         label.setFont(new Font("Arial", 20));
 
         table.setEditable(true);
-        table.setPrefWidth(Double.MAX_VALUE);
-        table.setPrefHeight(Double.MAX_VALUE);
-        table.setMinSize(400, 400);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        //table.getSelectionModel().setCellSelectionEnabled( true );
+        table.getSelectionModel().setSelectionMode( SelectionMode.MULTIPLE );
+        UtilitiesTable.installCopyPasteHandler(table);
 
         TableColumn idCol = new TableColumn("Id");
         idCol.setMaxWidth(450);
@@ -71,24 +71,41 @@ public class DisplayEditor {
         TableColumn classCol = new TableColumn("Class");
         classCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("objectclass"));
 
+        TableColumn restileCol = new TableColumn("Orbital Resource Tile");
+        restileCol.setEditable(true);
+        restileCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Long>("orbitaldeposittileinteger"));
+
+
         comboBox.setOnAction((event) -> {
             table.getColumns().clear();
+            countriesobjects.clear();
             String selectedCountry = comboBox.getSelectionModel().getSelectedItem();
             getSelectedCountryStellarObjects(selectedCountry);
             ObservableList<ObjectPlanet> data = FXCollections.observableArrayList(countriesobjects);
             table.setItems(data);
-            table.getColumns().addAll(idCol, sizeCol, nameCol, typeCol, classCol);
+            table.getColumns().addAll(idCol, sizeCol, nameCol, typeCol, classCol, restileCol);
             System.out.println(table.getItems().size());
         });
 
         VBox vbox = new VBox();
-        //vbox.setSpacing(5);
-        vbox.setPadding(new Insets(20, 20, 20, 20));
-        vbox.setStyle("-fx-background-color: #336699;");
-        //vbox.setPrefSize(1000,500);
-        vbox.getChildren().addAll(label, hb, table);
+        vbox.setPadding(new Insets(10, 10, 10, 10));
+        vbox.prefWidthProperty().bind(componentLayout.prefWidthProperty());
+        vbox.prefHeightProperty().bind(componentLayout.prefHeightProperty());
+//        vbox.setStyle("-fx-padding: 10;" +
+//                "-fx-border-style: solid inside;" +
+//                "-fx-border-width: 2;" +
+//                "-fx-border-insets: 5;" +
+//                "-fx-border-radius: 5;" +
+//                "-fx-border-color: blue;");
+        table.setMinSize(400, vbox.getPrefHeight());
+        BorderPane bpane = new BorderPane();
+        bpane.setStyle("-fx-background-color: #336699;");
+        bpane.setPadding(new Insets(10, 10, 10, 10));
+        vbox.getChildren().addAll(label, hb);
+        bpane.setTop(vbox);
+        bpane.setCenter(table);
 
-        return vbox;
+        return bpane;
     }
 
     private static void getCountries() {

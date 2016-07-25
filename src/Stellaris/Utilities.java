@@ -1,6 +1,7 @@
 package Stellaris;
 
 import javafx.beans.property.StringProperty;
+import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.swing.*;
@@ -127,7 +128,7 @@ public class Utilities {
         return arr1;
     }
 
-    public static JProgressBar main_Progress_Bar(int start, int end, String title) {
+    public static JProgressBar main_Progress_Bar(int start, int end, String title, Stage stage) {
         JProgressBar progressBar = new JProgressBar(start, end);
         progressBar.setValue(0);
         progressBar.setStringPainted(true);
@@ -135,9 +136,17 @@ public class Utilities {
         progressBar.setBorder(border);
         JFrame frame = new JFrame(title);
         Container content = frame.getContentPane();
-        content.add(progressBar, BorderLayout.NORTH);
-        frame.setLocationRelativeTo(null);
+
         frame.setSize(600, 100);
+        Double xpos = ((stage.getX() + stage.getWidth() / 2) - frame.getWidth() / 2);
+        Double ypos = ((stage.getY() + stage.getHeight() / 2) - frame.getHeight() / 2);
+
+        frame.setLocation(xpos.intValue(),ypos.intValue());
+
+        content.add(progressBar, BorderLayout.NORTH);
+        //frame.setLocationRelativeTo(null);
+
+
         frame.setVisible(true);
         progressBar.addComponentListener(new ComponentListener() {
             @Override

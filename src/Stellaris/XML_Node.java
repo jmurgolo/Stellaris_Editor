@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import javax.swing.*;
 import java.util.Arrays;
 
+import static Stellaris.Main.pstage;
 import static Stellaris.Main.sfe_arraylist;
 import static Stellaris.Utilities.*;
 
@@ -34,7 +35,7 @@ class XML_Node {
 
     public static void processSfe_arraylist() {
 
-        JProgressBar progressbar = main_Progress_Bar(0, sfe_arraylist.length, "Proccessing Nodes");
+        JProgressBar progressbar = main_Progress_Bar(0, sfe_arraylist.length, "Proccessing Nodes", pstage);
         String parent = "";
         int level_holder = 0;
         leveldepthlist[0] = 0;
