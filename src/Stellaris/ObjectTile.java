@@ -5,6 +5,10 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.util.Arrays;
+
+import static Stellaris.Utilities.addArrayCapacity;
+
 /**
  * Created by jmm on 7/16/2016.
  */
@@ -17,6 +21,9 @@ public class ObjectTile {
     private StringProperty pop = new SimpleStringProperty();
     private StringProperty building = new SimpleStringProperty();
     private StringProperty prevbuilding = new SimpleStringProperty();
+
+    private StringProperty[] resourcetype = new StringProperty[0];
+    private StringProperty[] resourcequantity = new StringProperty[0];
 
     private StringProperty[] resources;
 
@@ -74,10 +81,23 @@ public class ObjectTile {
     public void setprevbuilding(String s){ prevbuilding.set(s); }
     public StringProperty prevbuildingProperty() { return prevbuilding; }
 
+    public String getresourcetype(int index){
+        return resourcetype[index].get();
+    }
+    public void setresourcetype(String s, int index){ resourcetype[index].set(s); }
+    public StringProperty[] resourcetypeProperty() { return resourcetype; }
+
+    public String getresourcequantity(int index){
+        return resourcequantity[index].get();
+    }
+    public void setresourcequantity(String s, int index){ resourcequantity[index].set(s); }
+    public StringProperty[] resourcequantityProperty() { return resourcequantity; }
+
     public void setTileObjectNode(SaveFileElement[] list) {
         objectnodes = list;
         findId();
         findDeposit();
+        findResources();
     }
 
     public SaveFileElement[] getTileObjectNode() {
@@ -128,23 +148,39 @@ public class ObjectTile {
     }
 
     private void findResources(){
-        String temp = "";
         int counter = 0;
 
         if (objectnodes.length > counter) {
-            while (!(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodelevel == 4 && objectnodes[counter].getNodeName().trim().equals("deposit"))) {
+            while (!(objectnodes[counter].nodeparent.trim().equals("resources"))) {
+                //System.out.println(objectnodes[counter].nodeparent.trim());
                 if (objectnodes.length - 1 == counter) {
-                    //Utilities.print("break");
+                    //System.out.println("break");
                     break;
                 }
                 counter++;
             }
-            if (objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodelevel == 4 && objectnodes[counter].getNodeName().trim().equals("deposit")) {
-                temp = objectnodes[counter].nodevalue.trim().replace("=", "");
+            if (objectnodes[counter].nodeparent.trim().equals("resources")) {
+                //System.out.println(objectnodes[counter].nodeparent.trim());
+                for(int i = 0 ; (i+counter) < objectnodes.length ; i++) {
+                    resourcetype = addArrayCapacity(resourcetype,1);
+                    resourcetype[i] = new SimpleStringProperty();
+                    resourcetype[i].set(objectnodes[counter].nodename.trim().replace("=", "").replace("{", "").replace("}", ""));
+                    resourcequantity = addArrayCapacity(resourcequantity,1);
+                    resourcequantity[i] = new SimpleStringProperty();
+                    if(objectnodes[counter].nodevalue.trim().replace("=", "").replace("{", "").replace("}", "").split(" ").length > 1){
+                        resourcequantity[i].set(objectnodes[counter].nodevalue.trim().replace("=", "").replace("{", "").replace("}", "").split(" ")[1]);
+                    }else{
+                        resourcequantity[i].set(objectnodes[counter].nodevalue.trim().replace("=", "").replace("{", "").replace("}", ""));
+                    }
+                    //System.out.println(getresourcetype(i) + " | " + getresourcequantity(i));
+                    counter++;
+                    if(objectnodes[counter].nodeparent.trim().equals("resources") && objectnodes[counter].openorclose.equals("close")){
+                        break;
+                    }
+                }
             }
-            setdeposit(temp);
         } else {
-            //System.out.println(this.toString());
+            System.out.println(this.toString());
         }
     }
 
@@ -157,8 +193,9 @@ public class ObjectTile {
                 + "pop" + " =  " + getpop() + " | "
                 + "building" + " =  " + getbuilding() + " | "
                 + "prevbuilding" + " =  " + getprevbuilding() + " | "
+                + "resourcetype" + " =  " + Arrays.toString(resourcetype) + " | "
+                + "resourcequantity" + " =  " + Arrays.toString(resourcequantity) + " | "
                 //+ "objectnodes" + " =  " + Arrays.toString(objectnodes) + " | "
-                //+ "pop" + " =  " + pop + " | "
                 + "\r\n";
     }
 }
