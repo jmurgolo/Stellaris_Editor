@@ -364,6 +364,43 @@ public class ObjectPlanet {
         setorbitaldeposittileinteger(Long.parseLong(temp.replaceAll("\"", "").replaceAll("=", "").replaceAll("}", "").trim()));
     }
 
+    private void findTiles() {
+
+        List<SaveFileElement> tilelist = new ArrayList<>();
+        for (int i = 0; i < objectnodes.length; i++) {
+            if (objectnodes[i].nodeparent.trim().equals("tiles")) {
+                if (objectnodes[i].openorclose.equals("open")) {
+                    tilelist.add(objectnodes[i]);
+                }
+            }
+        }
+
+        ObjectTile planettilestemp[] = new ObjectTile[tilelist.size()];
+
+        for (int i = 0; i < tilelist.size(); i++) {
+            planettilestemp[i] = new ObjectTile();
+            planettilestemp[i].setTileObjectNode(tilelist.get(i).getChildren());
+            //System.out.println(Arrays.toString(planettiles[i].getTileObjectNode()));
+        }
+
+        if (planettilestemp.length > 0) {
+            planettiles = new ObjectTile[planettilestemp[planettilestemp.length - 1].getid()];
+            System.out.println(getorbitaldeposittile() + " " + planettiles.length);
+            for (int i = 0; i < planettilestemp.length; i++) {
+                //System.out.println(planettilestemp[i].getid());
+                planettiles[i] = new ObjectTile();
+                if (planettilestemp[i].getid().equals(i)) {
+                    //System.out.println(planettilestemp[i].getid());
+                    planettiles[planettilestemp[i].getid()] = planettilestemp[i];
+                    //System.out.println(Arrays.toString(planettiles[i].getTileObjectNode()));
+                }
+            }
+        } else {
+            planettiles = planettilestemp;
+        }
+
+    }
+
     private void findOrbitalResources() {
         try {
             if (getid().trim().equals(getorbitaldeposittile().trim())) {
@@ -417,9 +454,7 @@ public class ObjectPlanet {
             } else if (getorbitaldeposittile().startsWith("844442")) {
                 setorbitaldeposittiletypeone(planettiles[0].getresourcetype(23));
                 setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(23));
-            }
-
-            else if (getorbitaldeposittile().trim().startsWith("1125899")) {
+            } else if (getorbitaldeposittile().trim().startsWith("1125899")) {
                 setorbitaldeposittiletypeone(planettiles[0].getresourcetype(4));
                 setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(4));
             } else if (getorbitaldeposittile().trim().startsWith("1125904")) {
@@ -432,7 +467,6 @@ public class ObjectPlanet {
                 setorbitaldeposittiletypeone(planettiles[0].getresourcetype(19));
                 setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(19));
             } else if (getorbitaldeposittile().trim().startsWith("1125917")) {
-                System.out.println(getorbitaldeposittile());
                 setorbitaldeposittiletypeone(planettiles[0].getresourcetype(24));
                 setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(24));
             } else if (getorbitaldeposittile().trim().startsWith("429497")) {
@@ -448,30 +482,10 @@ public class ObjectPlanet {
                 setorbitaldeposittiletypeone(planettiles[0].getresourcetype(20));
                 setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(20));
             } else {
-                System.out.println("not in list: " + getorbitaldeposittile());
+                //System.out.println("not in list: " + getorbitaldeposittile());
             }
-        }catch(Exception e){
-            System.out.println(getorbitaldeposittile());
-        }
-    }
-
-    private void findTiles() {
-
-        List<SaveFileElement> tilelist = new ArrayList<>();
-        for (int i = 0; i < objectnodes.length; i++) {
-            if (objectnodes[i].nodeparent.trim().equals("tiles")) {
-                if (objectnodes[i].openorclose.equals("open")) {
-                    tilelist.add(objectnodes[i]);
-                }
-            }
-        }
-
-        planettiles = new ObjectTile[tilelist.size()];
-
-        for (int i = 0; i < tilelist.size(); i++) {
-            planettiles[i] = new ObjectTile();
-            planettiles[i].setTileObjectNode(tilelist.get(i).getChildren());
-            //System.out.println(Arrays.toString(planettiles[i].getTileObjectNode()));
+        } catch (Exception e) {
+            System.out.println("Error: " + getorbitaldeposittile() + e);
         }
     }
 
