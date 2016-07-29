@@ -2,6 +2,7 @@ package Stellaris;
 
 import javafx.beans.property.*;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -43,7 +44,7 @@ public class ObjectPlanet {
         setobjectclass("");
         setobjecttype("");
         setowner("");
-        //setcontroller          ("");
+        setcontroller          ("");
         //setpop                 ("");
         //setorbitals            ("");
         //setentity              ("");
@@ -147,6 +148,16 @@ public class ObjectPlanet {
         return owner;
     }
 
+    public String getcontroller() {
+        return controller.get();
+    }
+    public void setcontroller(String s) {
+        controller.set(s);
+    }
+    public StringProperty controllerProperty() {
+        return controller;
+    }
+
     public String getorbitaldeposittiletypeone() {
         return orbitaldeposittiletypeone.get();
     }
@@ -228,6 +239,7 @@ public class ObjectPlanet {
         findType();
         findObjectClass();
         findOwner();
+        findController();
         findOrbitalDepositTile();
         findTiles();
         findOrbitalResources();
@@ -293,6 +305,23 @@ public class ObjectPlanet {
             temp = objectnodes[counter].getNodeValue();
         }
         setowner(temp.replaceAll("\"", "").replaceAll("=", ""));
+    }
+
+    private void findController() {
+
+        String temp = "";
+        int counter = 0;
+
+        while (!(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodename.trim().equals("controller") && objectnodes[counter].nodelevel == 2)) {
+            if (objectnodes.length - 1 == counter) {
+                break;
+            }
+            counter++;
+        }
+        if (objectnodes.length > counter && objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodename.trim().equals("controller") && objectnodes[counter].nodelevel == 2) {
+            temp = objectnodes[counter].getNodeValue();
+        }
+        setcontroller(temp.replaceAll("\"", "").replaceAll("=", ""));
     }
 
     private void findObjectClass() {
@@ -380,113 +409,122 @@ public class ObjectPlanet {
         for (int i = 0; i < tilelist.size(); i++) {
             planettilestemp[i] = new ObjectTile();
             planettilestemp[i].setTileObjectNode(tilelist.get(i).getChildren());
-            //System.out.println(Arrays.toString(planettiles[i].getTileObjectNode()));
         }
 
         if (planettilestemp.length > 0) {
-            planettiles = new ObjectTile[planettilestemp[planettilestemp.length - 1].getid()];
-            System.out.println(getorbitaldeposittile() + " " + planettiles.length);
-            for (int i = 0; i < planettilestemp.length; i++) {
-                //System.out.println(planettilestemp[i].getid());
+            planettiles = new ObjectTile[planettilestemp[planettilestemp.length - 1].getid()+1];
+            for (int i = 0; i < planettiles.length; i++) {
                 planettiles[i] = new ObjectTile();
-                if (planettilestemp[i].getid().equals(i)) {
-                    //System.out.println(planettilestemp[i].getid());
+                planettiles[i].setid(i);
+            }
+            for (int i = 0; i < planettilestemp.length; i++) {
                     planettiles[planettilestemp[i].getid()] = planettilestemp[i];
-                    //System.out.println(Arrays.toString(planettiles[i].getTileObjectNode()));
-                }
             }
         } else {
             planettiles = planettilestemp;
         }
 
+//        System.out.println(orbitaldeposittile);
+//        System.out.println("tilelist: " + tilelist.size());
+//        System.out.println("planettilestemp: " +  planettilestemp.length);
+//        System.out.println("highid: " + planettilestemp[planettilestemp.length - 1].getid());
+//        System.out.println("planettiles: " + planettiles.length  );
+//        System.out.println(Arrays.toString(planettiles)+ "\r\n");
+
     }
 
     private void findOrbitalResources() {
-        try {
+        //try {
             if (getid().trim().equals(getorbitaldeposittile().trim())) {
                 setorbitaldeposittiletypeone(planettiles[0].getresourcetype(0));
                 setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(0));
+                setorbitaldeposittiletypetwo(planettiles[0].getresourcetype(1));
+                setorbitaldeposittilevaluetwo(planettiles[0].getresourcequantity(1));
 
             } else if (getorbitaldeposittile().startsWith("281474")) {
-                setorbitaldeposittiletypeone(planettiles[0].getresourcetype(1));
-                setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(1));
+                setorbitaldeposittiletypeone(planettiles[1].getresourcetype(0));
+                setorbitaldeposittilevalueone(planettiles[1].getresourcequantity(0));
             } else if (getorbitaldeposittile().startsWith("281479")) {
-                setorbitaldeposittiletypeone(planettiles[0].getresourcetype(6));
-                setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(6));
-            } else if (getorbitaldeposittile().startsWith("281435")) {
-                setorbitaldeposittiletypeone(planettiles[0].getresourcetype(11));
-                setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(11));
+                setorbitaldeposittiletypeone(planettiles[6].getresourcetype(0));
+                setorbitaldeposittilevalueone(planettiles[6].getresourcequantity(0));
+            } else if (getorbitaldeposittile().startsWith("281435") || getorbitaldeposittile().startsWith("281483") ) {
+                setorbitaldeposittiletypeone(planettiles[11].getresourcetype(0));
+                setorbitaldeposittilevalueone(planettiles[11].getresourcequantity(0));
             } else if (getorbitaldeposittile().startsWith("281487")) {
-                setorbitaldeposittiletypeone(planettiles[0].getresourcetype(16));
-                setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(16));
+                setorbitaldeposittiletypeone(planettiles[16].getresourcetype(0));
+                setorbitaldeposittilevalueone(planettiles[16].getresourcequantity(0));
             } else if (getorbitaldeposittile().startsWith("281492")) {
-                setorbitaldeposittiletypeone(planettiles[0].getresourcetype(21));
-                setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(21));
+                setorbitaldeposittiletypeone(planettiles[21].getresourcetype(0));
+                setorbitaldeposittilevalueone(planettiles[21].getresourcequantity(0));
 
             } else if (getorbitaldeposittile().startsWith("562949")) {
-                setorbitaldeposittiletypeone(planettiles[0].getresourcetype(2));
-                setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(2));
+                setorbitaldeposittiletypeone(planettiles[2].getresourcetype(0));
+                setorbitaldeposittilevalueone(planettiles[2].getresourcequantity(0));
             } else if (getorbitaldeposittile().startsWith("562954")) {
-                setorbitaldeposittiletypeone(planettiles[0].getresourcetype(7));
-                setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(7));
+                setorbitaldeposittiletypeone(planettiles[7].getresourcetype(0));
+                setorbitaldeposittilevalueone(planettiles[7].getresourcequantity(0));
             } else if (getorbitaldeposittile().startsWith("562958")) {
-                setorbitaldeposittiletypeone(planettiles[0].getresourcetype(12));
-                setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(12));
+                setorbitaldeposittiletypeone(planettiles[12].getresourcetype(0));
+                setorbitaldeposittilevalueone(planettiles[12].getresourcequantity(0));
             } else if (getorbitaldeposittile().startsWith("562962")) {
-                setorbitaldeposittiletypeone(planettiles[0].getresourcetype(17));
-                setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(17));
+                setorbitaldeposittiletypeone(planettiles[17].getresourcetype(0));
+                setorbitaldeposittilevalueone(planettiles[17].getresourcequantity(0));
             } else if (getorbitaldeposittile().startsWith("562967")) {
-                setorbitaldeposittiletypeone(planettiles[0].getresourcetype(22));
-                setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(22));
+                setorbitaldeposittiletypeone(planettiles[22].getresourcetype(0));
+                setorbitaldeposittilevalueone(planettiles[22].getresourcequantity(0));
 
             } else if (getorbitaldeposittile().startsWith("844424")) {
-                setorbitaldeposittiletypeone(planettiles[0].getresourcetype(3));
-                setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(3));
+                setorbitaldeposittiletypeone(planettiles[3].getresourcetype(0));
+                setorbitaldeposittilevalueone(planettiles[3].getresourcequantity(0));
             } else if (getorbitaldeposittile().startsWith("844429")) {
-                setorbitaldeposittiletypeone(planettiles[0].getresourcetype(8));
-                setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(8));
+                setorbitaldeposittiletypeone(planettiles[8].getresourcetype(0));
+                setorbitaldeposittilevalueone(planettiles[8].getresourcequantity(0));
             } else if (getorbitaldeposittile().startsWith("844433")) {
-                setorbitaldeposittiletypeone(planettiles[0].getresourcetype(13));
-                setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(13));
+                setorbitaldeposittiletypeone(planettiles[13].getresourcetype(0));
+                setorbitaldeposittilevalueone(planettiles[13].getresourcequantity(0));
             } else if (getorbitaldeposittile().startsWith("844437")) {
-                setorbitaldeposittiletypeone(planettiles[0].getresourcetype(18));
-                setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(18));
+                setorbitaldeposittiletypeone(planettiles[18].getresourcetype(0));
+                setorbitaldeposittilevalueone(planettiles[18].getresourcequantity(0));
             } else if (getorbitaldeposittile().startsWith("844442")) {
-                setorbitaldeposittiletypeone(planettiles[0].getresourcetype(23));
-                setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(23));
+                setorbitaldeposittiletypeone(planettiles[23].getresourcetype(0));
+                setorbitaldeposittilevalueone(planettiles[23].getresourcequantity(0));
+
             } else if (getorbitaldeposittile().trim().startsWith("1125899")) {
-                setorbitaldeposittiletypeone(planettiles[0].getresourcetype(4));
-                setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(4));
+                setorbitaldeposittiletypeone(planettiles[4].getresourcetype(0));
+                setorbitaldeposittilevalueone(planettiles[4].getresourcequantity(0));
             } else if (getorbitaldeposittile().trim().startsWith("1125904")) {
-                setorbitaldeposittiletypeone(planettiles[0].getresourcetype(9));
-                setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(9));
+                setorbitaldeposittiletypeone(planettiles[9].getresourcetype(0));
+                setorbitaldeposittilevalueone(planettiles[9].getresourcequantity(0));
             } else if (getorbitaldeposittile().trim().startsWith("1125908")) {
-                setorbitaldeposittiletypeone(planettiles[0].getresourcetype(14));
-                setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(14));
+                setorbitaldeposittiletypeone(planettiles[14].getresourcetype(0));
+                setorbitaldeposittilevalueone(planettiles[14].getresourcequantity(0));
             } else if (getorbitaldeposittile().trim().startsWith("1125912")) {
-                setorbitaldeposittiletypeone(planettiles[0].getresourcetype(19));
-                setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(19));
+                setorbitaldeposittiletypeone(planettiles[19].getresourcetype(0));
+                setorbitaldeposittilevalueone(planettiles[19].getresourcequantity(0));
             } else if (getorbitaldeposittile().trim().startsWith("1125917")) {
-                setorbitaldeposittiletypeone(planettiles[0].getresourcetype(24));
-                setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(24));
-            } else if (getorbitaldeposittile().trim().startsWith("429497")) {
-                setorbitaldeposittiletypeone(planettiles[0].getresourcetype(5));
-                setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(5));
-            } else if (getorbitaldeposittile().trim().startsWith("858993")) {
-                setorbitaldeposittiletypeone(planettiles[0].getresourcetype(10));
-                setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(10));
-            } else if (getorbitaldeposittile().trim().startsWith("128849")) {
-                setorbitaldeposittiletypeone(planettiles[0].getresourcetype(15));
-                setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(15));
-            } else if (getorbitaldeposittile().trim().startsWith("1717987")) {
-                setorbitaldeposittiletypeone(planettiles[0].getresourcetype(20));
-                setorbitaldeposittilevalueone(planettiles[0].getresourcequantity(20));
+                setorbitaldeposittiletypeone(planettiles[24].getresourcetype(0));
+                setorbitaldeposittilevalueone(planettiles[24].getresourcequantity(0));
+
+            } else if (getorbitaldeposittile().trim().startsWith("42949")) {
+                setorbitaldeposittiletypeone(planettiles[5].getresourcetype(0));
+                setorbitaldeposittilevalueone(planettiles[5].getresourcequantity(0));
+            } else if (getorbitaldeposittile().trim().startsWith("85899")) {
+                setorbitaldeposittiletypeone(planettiles[10].getresourcetype(0));
+                setorbitaldeposittilevalueone(planettiles[10].getresourcequantity(0));
+            } else if (getorbitaldeposittile().trim().startsWith("128") || getorbitaldeposittile().trim().startsWith("129")) {
+                setorbitaldeposittiletypeone(planettiles[15].getresourcetype(0));
+                setorbitaldeposittilevalueone(planettiles[15].getresourcequantity(0));
+            } else if (getorbitaldeposittile().trim().startsWith("171")) {
+                setorbitaldeposittiletypeone(planettiles[20].getresourcetype(0));
+                setorbitaldeposittilevalueone(planettiles[20].getresourcequantity(0));
+
             } else {
-                //System.out.println("not in list: " + getorbitaldeposittile());
+                System.out.println("not in list: " + getorbitaldeposittile());
+                System.out.println(Arrays.toString(planettiles)+ "\r\n");
             }
-        } catch (Exception e) {
-            System.out.println("Error: " + getorbitaldeposittile() + e);
-        }
+//        } catch (Exception e) {
+//            System.out.println("Error: " + getorbitaldeposittile() + e);
+//        }
     }
 
     private String getTileInfo() {

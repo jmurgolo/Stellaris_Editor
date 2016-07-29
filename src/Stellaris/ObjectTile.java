@@ -82,13 +82,26 @@ public class ObjectTile {
     public StringProperty prevbuildingProperty() { return prevbuilding; }
 
     public String getresourcetype(int index){
-        return resourcetype[index].get();
+        if(resourcetype.length <= index) {
+            //System.out.println(resourcetype.length);
+            return null;
+        }else {
+            //System.out.println(resourcetype.length);
+            return resourcetype[index].get();
+        }
     }
     public void setresourcetype(String s, int index){ resourcetype[index].set(s); }
     public StringProperty[] resourcetypeProperty() { return resourcetype; }
 
     public String getresourcequantity(int index){
-        return resourcequantity[index].get();
+        //System.out.println(this.toString());
+        if(resourcequantity.length <= index) {
+            //System.out.println(resourcequantity.length);
+            return null;
+        }else {
+            //System.out.println(resourcetype.length);
+            return resourcequantity[index].get();
+        }
     }
     public void setresourcequantity(String s, int index){ resourcequantity[index].set(s); }
     public StringProperty[] resourcequantityProperty() { return resourcequantity; }
@@ -121,7 +134,7 @@ public class ObjectTile {
             }
             setid(temp);
         } else {
-            //System.out.println(this.toString());
+            System.out.println("no id: " + this.toString());
         }
     }
 
@@ -185,8 +198,7 @@ public class ObjectTile {
     }
 
     public String toString() {
-        return "\r\n" +
-                "id" + " = " + getid() + " | "
+        return  "id" + " = " + getid() + " | "
                 + "active" + " =  " + getactive() + " | "
                 + "blocker" + " =  " + getblocker() + " | "
                 + "deposit" + " =  " + getdeposit() + " | "

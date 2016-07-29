@@ -71,13 +71,33 @@ public class DisplayEditor {
         TableColumn classCol = new TableColumn("Class");
         classCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("objectclass"));
 
-        TableColumn restileCol = new TableColumn("Orbital Resource Tile");
-        restileCol.setEditable(true);
-        restileCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Long>("orbitaldeposittileinteger"));
+//        TableColumn restileCol = new TableColumn("Orbital Resource Tile");
+//        restileCol.setEditable(true);
+//        restileCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Long>("orbitaldeposittileinteger"));
 
-        TableColumn resonetileCol = new TableColumn("Resource 1");
+        TableColumn ownerCol = new TableColumn("Owner");
+        ownerCol.setEditable(true);
+        ownerCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Long>("owner"));
+
+        TableColumn controllerCol = new TableColumn("Controller");
+        controllerCol.setEditable(true);
+        controllerCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Long>("controller"));
+
+        TableColumn resonetileCol = new TableColumn("Res 1");
         resonetileCol.setEditable(true);
         resonetileCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Long>("orbitaldeposittiletypeone"));
+
+        TableColumn resvalonetileCol = new TableColumn("Res 1");
+        resvalonetileCol.setEditable(true);
+        resvalonetileCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Long>("orbitaldeposittilevalueone"));
+
+        TableColumn restwotileCol = new TableColumn("Res 2");
+        restwotileCol.setEditable(true);
+        restwotileCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Long>("orbitaldeposittiletypetwo"));
+
+        TableColumn resvaltwotileCol = new TableColumn("Res 2");
+        resvaltwotileCol.setEditable(true);
+        resvaltwotileCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Long>("orbitaldeposittilevaluetwo"));
 
         comboBox.setOnAction((event) -> {
             table.getColumns().clear();
@@ -86,7 +106,7 @@ public class DisplayEditor {
             getSelectedCountryStellarObjects(selectedCountry);
             ObservableList<ObjectPlanet> data = FXCollections.observableArrayList(countriesobjects);
             table.setItems(data);
-            table.getColumns().addAll(idCol, sizeCol, nameCol, typeCol, classCol, restileCol, resonetileCol);
+            table.getColumns().addAll(idCol, sizeCol, nameCol, typeCol, classCol, ownerCol, controllerCol, resonetileCol, resvalonetileCol, restwotileCol, resvaltwotileCol );
             System.out.println(table.getItems().size());
         });
 
@@ -173,6 +193,7 @@ public class DisplayEditor {
         //todo: split up stars and planets searches and combine them later so index function works
 
         String[] surveyed = countries[i].returnSurveyed();
+        System.out.println(surveyed.length);
         if(surveyed != null && surveyed.length > 0) {
             for (int j = 0; j < surveyed.length; j++) {
                 countriesobjects.add(j, planetarray[Integer.valueOf(surveyed[j].trim())]);
