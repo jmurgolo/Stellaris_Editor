@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class ObjectPlanet {
 
+    private StringProperty star = new SimpleStringProperty();
     private StringProperty id = new SimpleStringProperty();
     private IntegerProperty size = new SimpleIntegerProperty();
     private LongProperty orbitaldeposittileinteger = new SimpleLongProperty();
@@ -36,6 +37,7 @@ public class ObjectPlanet {
     private ObjectTile[] planettiles;
 
     public ObjectPlanet() {
+        setstar("");
         setid("");
         setsize(0);
         setorbitaldeposittile("");
@@ -51,14 +53,22 @@ public class ObjectPlanet {
         //setspaceport           ("");
     }
 
+    public String getstar() {
+        return star.get();
+    }
+    public void setstar(String i) {
+        star.set(i);
+    }
+    public StringProperty starProperty() {
+        return star;
+    }
+
     public String getid() {
         return id.get();
     }
-
     public void setid(String i) {
         id.set(i);
     }
-
     public StringProperty idProperty() {
         return id;
     }
@@ -407,7 +417,7 @@ public class ObjectPlanet {
 
         for (int i = 0; i < tilelist.size(); i++) {
             planettilestemp[i] = new ObjectTile();
-            planettilestemp[i].setTileObjectNode(tilelist.get(i).getChildren());
+            planettilestemp[i].setTileObjectNode(tilelist.get(i).getChildren(),getid());
         }
 
         if (planettilestemp.length > 0) {

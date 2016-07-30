@@ -65,15 +65,15 @@ public class DisplayEditor {
         TableColumn nameCol = new TableColumn("Name");
         nameCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("objectname"));
 
-        TableColumn typeCol = new TableColumn("Type");
-        typeCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("objecttype"));
+//        TableColumn typeCol = new TableColumn("Type");
+//        typeCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("objecttype"));
 
         TableColumn classCol = new TableColumn("Class");
         classCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("objectclass"));
 
-//        TableColumn restileCol = new TableColumn("Orbital Resource Tile");
-//        restileCol.setEditable(true);
-//        restileCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Long>("orbitaldeposittileinteger"));
+        TableColumn restileCol = new TableColumn("Orbital Resource Tile");
+        restileCol.setEditable(true);
+        restileCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Long>("orbitaldeposittileinteger"));
 
         TableColumn ownerCol = new TableColumn("Owner");
         ownerCol.setEditable(true);
@@ -106,8 +106,8 @@ public class DisplayEditor {
             getSelectedCountryStellarObjects(selectedCountry);
             ObservableList<ObjectPlanet> data = FXCollections.observableArrayList(countriesobjects);
             table.setItems(data);
-            table.getColumns().addAll(idCol, sizeCol, nameCol, typeCol, classCol, ownerCol, controllerCol, resonetileCol, resvalonetileCol, restwotileCol, resvaltwotileCol );
-            System.out.println(table.getItems().size());
+            table.getColumns().addAll(idCol, sizeCol, nameCol, classCol, ownerCol, controllerCol, restileCol, resonetileCol, resvalonetileCol, restwotileCol, resvaltwotileCol );
+            //System.out.println(table.getItems().size());
         });
 
         VBox vbox = new VBox();
