@@ -421,13 +421,13 @@ public class ObjectPlanet {
         }
 
         if (planettilestemp.length > 0) {
-            planettiles = new ObjectTile[planettilestemp[planettilestemp.length - 1].getid()+1];
+            planettiles = new ObjectTile[Integer.parseInt(planettilestemp[planettilestemp.length - 1].getid())+1];
             for (int i = 0; i < planettiles.length; i++) {
                 planettiles[i] = new ObjectTile();
-                planettiles[i].setid(i);
+                planettiles[i].setid(Integer.toString(i));
             }
             for (int i = 0; i < planettilestemp.length; i++) {
-                    planettiles[planettilestemp[i].getid()] = planettilestemp[i];
+                    planettiles[Integer.parseInt(planettilestemp[i].getid())] = planettilestemp[i];
             }
         } else {
             planettiles = planettilestemp;
