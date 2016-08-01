@@ -1,14 +1,14 @@
 package Stellaris;
 
-import javafx.beans.property.*;
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 import java.math.BigInteger;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 import static Stellaris.Utilities.addArrayCapacity;
-import static java.lang.Math.max;
 
 /**
  * Created by jmm on 7/16/2016.
@@ -151,7 +151,7 @@ public class ObjectTile {
     private void initiateBaseTileValue(){
         Long stepL = 0L;
         Long baseL = 0L;
-        String totalL = "";
+        Long totalL = 0L;
         BigInteger bi = new BigInteger("0",16);
         Long ll = 0L;
 
@@ -160,10 +160,10 @@ public class ObjectTile {
         } else {
             baseL = (Integer.parseInt(getid()) % 5) * 1000000000000L;
             stepL = (Integer.parseInt(getid()) / 5) * 100000000L;
-            totalL = Long.toHexString(baseL + stepL);
-            bi = new BigInteger(totalL, 16);
-            //setglobaltileidtotal(Long.parseLong(totalL));
-            System.out.println(getid() + " | " + Long.toString(baseL) + " | " + Long.toString(stepL) + " | " + Long.parseLong(0x0 + totalL));
+            totalL = baseL + stepL;
+            Long ss = Long.parseLong(totalL.toString(),16);
+            setglobaltileidtotal(String.valueOf(ss + Long.parseLong(getplanetid())));
+            //System.out.println(getplanetid() + " | " + getid() + " | " +  (ss + Long.parseLong(getplanetid())) + " | " + getglobaltileidtotal());
         }
     }
 
