@@ -460,7 +460,7 @@ public class ObjectPlanet {
                 setorbitaldeposittilevalueone(planettiles[6].getresourcequantity(0));
                 setorbitaldeposittiletypetwo(planettiles[6].getresourcetype(1));
                 setorbitaldeposittilevaluetwo(planettiles[6].getresourcequantity(1));
-            } else if (getorbitaldeposittile().startsWith("281435") || getorbitaldeposittile().startsWith("281483") ) {
+            } else if (getorbitaldeposittile().startsWith("281483")) {
                 setorbitaldeposittiletypeone(planettiles[11].getresourcetype(0));
                 setorbitaldeposittilevalueone(planettiles[11].getresourcequantity(0));
                 setorbitaldeposittiletypetwo(planettiles[11].getresourcetype(1));
@@ -555,6 +555,8 @@ public class ObjectPlanet {
                 setorbitaldeposittilevaluetwo(planettiles[24].getresourcequantity(1));
 
             } else if (getorbitaldeposittile().trim().startsWith("42949")) {
+                //long ss = 0x1000000000000L * 2; //Long.toHexString(281479271677952L);
+                //System.out.println(ss);
                 setorbitaldeposittiletypeone(planettiles[5].getresourcetype(0));
                 setorbitaldeposittilevalueone(planettiles[5].getresourcequantity(0));
                 setorbitaldeposittiletypetwo(planettiles[5].getresourcetype(1));
@@ -564,7 +566,7 @@ public class ObjectPlanet {
                 setorbitaldeposittilevalueone(planettiles[10].getresourcequantity(0));
                 setorbitaldeposittiletypetwo(planettiles[10].getresourcetype(1));
                 setorbitaldeposittilevaluetwo(planettiles[10].getresourcequantity(1));
-            } else if (getorbitaldeposittile().trim().startsWith("128") || getorbitaldeposittile().trim().startsWith("129")) {
+            } else if (getorbitaldeposittile().trim().startsWith("128")) {
                 setorbitaldeposittiletypeone(planettiles[15].getresourcetype(0));
                 setorbitaldeposittilevalueone(planettiles[15].getresourcequantity(0));
                 setorbitaldeposittiletypetwo(planettiles[15].getresourcetype(1));

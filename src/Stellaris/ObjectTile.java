@@ -2,6 +2,7 @@ package Stellaris;
 
 import javafx.beans.property.*;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -25,7 +26,7 @@ public class ObjectTile {
     private StringProperty pop = new SimpleStringProperty();
     private StringProperty building = new SimpleStringProperty();
     private StringProperty prevbuilding = new SimpleStringProperty();
-    private DoubleProperty tilebasevalue = new SimpleDoubleProperty();
+    private LongProperty tilebasevalue = new SimpleLongProperty();
 
     private StringProperty[] resourcetype = new StringProperty[0];
     private StringProperty[] resourcequantity = new StringProperty[0];
@@ -132,9 +133,9 @@ public class ObjectTile {
         }
     }
 
-    public void settilebasevalues(Double s){tilebasevalue.set(s);}
-    public DoubleProperty tilebasevaluesProperty() { return tilebasevalue; }
-    public Double gettilebasevalues() {return tilebasevalue.get();}
+    public void settilebasevalues(Long s){tilebasevalue.set(s);}
+    public LongProperty tilebasevaluesProperty() { return tilebasevalue; }
+    public Long gettilebasevalues() {return tilebasevalue.get();}
 
     public void setTileObjectNode(SaveFileElement[] list, String vplanetid) {
         objectnodes = list;
@@ -148,18 +149,22 @@ public class ObjectTile {
     }
 
     private void initiateBaseTileValue(){
-        Double stepD = 0D;
+        Long stepL = 0L;
+        Long baseL = 0L;
+        String totalL = "";
+        BigInteger bi = new BigInteger("0",16);
+        Long ll = 0L;
+
         if(getid().equals("0")){
             setglobaltileidtotal(getplanetid());
         } else {
-            stepD = (4294967296D *
-                    (max(1, 4294967296D % Double.parseDouble(getid())))//)
-                    + (4294967296D * (281474976710656D % Double.parseDouble(getid()))))
-            + Double.parseDouble(getplanetid())
-            ;
-            setglobaltileidtotal(Double.toString(stepD));
+            baseL = (Integer.parseInt(getid()) % 5) * 1000000000000L;
+            stepL = (Integer.parseInt(getid()) / 5) * 100000000L;
+            totalL = Long.toHexString(baseL + stepL);
+            bi = new BigInteger(totalL, 16);
+            //setglobaltileidtotal(Long.parseLong(totalL));
+            System.out.println(getid() + " | " + Long.toString(baseL) + " | " + Long.toString(stepL) + " | " + Long.parseLong(0x0 + totalL));
         }
-        System.out.println(getplanetid() + " | " + Double.toString(stepD));
     }
 
     public SaveFileElement[] getTileObjectNode() {
