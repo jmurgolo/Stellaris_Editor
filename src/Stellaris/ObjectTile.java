@@ -152,19 +152,12 @@ public class ObjectTile {
         Long stepL = 0L;
         Long baseL = 0L;
         Long totalL = 0L;
-        BigInteger bi = new BigInteger("0",16);
-        Long ll = 0L;
-
-        if(getid().equals("0")){
-            setglobaltileidtotal(getplanetid());
-        } else {
             baseL = (Integer.parseInt(getid()) % 5) * 1000000000000L;
             stepL = (Integer.parseInt(getid()) / 5) * 100000000L;
             totalL = baseL + stepL;
             Long ss = Long.parseLong(totalL.toString(),16);
             setglobaltileidtotal(String.valueOf(ss + Long.parseLong(getplanetid())));
             //System.out.println(getplanetid() + " | " + getid() + " | " +  (ss + Long.parseLong(getplanetid())) + " | " + getglobaltileidtotal());
-        }
     }
 
     public SaveFileElement[] getTileObjectNode() {
