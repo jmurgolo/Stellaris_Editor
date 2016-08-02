@@ -99,6 +99,14 @@ public class DisplayEditor {
         resvaltwotileCol.setEditable(true);
         resvaltwotileCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Long>("orbitaldeposittilevaluetwo"));
 
+        TableColumn resthreetileCol = new TableColumn("Res 3");
+        resthreetileCol.setEditable(true);
+        resthreetileCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Long>("orbitaldeposittiletypethree"));
+
+        TableColumn resvalthreetileCol = new TableColumn("Res 3");
+        resvalthreetileCol.setEditable(true);
+        resvalthreetileCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Long>("orbitaldeposittilevaluethree"));
+
         comboBox.setOnAction((event) -> {
             table.getColumns().clear();
             countriesobjects.clear();
@@ -106,7 +114,7 @@ public class DisplayEditor {
             getSelectedCountryStellarObjects(selectedCountry);
             ObservableList<ObjectPlanet> data = FXCollections.observableArrayList(countriesobjects);
             table.setItems(data);
-            table.getColumns().addAll(idCol, sizeCol, nameCol, classCol, ownerCol, controllerCol, restileCol, resonetileCol, resvalonetileCol, restwotileCol, resvaltwotileCol );
+            table.getColumns().addAll(idCol, sizeCol, nameCol, classCol, ownerCol, controllerCol, restileCol, resonetileCol, resvalonetileCol, restwotileCol, resvaltwotileCol, resthreetileCol, resvalthreetileCol);
             //System.out.println(table.getItems().size());
         });
 
