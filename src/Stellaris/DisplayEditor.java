@@ -31,6 +31,7 @@ public class DisplayEditor {
 
         getCountries();
         getPlanets();
+        getPops();
 
         ObservableList<String> options = FXCollections.observableArrayList(countrynames);
 
@@ -186,6 +187,25 @@ public class DisplayEditor {
         for (int i = 0; i < planetlist.size(); i++) {
             planetarray[i] = new ObjectPlanet();
             planetarray[i].setStellarObjectNodes(planetlist.get(i).getChildren());
+            //System.out.println("Start ------------------- " + Arrays.toString(planetarray[i].objectnodes));
+        }
+    }
+
+    private static void getPops(){
+        List<SaveFileElement> poplist = new ArrayList<>();
+        for (int i = 0; i < sfe_arraylist.length; i++) {
+            if (sfe_arraylist[i].nodeparent.trim().equals("pop")) {
+                if (sfe_arraylist[i].openorclose.equals("open")) {
+                    poplist.add(sfe_arraylist[i]);
+                }
+            }
+        }
+
+        ObjectPopulation[] poparray = new ObjectPopulation[poplist.size()];
+
+        for (int i = 0; i < poplist.size(); i++) {
+            poparray[i] = new ObjectPopulation();
+            poparray[i].setStellarObjectNodes(poplist.get(i).getChildren());
             //System.out.println("Start ------------------- " + Arrays.toString(planetarray[i].objectnodes));
         }
     }
