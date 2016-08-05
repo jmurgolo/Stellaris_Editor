@@ -3,8 +3,6 @@ package Stellaris;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import java.util.Arrays;
-
 /**
  * Created by jmm on 8/2/2016.
  */
@@ -121,28 +119,20 @@ public class ObjectPopulation {
         }else {
             Long stepL = 0L;
             String stepH = "";
+            String planetid = "";
             stepL = Long.valueOf(gettile().replaceAll("\"", "").replaceAll("=", ""));
             stepH = Long.toHexString(stepL);
+            planetid = stepH.substring(stepH.length() - 4, stepH.length());
             stepH = stepH.replace(stepH.substring(stepH.length() - 4, stepH.length()), "0000");
 
-            char primarytileid = gettile().charAt(0);
-            Long baseL = 0L;
-            String baseH = "";
+            char primarytileid = stepH.charAt(0);
+            char secondarytileid = stepH.charAt(4);
 
-            char primarytileid = gettile().charAt(0);
-
-            System.out.println(gettile().replaceAll("\"", "").replaceAll("=", "") + " | " + stepH);
+            setplanet_id(Long.valueOf(planetid,16).toString());
+            setplanet_tile_id(String.valueOf(Character.getNumericValue(primarytileid) + (5 * Character.getNumericValue(secondarytileid))));
+            //System.out.println(getplanet_id() + " | " + getplanet_tile_id() + " | " + primarytileid + " | " + secondarytileid);
+            //System.out.println(gettile().replaceAll("\"", "").replaceAll("=", "") + " | " + stepH);
         }
-//        Long stepL = 0L;
-//        Long baseL = 0L;
-//        Long totalL = 0L;
-//        baseL = (Integer.parseInt(getid()) % 5) * 1000000000000L;
-//        stepL = (Integer.parseInt(getid()) / 5) * 100000000L;
-//        totalL = baseL + stepL;
-//
-//        Long ss = Long.parseLong(totalL.toString(), 16);
-//        setglobaltileidtotal(String.valueOf(ss + Long.parseLong(getplanetid())));
-
     }
 
     @Override
