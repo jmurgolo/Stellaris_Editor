@@ -57,7 +57,7 @@ public class DisplayEditor {
 
         TableColumn idCol = new TableColumn("Id");
         idCol.setMaxWidth(450);
-        idCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Integer>("id"));
+        idCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Integer>("idnumber"));
 
         TableColumn sizeCol = new TableColumn("Size");
         sizeCol.setMaxWidth(400);

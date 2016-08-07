@@ -3,6 +3,8 @@ package Stellaris;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import static Stellaris.Main.planetarray;
+
 /**
  * Created by jmm on 8/2/2016.
  */
@@ -65,6 +67,7 @@ public class ObjectPopulation {
         findspecies_index();
         findTile();
         findPlanetInfo();
+        setTilePop();
         //System.out.println(this.toString()); //Arrays.toString(this.objectnodes));
 
     }
@@ -113,6 +116,13 @@ public class ObjectPopulation {
     }
 
     private void findPlanetInfo(){
+        /*
+            Tiles ids are created using hex.  The initial value is tileid mod 5 + tileid/5 + planet id.
+            So 0 tile is 0mod5 + 0/5(no remainder) + planet id for tile = planet id!
+            Then hex 1000000000000 with a value of 281474976710656‬ + the tile id of 1/5 (no remainder) + planet id.
+            Moving to, say, 7 we would have 7mod5 (2 = ‭2000000000000‬(hex) = ‭562949953421312(dec)‬) + 7/5 (‭1 =
+            100000000‬(hex) = ‭4294967296‬(dec)) = ‭2000100000000‬(hex) = ‭562954248388608‬(dec) + planetid.
+        */
         if(gettile().length() <= 4){
             setplanet_id(gettile());
             setplanet_tile_id("0");
@@ -133,6 +143,11 @@ public class ObjectPopulation {
             //System.out.println(getplanet_id() + " | " + getplanet_tile_id() + " | " + primarytileid + " | " + secondarytileid);
             //System.out.println(gettile().replaceAll("\"", "").replaceAll("=", "") + " | " + stepH);
         }
+    }
+
+    private void setTilePop(){
+        planetarray[Integer.parseInt(getplanet_id().replaceAll("\"", "").replaceAll("=", ""))]
+                .planettiles[Integer.parseInt(getplanet_tile_id().replaceAll("\"", "").replaceAll("=", ""))].setpop(getspecies_index());
     }
 
     @Override

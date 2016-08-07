@@ -13,6 +13,7 @@ public class ObjectPlanet {
 
     private StringProperty star = new SimpleStringProperty();
     private StringProperty id = new SimpleStringProperty();
+    private IntegerProperty idnumber = new SimpleIntegerProperty();
     private IntegerProperty size = new SimpleIntegerProperty();
     private LongProperty orbitaldeposittileinteger = new SimpleLongProperty();
     private StringProperty orbitaldeposittile = new SimpleStringProperty();
@@ -27,14 +28,15 @@ public class ObjectPlanet {
     private StringProperty objecttype = new SimpleStringProperty();
     private StringProperty owner = new SimpleStringProperty();
     private StringProperty controller = new SimpleStringProperty();
-    private StringProperty pop = new SimpleStringProperty();
     private StringProperty orbitals = new SimpleStringProperty();
     private StringProperty entity = new SimpleStringProperty();
     private StringProperty prevent_anomaly = new SimpleStringProperty();
     private StringProperty spaceport = new SimpleStringProperty();
 
     public SaveFileElement[] objectnodes;
-    private ObjectTile[] planettiles;
+    public ObjectTile[] planettiles;
+    private StringProperty[] pop = new StringProperty[0];
+
 
     public ObjectPlanet() {
         setstar("");
@@ -45,7 +47,8 @@ public class ObjectPlanet {
         setobjectclass("");
         setobjecttype("");
         setowner("");
-        setcontroller          ("");
+        setcontroller("");
+        setpops();
         //setpop                 ("");
         //setorbitals            ("");
         //setentity              ("");
@@ -71,6 +74,16 @@ public class ObjectPlanet {
     }
     public StringProperty idProperty() {
         return id;
+    }
+
+    public Integer getidnumber() {
+        return idnumber.get();
+    }
+    public void setidnumber(Integer i) {
+        idnumber.set(i);
+    }
+    public IntegerProperty idnumberProperty() {
+        return idnumber;
     }
 
     public Long getorbitaldeposittileinteger() {
@@ -239,6 +252,20 @@ public class ObjectPlanet {
         return orbitaldeposittilevaluethree;
     }
 
+    public String getpop(int index) {
+        if (pop.length <= index) {
+            return null;
+        } else {
+            return pop[index].get();
+        }
+    }
+
+    public void setpop(String s, int index) {pop[index].set(s);}
+
+    public StringProperty[] popProperty() {
+        return pop;
+    }
+
     public void setStellarObjectNodes(SaveFileElement[] list) {
 
         objectnodes = list;
@@ -272,6 +299,7 @@ public class ObjectPlanet {
             if (objectnodes[counter].openorclose.equals("open") && objectnodes[counter].nodelevel == 2 && (objectnodes[counter].nodeparent.trim().equals("galactic_object") || objectnodes[counter].nodeparent.trim().equals("planet"))) {
                 temp = objectnodes[counter].getNodeName().trim();
             }
+            setidnumber(Integer.parseInt(temp));
             setid(temp);
         } catch (Exception e) {
             System.out.println("Error: ObjectPlanet 1: " + this.toString());
