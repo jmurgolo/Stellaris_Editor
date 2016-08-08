@@ -5,6 +5,8 @@ import javafx.beans.property.StringProperty;
 
 import static Stellaris.Main.planetarray;
 
+
+//todo: change species index to species name or figure out why index is sequential.
 /**
  * Created by jmm on 8/2/2016.
  */
@@ -146,6 +148,7 @@ public class ObjectPopulation {
     }
 
     private void setTilePop(){
+        System.out.println(Integer.parseInt(getplanet_id().replaceAll("\"", "").replaceAll("=", "")) + " | " + Integer.parseInt(getplanet_tile_id().replaceAll("\"", "").replaceAll("=", "")) + " | " + getspecies_index());
         planetarray[Integer.parseInt(getplanet_id().replaceAll("\"", "").replaceAll("=", ""))]
                 .planettiles[Integer.parseInt(getplanet_tile_id().replaceAll("\"", "").replaceAll("=", ""))].setpop(getspecies_index());
     }
@@ -158,7 +161,6 @@ public class ObjectPopulation {
                 + "\r\n";
     }
 }
-
 
 //pop={
 //        0={

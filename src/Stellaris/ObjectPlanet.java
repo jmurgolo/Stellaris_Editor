@@ -2,9 +2,7 @@ package Stellaris;
 
 import javafx.beans.property.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by jmm on 6/25/2016.
@@ -32,10 +30,11 @@ public class ObjectPlanet {
     private StringProperty entity = new SimpleStringProperty();
     private StringProperty prevent_anomaly = new SimpleStringProperty();
     private StringProperty spaceport = new SimpleStringProperty();
+    private StringProperty popsstringprop = new SimpleStringProperty();
 
     public SaveFileElement[] objectnodes;
     public ObjectTile[] planettiles;
-    private StringProperty[] pop = new StringProperty[0];
+    //private ObjectPopulation[] pops = new ObjectPopulation[0];
 
 
     public ObjectPlanet() {
@@ -48,7 +47,6 @@ public class ObjectPlanet {
         setobjecttype("");
         setowner("");
         setcontroller("");
-        setpops();
         //setpop                 ("");
         //setorbitals            ("");
         //setentity              ("");
@@ -252,19 +250,31 @@ public class ObjectPlanet {
         return orbitaldeposittilevaluethree;
     }
 
-    public String getpop(int index) {
-        if (pop.length <= index) {
-            return null;
-        } else {
-            return pop[index].get();
-        }
+    public String getpopsstringprop() {
+        return popsstringprop.get();
     }
 
-    public void setpop(String s, int index) {pop[index].set(s);}
-
-    public StringProperty[] popProperty() {
-        return pop;
+    public void setpopsstringprop(String s) {
+        popsstringprop.set(s);
     }
+
+    public StringProperty popsstringpropProperty() {
+        return popsstringprop;
+    }
+
+//    public ObjectPopulation getpop(int index) {
+//        if (pop.length <= index) {
+//            return null;
+//        } else {
+//            return pop[index].get();
+//        }
+//    }
+//
+//    public void setpop(String s, int index) {pop[index].set(s);}
+//
+//    public StringProperty[] popProperty() {
+//        return pop;
+//    }
 
     public void setStellarObjectNodes(SaveFileElement[] list) {
 
@@ -279,8 +289,24 @@ public class ObjectPlanet {
         findOrbitalDepositTile();
         findTiles();
         findOrbitalResources();
+        findpopsstringprop();
         //System.out.println(Arrays.toString(this.objectnodes));
+    }
 
+    private void findpopsstringprop(){
+        List temparray = new ArrayList();
+        //System.out.println(Arrays.toString(planettiles));
+        if(planettiles.length > 0) {
+            for (int i = 0; i < planettiles.length; i++) {
+                if (planettiles[i].getpop() != null) {
+                    temparray.add(planettiles[i].getpop());
+                }
+            }
+            if (temparray.size() > 0) {
+                Set<String> uniquepops = new HashSet<String>(temparray);
+                setpopsstringprop(Arrays.toString(uniquepops.toArray()));
+            }
+        }
     }
 
     private void findId() {
