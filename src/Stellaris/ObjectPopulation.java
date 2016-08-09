@@ -7,12 +7,14 @@ import static Stellaris.Main.planetarray;
 
 
 //todo: change species index to species name or figure out why index is sequential.
+
 /**
  * Created by jmm on 8/2/2016.
  */
 public class ObjectPopulation {
 
     private StringProperty species_index = new SimpleStringProperty();
+    private StringProperty species_name = new SimpleStringProperty();
     private StringProperty growth_state = new SimpleStringProperty();
     private StringProperty tile = new SimpleStringProperty();
     private StringProperty pop_faction = new SimpleStringProperty();
@@ -26,9 +28,11 @@ public class ObjectPopulation {
     public String getspecies_index() {
         return species_index.get();
     }
+
     public void setspecies_index(String i) {
         species_index.set(i);
     }
+
     public StringProperty species_indexProperty() {
         return species_index;
     }
@@ -36,9 +40,11 @@ public class ObjectPopulation {
     public String gettile() {
         return tile.get();
     }
+
     public void settile(String i) {
         tile.set(i);
     }
+
     public StringProperty tileProperty() {
         return tile;
     }
@@ -46,9 +52,11 @@ public class ObjectPopulation {
     public String getplanet_id() {
         return planet_id.get();
     }
+
     public void setplanet_id(String i) {
         planet_id.set(i);
     }
+
     public StringProperty planet_idProperty() {
         return planet_id;
     }
@@ -56,9 +64,11 @@ public class ObjectPopulation {
     public String getplanet_tile_id() {
         return planet_tile_id.get();
     }
+
     public void setplanet_tile_id(String i) {
         planet_tile_id.set(i);
     }
+
     public StringProperty planet_tile_idProperty() {
         return planet_tile_id;
     }
@@ -79,15 +89,15 @@ public class ObjectPopulation {
         String temp = "";
         int counter = 0;
         if (objectnodes.length > counter) {
-            while (!(objectnodes[counter].openorclose.equals("open") && objectnodes[counter].nodelevel == 2 && objectnodes[counter].nodeparent.trim().equals("pop"))) {
+            while (!(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodelevel == 2 && objectnodes[counter].getNodeName().trim().equals("species_index"))) {
                 if (objectnodes.length - 1 == counter) {
                     //Utilities.print("break");
                     break;
                 }
                 counter++;
             }
-            if (objectnodes[counter].openorclose.equals("open") && objectnodes[counter].nodelevel == 2 && objectnodes[counter].nodeparent.trim().equals("pop")) {
-                temp = objectnodes[counter].getNodeName().trim().replace("=", "");
+            if (objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodelevel == 2 && objectnodes[counter].getNodeName().trim().equals("species_index")) {
+                temp = objectnodes[counter].getNodeValue().trim().replace("=", "");
             }
             setspecies_index(temp);
         } else {
@@ -95,7 +105,7 @@ public class ObjectPopulation {
         }
     }
 
-    private void findTile(){
+    private void findTile() {
         String temp = "";
         int counter = 0;
 
@@ -117,7 +127,7 @@ public class ObjectPopulation {
         }
     }
 
-    private void findPlanetInfo(){
+    private void findPlanetInfo() {
         /*
             Tiles ids are created using hex.  The initial value is tileid mod 5 + tileid/5 + planet id.
             So 0 tile is 0mod5 + 0/5(no remainder) + planet id for tile = planet id!
@@ -125,10 +135,11 @@ public class ObjectPopulation {
             Moving to, say, 7 we would have 7mod5 (2 = ‭2000000000000‬(hex) = ‭562949953421312(dec)‬) + 7/5 (‭1 =
             100000000‬(hex) = ‭4294967296‬(dec)) = ‭2000100000000‬(hex) = ‭562954248388608‬(dec) + planetid.
         */
-        if(gettile().length() <= 4){
+        System.out.println(gettile());
+        if (gettile().replaceAll("\"", "").replaceAll("=", "").trim().length() <= 4) {
             setplanet_id(gettile());
             setplanet_tile_id("0");
-        }else {
+        } else {
             Long stepL = 0L;
             String stepH = "";
             String planetid = "";
@@ -140,17 +151,21 @@ public class ObjectPopulation {
             char primarytileid = stepH.charAt(0);
             char secondarytileid = stepH.charAt(4);
 
-            setplanet_id(Long.valueOf(planetid,16).toString());
+            setplanet_id(Long.valueOf(planetid, 16).toString());
             setplanet_tile_id(String.valueOf(Character.getNumericValue(primarytileid) + (5 * Character.getNumericValue(secondarytileid))));
             //System.out.println(getplanet_id() + " | " + getplanet_tile_id() + " | " + primarytileid + " | " + secondarytileid);
             //System.out.println(gettile().replaceAll("\"", "").replaceAll("=", "") + " | " + stepH);
         }
     }
 
-    private void setTilePop(){
-        System.out.println(Integer.parseInt(getplanet_id().replaceAll("\"", "").replaceAll("=", "")) + " | " + Integer.parseInt(getplanet_tile_id().replaceAll("\"", "").replaceAll("=", "")) + " | " + getspecies_index());
+    private void setTilePop() {
         planetarray[Integer.parseInt(getplanet_id().replaceAll("\"", "").replaceAll("=", ""))]
                 .planettiles[Integer.parseInt(getplanet_tile_id().replaceAll("\"", "").replaceAll("=", ""))].setpop(getspecies_index());
+
+//        System.out.println(Integer.parseInt(getplanet_id().replaceAll("\"", "").replaceAll("=", "")) + " | " + Integer.parseInt(getplanet_tile_id().replaceAll("\"", "").replaceAll("=", "")) + " | " + getspecies_index());
+
+        //System.out.println(Integer.parseInt(getplanet_id().replaceAll("\"", "").replaceAll("=", "")) + " | " + Integer.parseInt(getplanet_tile_id().replaceAll("\"", "").replaceAll("=", "")) + " | " + getspecies_index());
+
     }
 
     @Override

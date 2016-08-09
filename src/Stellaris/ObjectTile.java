@@ -26,7 +26,7 @@ public class ObjectTile {
     private StringProperty pop = new SimpleStringProperty();
     private StringProperty building = new SimpleStringProperty();
     private StringProperty prevbuilding = new SimpleStringProperty();
-    private LongProperty   tilebasevalue = new SimpleLongProperty();
+    private LongProperty tilebasevalue = new SimpleLongProperty();
 
     private StringProperty[] resourcetype = new StringProperty[0];
     private StringProperty[] resourcequantity = new StringProperty[0];
@@ -148,7 +148,10 @@ public class ObjectTile {
     }
 
     public void setpop(String s) {
+
         pop.set(s);
+        //System.out.println(getglobaltileidtotal() + " | " + getplanetid() + " | " + getid() + " | si: " +  getpop());
+
     }
 
     public StringProperty popProperty() {
@@ -346,7 +349,7 @@ public class ObjectTile {
     }
 
 
-        @Override
+    @Override
     public String toString() {
         return "id" + " = " + getid() + " | "
                 + "active" + " =  " + getactive() + " | "

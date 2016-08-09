@@ -32,6 +32,9 @@ public class DisplayEditor {
         getCountries();
         getPlanets();
         getPops();
+        for(int i = 0 ; i < planetarray.length ; i++){
+            planetarray[i].findpopsstringprop();
+        }
 
         ObservableList<String> options = FXCollections.observableArrayList(countrynames);
 
@@ -110,7 +113,7 @@ public class DisplayEditor {
 
         TableColumn popsstringpropCol = new TableColumn("Pops");
         popsstringpropCol.setEditable(true);
-        popsstringpropCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Long>("popsstringprop"));
+        popsstringpropCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("popsstringprop"));
 
         comboBox.setOnAction((event) -> {
             table.getColumns().clear();

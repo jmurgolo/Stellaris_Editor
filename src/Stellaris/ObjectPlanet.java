@@ -289,22 +289,23 @@ public class ObjectPlanet {
         findOrbitalDepositTile();
         findTiles();
         findOrbitalResources();
-        findpopsstringprop();
         //System.out.println(Arrays.toString(this.objectnodes));
     }
 
-    private void findpopsstringprop(){
+    public void findpopsstringprop(){
         List temparray = new ArrayList();
-        //System.out.println(Arrays.toString(planettiles));
         if(planettiles.length > 0) {
             for (int i = 0; i < planettiles.length; i++) {
-                if (planettiles[i].getpop() != null) {
+                if (!(planettiles[i].getpop().equals(""))) {
                     temparray.add(planettiles[i].getpop());
+                    System.out.println(Arrays.toString(planettiles));
                 }
             }
             if (temparray.size() > 0) {
                 Set<String> uniquepops = new HashSet<String>(temparray);
+                System.out.println(uniquepops.toString());
                 setpopsstringprop(Arrays.toString(uniquepops.toArray()));
+                System.out.println(getpopsstringprop());
             }
         }
     }
