@@ -104,7 +104,7 @@ public class Main extends Application {
             e.printStackTrace();
         }
         processSfe_arraylist();
-        FileProcessor.createTempFileofArray(56461,745219);
+        FileProcessor.createTempFileofArray(1,10000);
     }
 
     private MenuBar getMenuBar(Stage primaryStage, BorderPane componentLayout){

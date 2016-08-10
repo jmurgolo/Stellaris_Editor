@@ -135,7 +135,6 @@ public class ObjectPopulation {
             Moving to, say, 7 we would have 7mod5 (2 = ‭2000000000000‬(hex) = ‭562949953421312(dec)‬) + 7/5 (‭1 =
             100000000‬(hex) = ‭4294967296‬(dec)) = ‭2000100000000‬(hex) = ‭562954248388608‬(dec) + planetid.
         */
-        System.out.println(gettile());
         if (gettile().replaceAll("\"", "").replaceAll("=", "").trim().length() <= 4) {
             setplanet_id(gettile());
             setplanet_tile_id("0");

@@ -298,14 +298,14 @@ public class ObjectPlanet {
             for (int i = 0; i < planettiles.length; i++) {
                 if (!(planettiles[i].getpop().equals(""))) {
                     temparray.add(planettiles[i].getpop());
-                    System.out.println(Arrays.toString(planettiles));
+                    //System.out.println(Arrays.toString(planettiles));
                 }
             }
             if (temparray.size() > 0) {
                 Set<String> uniquepops = new HashSet<String>(temparray);
-                System.out.println(uniquepops.toString());
+                //System.out.println(uniquepops.toString());
                 setpopsstringprop(Arrays.toString(uniquepops.toArray()));
-                System.out.println(getpopsstringprop());
+                //System.out.println(getpopsstringprop());
             }
         }
     }

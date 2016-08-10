@@ -17,8 +17,6 @@ public class ObjectTile {
 
     private StringProperty id = new SimpleStringProperty();
     private StringProperty planetid = new SimpleStringProperty();
-    private StringProperty globaltileidbase = new SimpleStringProperty();
-    private StringProperty globaltileidbyplanet = new SimpleStringProperty();
     private StringProperty globaltileidtotal = new SimpleStringProperty();
     private StringProperty active = new SimpleStringProperty();
     private StringProperty blocker = new SimpleStringProperty();
@@ -26,7 +24,8 @@ public class ObjectTile {
     private StringProperty pop = new SimpleStringProperty();
     private StringProperty building = new SimpleStringProperty();
     private StringProperty prevbuilding = new SimpleStringProperty();
-    private LongProperty tilebasevalue = new SimpleLongProperty();
+
+    private ObjectSpecies objectspecies;
 
     private StringProperty[] resourcetype = new StringProperty[0];
     private StringProperty[] resourcequantity = new StringProperty[0];
@@ -36,8 +35,6 @@ public class ObjectTile {
     public ObjectTile() {
         setid("");
         setplanetid("");
-        setglobaltileidbase("");
-        setglobaltileidbyplanet("");
         setglobaltileidtotal("");
         setactive("");
         setblocker("");
@@ -69,30 +66,6 @@ public class ObjectTile {
 
     public StringProperty planetidProperty() {
         return planetid;
-    }
-
-    public String getglobaltileidbase() {
-        return globaltileidbase.get();
-    }
-
-    public void setglobaltileidbase(String s) {
-        globaltileidbase.set(s);
-    }
-
-    public StringProperty globaltileidbaseProperty() {
-        return globaltileidbase;
-    }
-
-    public String getglobaltileidbyplanet() {
-        return globaltileidbyplanet.get();
-    }
-
-    public void setglobaltileidbyplanet(String s) {
-        globaltileidbyplanet.set(s);
-    }
-
-    public StringProperty globaltileidbyplanetProperty() {
-        return globaltileidbyplanet;
     }
 
     public String getglobaltileidtotal() {
@@ -214,26 +187,12 @@ public class ObjectTile {
         }
     }
 
-    public void settilebasevalues(Long s) {
-        tilebasevalue.set(s);
-    }
-
-    public LongProperty tilebasevaluesProperty() {
-        return tilebasevalue;
-    }
-
-    public Long gettilebasevalues() {
-        return tilebasevalue.get();
-    }
-
     public void setTileObjectNode(SaveFileElement[] list, String vplanetid) {
         objectnodes = list;
         setplanetid(vplanetid);
         findId();
         findDeposit();
         findResources();
-        findglobaltileidbase();
-        findglobaltileidtotal();
         initiateBaseTileValue();
     }
 
@@ -254,16 +213,6 @@ public class ObjectTile {
         return objectnodes;
     }
 
-    private String findglobaltileidbase() {
-        String temp = "";
-        return temp;
-    }
-
-    private String findglobaltileidtotal() {
-        String temp = "";
-        return temp;
-    }
-
     private void findId() {
 
         String temp = "";
@@ -281,7 +230,7 @@ public class ObjectTile {
             }
             setid(temp);
         } else {
-            System.out.println("no id: " + this.toString());
+            //System.out.println("no id: " + this.toString());
         }
     }
 
@@ -340,12 +289,12 @@ public class ObjectTile {
                 }
             }
         } else {
-            System.out.println(this.toString());
+            //System.out.println(this.toString());
         }
     }
 
     private void findPlanetSpecies() {
-
+        //objectspecies =
     }
 
 

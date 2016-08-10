@@ -31,7 +31,9 @@ public class DisplayEditor {
 
         getCountries();
         getPlanets();
+        getSpecies();
         getPops();
+
         for(int i = 0 ; i < planetarray.length ; i++){
             planetarray[i].findpopsstringprop();
         }
@@ -235,6 +237,26 @@ public class DisplayEditor {
             }
         }
     }
+
+    private static void getSpecies() {
+        List<SaveFileElement> specieslist = new ArrayList<>();
+        for (int i = 0; i < sfe_arraylist.length; i++) {
+            if (sfe_arraylist[i].nodeparent.trim().equals("species")) {
+                if (sfe_arraylist[i].openorclose.equals("open")) {
+                    specieslist.add(sfe_arraylist[i]);
+                }
+            }
+        }
+
+        ObjectSpecies[] speciesarray = new ObjectSpecies[specieslist.size()];
+
+        for (int i = 0; i < specieslist.size(); i++) {
+            speciesarray[i] = new ObjectSpecies();
+            speciesarray[i].setSpeciesObjectNode(specieslist.get(i).getChildren(),i);
+            //System.out.println("Start ------------------- " + Arrays.toString(planetarray[i].objectnodes));
+        }
+    }
+
 }// end class
 
 
