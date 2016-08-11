@@ -1,0 +1,51 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Stellaris Editor:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Stellaris_Editor_jar</output-path>
+    <root id="archive" name="Stellaris Editor.jar">
+      <element id="module-output" name="Stellaris Editor" />
+      <element id="extracted-dir" path="C:/Stellaris Save Game Editor/Libraries/commons-compress-1.12/commons-compress-1.12.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-api-2.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-jcl-2.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-jul-2.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-web-2.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-core-2.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-nosql-2.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-taglib-2.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-1.2-api-2.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-jmx-gui-2.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-flume-ng-2.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-to-slf4j-2.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-iostreams-2.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-core-2.6-tests.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-slf4j-impl-2.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-api-2.6-javadoc.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-api-2.6-sources.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-jcl-2.6-javadoc.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-jcl-2.6-sources.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-jul-2.6-javadoc.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-jul-2.6-sources.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-web-2.6-javadoc.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-web-2.6-sources.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-core-2.6-javadoc.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-core-2.6-sources.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-nosql-2.6-javadoc.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-nosql-2.6-sources.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-taglib-2.6-javadoc.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-taglib-2.6-sources.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-1.2-api-2.6-javadoc.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-1.2-api-2.6-sources.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-jmx-gui-2.6-javadoc.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-jmx-gui-2.6-sources.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-flume-ng-2.6-javadoc.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-flume-ng-2.6-sources.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-to-slf4j-2.6-javadoc.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-to-slf4j-2.6-sources.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-iostreams-2.6-javadoc.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-iostreams-2.6-sources.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-slf4j-impl-2.6-javadoc.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/apache-log4j-2.6-bin/log4j-slf4j-impl-2.6-sources.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/commons-lang3-3.4/commons-lang3-3.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Libraries/commons-lang3-3.4/commons-lang3-3.4-javadoc.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
