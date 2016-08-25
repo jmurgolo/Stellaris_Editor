@@ -4,6 +4,8 @@ import javafx.beans.property.*;
 
 import java.util.*;
 
+import static Stellaris.Main.speciesarray;
+
 /**
  * Created by jmm on 6/25/2016.
  */
@@ -31,6 +33,7 @@ public class ObjectPlanet {
     private StringProperty prevent_anomaly = new SimpleStringProperty();
     private StringProperty spaceport = new SimpleStringProperty();
     private StringProperty popsstringprop = new SimpleStringProperty();
+    private StringProperty popsnamesstringprop = new SimpleStringProperty();
 
     public SaveFileElement[] objectnodes;
     public ObjectTile[] planettiles;
@@ -262,19 +265,17 @@ public class ObjectPlanet {
         return popsstringprop;
     }
 
-//    public ObjectPopulation getpop(int index) {
-//        if (pop.length <= index) {
-//            return null;
-//        } else {
-//            return pop[index].get();
-//        }
-//    }
-//
-//    public void setpop(String s, int index) {pop[index].set(s);}
-//
-//    public StringProperty[] popProperty() {
-//        return pop;
-//    }
+    public String getpopsnamesstringprop() {
+        return popsnamesstringprop.get();
+    }
+
+    public void setpopsnamesstringprop(String s) {
+        popsnamesstringprop.set(s);
+    }
+
+    public StringProperty popsnamesstringpropProperty() {
+        return popsnamesstringprop;
+    }
 
     public void setStellarObjectNodes(SaveFileElement[] list) {
 
@@ -298,16 +299,29 @@ public class ObjectPlanet {
             for (int i = 0; i < planettiles.length; i++) {
                 if (!(planettiles[i].getpop().equals(""))) {
                     temparray.add(planettiles[i].getpop());
-                    //System.out.println(Arrays.toString(planettiles));
                 }
             }
+            //in the event of multiple species on same planet
             if (temparray.size() > 0) {
                 Set<String> uniquepops = new HashSet<String>(temparray);
-                //System.out.println(uniquepops.toString());
                 setpopsstringprop(Arrays.toString(uniquepops.toArray()));
-                //System.out.println(getpopsstringprop());
+                //get names from id's
+                findpopsnamesstringprop();
             }
         }
+    }
+
+    public void findpopsnamesstringprop(){
+        //get names from id's
+            String[] tempList = getpopsstringprop().replaceAll("\\[", "").replaceAll("]","").split(",");
+            System.out.println(tempList[0]);
+            for (int i = 0; i < tempList.length; i++) {
+                for (int j = 0; j < speciesarray.length; j++) {
+                    if (tempList[i].trim().equals(speciesarray[j].getid().trim())) {
+                        setpopsnamesstringprop(getpopsnamesstringprop() + ", " + tempList[i]);
+                    }
+                }
+            }
     }
 
     private void findId() {

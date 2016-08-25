@@ -56,6 +56,10 @@ public class ObjectSpecies {
             System.out.println(this.toString());
         }
 
+        public SaveFileElement[] getObjectnodes(){
+            return objectnodes;
+        }
+
         public SaveFileElement[] getTileObjectNode() {
             return objectnodes;
         }

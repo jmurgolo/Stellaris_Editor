@@ -43,6 +43,7 @@ public class Main extends Application {
     public static ObjectCountry[] countries;
     public static ObjectStar[] stararray;
     public static ObjectPlanet[] planetarray;
+    public static ObjectSpecies[] speciesarray;
     public static File savefile;
     public static final BorderPane componentLayout = new BorderPane();
     public static Stage pstage;

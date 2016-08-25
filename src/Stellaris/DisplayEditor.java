@@ -14,6 +14,7 @@ import javafx.scene.text.Font;
 import Stellaris.UtilitiesTable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static Stellaris.Main.*;
@@ -115,7 +116,7 @@ public class DisplayEditor {
 
         TableColumn popsstringpropCol = new TableColumn("Pops");
         popsstringpropCol.setEditable(true);
-        popsstringpropCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("popsstringprop"));
+        popsstringpropCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("popsnamesstringprop"));
 
         comboBox.setOnAction((event) -> {
             table.getColumns().clear();
@@ -248,12 +249,12 @@ public class DisplayEditor {
             }
         }
 
-        ObjectSpecies[] speciesarray = new ObjectSpecies[specieslist.size()];
+        speciesarray = new ObjectSpecies[specieslist.size()];
 
         for (int i = 0; i < specieslist.size(); i++) {
             speciesarray[i] = new ObjectSpecies();
             speciesarray[i].setSpeciesObjectNode(specieslist.get(i).getChildren(),i);
-            //System.out.println("Start ------------------- " + Arrays.toString(planetarray[i].objectnodes));
+            //System.out.println("Start ------------------- " + Arrays.toString(speciesarray[i].getObjectnodes()));
         }
     }
 
