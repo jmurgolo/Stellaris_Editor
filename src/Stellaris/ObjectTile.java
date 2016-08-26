@@ -171,6 +171,14 @@ public class ObjectTile {
         }
     }
 
+    public String[] getresourcequantity() {
+        String[] temparray = new String[5];
+        for(int i = 0 ; i < resourcequantity.length ; i++)   {
+            temparray[i] = resourcequantity[i].get();
+        }
+        return temparray;
+    }
+
     public void setresourcetype(String s, int index) {
         resourcetype[index].set(s);
     }
@@ -185,6 +193,14 @@ public class ObjectTile {
         } else {
             return resourcetype[index].get();
         }
+    }
+
+    public String[] getresourcetype() {
+        String[] temparray = new String[5];
+        for(int i = 0 ; i < resourcetype.length ; i++)   {
+            temparray[i] = resourcetype[i].get();
+        }
+        return temparray;
     }
 
     public void setTileObjectNode(SaveFileElement[] list, String vplanetid) {

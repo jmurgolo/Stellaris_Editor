@@ -15,6 +15,7 @@ public class ObjectPlanet {
     private StringProperty id = new SimpleStringProperty();
     private IntegerProperty idnumber = new SimpleIntegerProperty();
     private IntegerProperty size = new SimpleIntegerProperty();
+
     private LongProperty orbitaldeposittileinteger = new SimpleLongProperty();
     private StringProperty orbitaldeposittile = new SimpleStringProperty();
     private StringProperty orbitaldeposittiletypeone = new SimpleStringProperty();
@@ -23,6 +24,15 @@ public class ObjectPlanet {
     private StringProperty orbitaldeposittilevalueone = new SimpleStringProperty();
     private StringProperty orbitaldeposittilevaluetwo = new SimpleStringProperty();
     private StringProperty orbitaldeposittilevaluethree = new SimpleStringProperty();
+
+    private StringProperty overallcolonizationdepositvalue = new SimpleStringProperty();
+    private StringProperty foodvalue = new SimpleStringProperty();
+    private StringProperty orevalue = new SimpleStringProperty();
+    private StringProperty energyvalue = new SimpleStringProperty();
+    private StringProperty biologyvalue = new SimpleStringProperty();
+    private StringProperty engineeringvalue = new SimpleStringProperty();
+    private StringProperty physicsvalue = new SimpleStringProperty();
+
     private StringProperty objectname = new SimpleStringProperty();
     private StringProperty objectclass = new SimpleStringProperty();
     private StringProperty objecttype = new SimpleStringProperty();
@@ -50,6 +60,12 @@ public class ObjectPlanet {
         setobjecttype("");
         setowner("");
         setcontroller("");
+        setfoodvalue("0");
+        setorevalue("0");
+        setenergyvalue("0");
+        setbiologyvalue("0");
+        setengineeringvalue("0");
+        setphysicsvalue("0");
         //setpop                 ("");
         //setorbitals            ("");
         //setentity              ("");
@@ -253,14 +269,82 @@ public class ObjectPlanet {
         return orbitaldeposittilevaluethree;
     }
 
+    public String getoverallcolonizationdepositvalue() {
+        return overallcolonizationdepositvalue.get();
+    }
+    public void setoverallcolonizationdepositvalue(String s) {
+        overallcolonizationdepositvalue.set(s);
+    }
+    public StringProperty overallcolonizationdepositvalueProperty() {
+        return overallcolonizationdepositvalue;
+    }
+
+    public String getfoodvalue() {
+        return foodvalue.get();
+    }
+    public void setfoodvalue(String s) {
+        foodvalue.set(s);
+    }
+    public StringProperty foodvalueProperty() {
+        return foodvalue;
+    }
+
+    public String getorevalue() {
+        return orevalue.get();
+    }
+    public void setorevalue(String s) {
+        orevalue.set(s);
+    }
+    public StringProperty orevalueProperty() {
+        return orevalue;
+    }
+
+    public String getenergyvalue() {
+        return energyvalue.get();
+    }
+    public void setenergyvalue(String s) {
+        energyvalue.set(s);
+    }
+    public StringProperty energyvalueProperty() {
+        return energyvalue;
+    }
+
+    public String getbiologyvalue() {
+        return biologyvalue.get();
+    }
+    public void setbiologyvalue(String s) {
+        biologyvalue.set(s);
+    }
+    public StringProperty biologyvalueProperty() {
+        return biologyvalue;
+    }
+
+    public String getengineeringvalue() {
+        return engineeringvalue.get();
+    }
+    public void setengineeringvalue(String s) {
+        engineeringvalue.set(s);
+    }
+    public StringProperty engineeringvalueProperty() {
+        return engineeringvalue;
+    }
+
+    public String getphysicsvalue() {
+        return physicsvalue.get();
+    }
+    public void setphysicsvalue(String s) {
+        physicsvalue.set(s);
+    }
+    public StringProperty physicsvalueProperty() {
+        return physicsvalue;
+    }
+
     public String getpopsstringprop() {
         return popsstringprop.get();
     }
-
     public void setpopsstringprop(String s) {
         popsstringprop.set(s);
     }
-
     public StringProperty popsstringpropProperty() {
         return popsstringprop;
     }
@@ -268,11 +352,9 @@ public class ObjectPlanet {
     public String getpopsnamesstringprop() {
         return popsnamesstringprop.get();
     }
-
     public void setpopsnamesstringprop(String s) {
         popsnamesstringprop.set(s);
     }
-
     public StringProperty popsnamesstringpropProperty() {
         return popsnamesstringprop;
     }
@@ -290,6 +372,12 @@ public class ObjectPlanet {
         findOrbitalDepositTile();
         findTiles();
         findOrbitalResources();
+        findFoodValue();
+        findEnergyValue();
+        findMineralValue();
+        findBiologyValue();
+        findEngineeringValue();
+        findPhysicsValue();
         //System.out.println(Arrays.toString(this.objectnodes));
     }
 
@@ -318,7 +406,6 @@ public class ObjectPlanet {
             for (int i = 0; i < tempList.length; i++) {
                 for (int j = 0; j < speciesarray.length; j++) {
                     if (tempList[i].trim().equals(speciesarray[j].getid().trim())) {
-                        System.out.println(tempList[i].trim() + " " + speciesarray[j].getid().trim() + "\r\n");
                         setpopsnamesstringprop(getpopsnamesstringprop() + ", " + speciesarray[j].getname());
                     }
                 }
@@ -521,12 +608,90 @@ public class ObjectPlanet {
         }
     }
 
-    private String getTileInfo() {
-        String temp = "";
+//    private void findOverallColonizationDepositValues(){
+//        //food,ore,energy,bio,eng,phys
+//        Integer[] temp = {0,0,0,0,0,0};
+//        for (int i = 0; i < planettiles.length; i++) {
+//            for (int j = 0; j < planettiles[i].getresourcetype().length ; j++) {
+//                System.out.println(planettiles[i].getresourcetype(j) + "\r\n");
+//                //temp = temp + planettiles[i].getid() + planettiles[i].getdeposit() + " | ";
+//            }
+//        }
+//    }
+
+    private void findFoodValue(){
+        Integer[] temp = {0,0,0,0,0,0};
         for (int i = 0; i < planettiles.length; i++) {
-            temp = temp + planettiles[i].getid() + planettiles[i].getdeposit() + " | ";
+            for (int j = 0; j < planettiles[i].getresourcetype().length ; j++) {
+                if(!(planettiles[i].getresourcetype(j)==null) && planettiles[i].getresourcetype(j).equals("food")){
+                    setfoodvalue(Integer.toString(Integer.parseInt(getfoodvalue()) + Integer.parseInt(planettiles[i].getresourcequantity(j).replaceAll(".000",""))));
+                    //System.out.println(planettiles[i].getresourcetype(j) + " " + getfoodvalue());
+                }
+            }
         }
-        return temp;
+    }
+
+    private void findEnergyValue(){
+        Integer[] temp = {0,0,0,0,0,0};
+        for (int i = 0; i < planettiles.length; i++) {
+            for (int j = 0; j < planettiles[i].getresourcetype().length ; j++) {
+                if(!(planettiles[i].getresourcetype(j)==null) && planettiles[i].getresourcetype(j).equals("energy")){
+                    setenergyvalue(Integer.toString(Integer.parseInt(getenergyvalue()) + Integer.parseInt(planettiles[i].getresourcequantity(j).replaceAll(".000",""))));
+                    //System.out.println(planettiles[i].getresourcetype(j) + " " + getenergyvalue());
+                }
+            }
+        }
+    }
+
+    private void findMineralValue(){
+        Integer[] temp = {0,0,0,0,0,0};
+        for (int i = 0; i < planettiles.length; i++) {
+            for (int j = 0; j < planettiles[i].getresourcetype().length ; j++) {
+                if(!(planettiles[i].getresourcetype(j)==null) && planettiles[i].getresourcetype(j).equals("minerals")){
+                    setorevalue(Integer.toString(Integer.parseInt(getorevalue()) + Integer.parseInt(planettiles[i].getresourcequantity(j).replaceAll(".000",""))));
+                    //System.out.println(planettiles[i].getresourcetype(j) + " " + getorevalue());
+                }
+            }
+        }
+    }
+
+    private void findBiologyValue(){
+        Integer[] temp = {0,0,0,0,0,0};
+        for (int i = 0; i < planettiles.length; i++) {
+            for (int j = 0; j < planettiles[i].getresourcetype().length ; j++) {
+                if(!(planettiles[i].getresourcetype(j)==null) && planettiles[i].getresourcetype(j).equals("society_research")){
+                    setbiologyvalue(Integer.toString(Integer.parseInt(getbiologyvalue()) + Integer.parseInt(planettiles[i].getresourcequantity(j).replaceAll(".000",""))));
+                    //System.out.println(planettiles[i].getresourcetype(j) + " " + getbiologyvalue());
+                }
+            }
+        }
+    }
+
+    private void findEngineeringValue(){
+        Integer[] temp = {0,0,0,0,0,0};
+        for (int i = 0; i < planettiles.length; i++) {
+            for (int j = 0; j < planettiles[i].getresourcetype().length ; j++) {
+                if(!(planettiles[i].getresourcetype(j)==null) && planettiles[i].getresourcetype(j).equals("engineering_research")){
+                    setengineeringvalue(Integer.toString(Integer.parseInt(getengineeringvalue()) + Integer.parseInt(planettiles[i].getresourcequantity(j).replaceAll(".000",""))));
+                    //System.out.println(planettiles[i].getresourcetype(j) + " " + getengineeringvalue());
+                }
+            }
+        }
+    }
+
+    private void findPhysicsValue(){
+        Integer[] temp = {0,0,0,0,0,0};
+        for (int i = 0; i < planettiles.length; i++) {
+            for (int j = 0; j < planettiles[i].getresourcetype().length ; j++) {
+//                if(!(planettiles[i].getresourcetype(j)==null)) {
+//                    System.out.println(planettiles[i].getresourcetype(j));
+//                }
+                if(!(planettiles[i].getresourcetype(j)==null) && planettiles[i].getresourcetype(j).equals("physics_research")){
+                    setphysicsvalue(Integer.toString(Integer.parseInt(getphysicsvalue()) + Integer.parseInt(planettiles[i].getresourcequantity(j).replaceAll(".000",""))));
+                    //System.out.println(planettiles[i].getresourcetype(j) + " " + getphysicsvalue());
+                }
+            }
+        }
     }
 
     @Override

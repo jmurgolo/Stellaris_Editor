@@ -118,6 +118,30 @@ public class DisplayEditor {
         popsstringpropCol.setEditable(true);
         popsstringpropCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("popsnamesstringprop"));
 
+        TableColumn foodsstringpropCol = new TableColumn("Food");
+        foodsstringpropCol.setEditable(true);
+        foodsstringpropCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("foodvalue"));
+
+        TableColumn energystringpropCol = new TableColumn("Energy");
+        energystringpropCol.setEditable(true);
+        energystringpropCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("energyvalue"));
+
+        TableColumn mineralstringpropCol = new TableColumn("Ore");
+        mineralstringpropCol.setEditable(true);
+        mineralstringpropCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("orevalue"));
+
+        TableColumn biostringpropCol = new TableColumn("Bio");
+        biostringpropCol.setEditable(true);
+        biostringpropCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("biologyvalue"));
+
+        TableColumn engsstringpropCol = new TableColumn("Eng");
+        engsstringpropCol.setEditable(true);
+        engsstringpropCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("engineeringvalue"));
+
+        TableColumn phystringpropCol = new TableColumn("Phy");
+        phystringpropCol.setEditable(true);
+        phystringpropCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("physicsvalue"));
+
         comboBox.setOnAction((event) -> {
             table.getColumns().clear();
             countriesobjects.clear();
@@ -125,7 +149,7 @@ public class DisplayEditor {
             getSelectedCountryStellarObjects(selectedCountry);
             ObservableList<ObjectPlanet> data = FXCollections.observableArrayList(countriesobjects);
             table.setItems(data);
-            table.getColumns().addAll(idCol, sizeCol, nameCol, classCol, ownerCol, controllerCol, restileCol, resonetileCol, resvalonetileCol, restwotileCol, resvaltwotileCol, resthreetileCol, resvalthreetileCol, popsstringpropCol);
+            table.getColumns().addAll(idCol, sizeCol, nameCol, classCol, ownerCol, controllerCol, restileCol, resonetileCol, resvalonetileCol, restwotileCol, resvaltwotileCol, resthreetileCol, resvalthreetileCol, popsstringpropCol,foodsstringpropCol,energystringpropCol,mineralstringpropCol,biostringpropCol,engsstringpropCol,phystringpropCol);
             //System.out.println(table.getItems().size());
         });
 
