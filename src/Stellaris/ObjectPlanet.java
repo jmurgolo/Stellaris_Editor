@@ -313,15 +313,18 @@ public class ObjectPlanet {
 
     public void findpopsnamesstringprop(){
         //get names from id's
-            String[] tempList = getpopsstringprop().replaceAll("\\[", "").replaceAll("]","").split(",");
-            System.out.println(tempList[0]);
+        if(!(getpopsstringprop() == null)) {
+            String[] tempList = getpopsstringprop().replaceAll("\\[", "").replaceAll("]", "").split(",");
             for (int i = 0; i < tempList.length; i++) {
                 for (int j = 0; j < speciesarray.length; j++) {
                     if (tempList[i].trim().equals(speciesarray[j].getid().trim())) {
-                        setpopsnamesstringprop(getpopsnamesstringprop() + ", " + tempList[i]);
+                        System.out.println(tempList[i].trim() + " " + speciesarray[j].getid().trim() + "\r\n");
+                        setpopsnamesstringprop(getpopsnamesstringprop() + ", " + speciesarray[j].getname());
                     }
                 }
             }
+            setpopsnamesstringprop(getpopsnamesstringprop().replaceAll("null,",""));
+        }
     }
 
     private void findId() {
