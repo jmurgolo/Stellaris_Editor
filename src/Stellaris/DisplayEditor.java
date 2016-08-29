@@ -31,8 +31,10 @@ public class DisplayEditor {
     public static BorderPane creatTable() {
 
         getCountries();
-        getPlanets();
         getSpecies();
+        getPlanets();
+
+        //must come last
         getPops();
 
         for(int i = 0 ; i < planetarray.length ; i++){
@@ -72,23 +74,20 @@ public class DisplayEditor {
         TableColumn nameCol = new TableColumn("Name");
         nameCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("objectname"));
 
-//        TableColumn typeCol = new TableColumn("Type");
-//        typeCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("objecttype"));
-
         TableColumn classCol = new TableColumn("Class");
         classCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("objectclass"));
 
-        TableColumn restileCol = new TableColumn("Orbital Resource Tile");
-        restileCol.setEditable(true);
-        restileCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Long>("orbitaldeposittileinteger"));
+//        TableColumn restileCol = new TableColumn("Orbital Resource Tile");
+//        restileCol.setEditable(true);
+//        restileCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Long>("orbitaldeposittileinteger"));
 
         TableColumn ownerCol = new TableColumn("Owner");
         ownerCol.setEditable(true);
-        ownerCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Long>("owner"));
+        ownerCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("ownername"));
 
         TableColumn controllerCol = new TableColumn("Controller");
         controllerCol.setEditable(true);
-        controllerCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Long>("controller"));
+        controllerCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("controllerName"));
 
         TableColumn resonetileCol = new TableColumn("Res 1");
         resonetileCol.setEditable(true);
@@ -104,15 +103,15 @@ public class DisplayEditor {
 
         TableColumn resvaltwotileCol = new TableColumn("Res 2");
         resvaltwotileCol.setEditable(true);
-        resvaltwotileCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Long>("orbitaldeposittilevaluetwo"));
+        resvaltwotileCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("orbitaldeposittilevaluetwo"));
 
         TableColumn resthreetileCol = new TableColumn("Res 3");
         resthreetileCol.setEditable(true);
-        resthreetileCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Long>("orbitaldeposittiletypethree"));
+        resthreetileCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("orbitaldeposittiletypethree"));
 
         TableColumn resvalthreetileCol = new TableColumn("Res 3");
         resvalthreetileCol.setEditable(true);
-        resvalthreetileCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Long>("orbitaldeposittilevaluethree"));
+        resvalthreetileCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("orbitaldeposittilevaluethree"));
 
         TableColumn popsstringpropCol = new TableColumn("Pops");
         popsstringpropCol.setEditable(true);
@@ -142,6 +141,10 @@ public class DisplayEditor {
         phystringpropCol.setEditable(true);
         phystringpropCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("physicsvalue"));
 
+        TableColumn allstringpropCol = new TableColumn("All");
+        allstringpropCol.setEditable(true);
+        allstringpropCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("overallcolonizationdepositvalue"));
+
         comboBox.setOnAction((event) -> {
             table.getColumns().clear();
             countriesobjects.clear();
@@ -149,20 +152,13 @@ public class DisplayEditor {
             getSelectedCountryStellarObjects(selectedCountry);
             ObservableList<ObjectPlanet> data = FXCollections.observableArrayList(countriesobjects);
             table.setItems(data);
-            table.getColumns().addAll(idCol, sizeCol, nameCol, classCol, ownerCol, controllerCol, restileCol, resonetileCol, resvalonetileCol, restwotileCol, resvaltwotileCol, resthreetileCol, resvalthreetileCol, popsstringpropCol,foodsstringpropCol,energystringpropCol,mineralstringpropCol,biostringpropCol,engsstringpropCol,phystringpropCol);
-            //System.out.println(table.getItems().size());
+            table.getColumns().addAll(idCol, sizeCol, nameCol, classCol, ownerCol, controllerCol, resonetileCol, resvalonetileCol, restwotileCol, resvaltwotileCol, resthreetileCol, resvalthreetileCol, popsstringpropCol,allstringpropCol,foodsstringpropCol,energystringpropCol,mineralstringpropCol,biostringpropCol,engsstringpropCol,phystringpropCol);
         });
 
         VBox vbox = new VBox();
         vbox.setPadding(new Insets(10, 10, 10, 10));
         vbox.prefWidthProperty().bind(componentLayout.prefWidthProperty());
         vbox.prefHeightProperty().bind(componentLayout.prefHeightProperty());
-//        vbox.setStyle("-fx-padding: 10;" +
-//                "-fx-border-style: solid inside;" +
-//                "-fx-border-width: 2;" +
-//                "-fx-border-insets: 5;" +
-//                "-fx-border-radius: 5;" +
-//                "-fx-border-color: blue;");
         table.setMinSize(400, vbox.getPrefHeight());
         BorderPane bpane = new BorderPane();
         bpane.setStyle("-fx-background-color: #336699;");

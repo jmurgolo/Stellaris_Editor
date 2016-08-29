@@ -25,19 +25,21 @@ public class ObjectPlanet {
     private StringProperty orbitaldeposittilevaluetwo = new SimpleStringProperty();
     private StringProperty orbitaldeposittilevaluethree = new SimpleStringProperty();
 
-    private StringProperty overallcolonizationdepositvalue = new SimpleStringProperty();
-    private StringProperty foodvalue = new SimpleStringProperty();
-    private StringProperty orevalue = new SimpleStringProperty();
-    private StringProperty energyvalue = new SimpleStringProperty();
-    private StringProperty biologyvalue = new SimpleStringProperty();
-    private StringProperty engineeringvalue = new SimpleStringProperty();
-    private StringProperty physicsvalue = new SimpleStringProperty();
+    private IntegerProperty overallcolonizationdepositvalue = new SimpleIntegerProperty();
+    private IntegerProperty foodvalue = new SimpleIntegerProperty();
+    private IntegerProperty orevalue = new SimpleIntegerProperty();
+    private IntegerProperty energyvalue = new SimpleIntegerProperty();
+    private IntegerProperty biologyvalue = new SimpleIntegerProperty();
+    private IntegerProperty engineeringvalue = new SimpleIntegerProperty();
+    private IntegerProperty physicsvalue = new SimpleIntegerProperty();
 
     private StringProperty objectname = new SimpleStringProperty();
     private StringProperty objectclass = new SimpleStringProperty();
     private StringProperty objecttype = new SimpleStringProperty();
     private StringProperty owner = new SimpleStringProperty();
+    private StringProperty ownername = new SimpleStringProperty();
     private StringProperty controller = new SimpleStringProperty();
+    private StringProperty controllerName = new SimpleStringProperty();
     private StringProperty orbitals = new SimpleStringProperty();
     private StringProperty entity = new SimpleStringProperty();
     private StringProperty prevent_anomaly = new SimpleStringProperty();
@@ -60,12 +62,12 @@ public class ObjectPlanet {
         setobjecttype("");
         setowner("");
         setcontroller("");
-        setfoodvalue("0");
-        setorevalue("0");
-        setenergyvalue("0");
-        setbiologyvalue("0");
-        setengineeringvalue("0");
-        setphysicsvalue("0");
+        setfoodvalue(0);
+        setorevalue(0);
+        setenergyvalue(0);
+        setbiologyvalue(0);
+        setengineeringvalue(0);
+        setphysicsvalue(0);
         //setpop                 ("");
         //setorbitals            ("");
         //setentity              ("");
@@ -76,9 +78,11 @@ public class ObjectPlanet {
     public String getstar() {
         return star.get();
     }
+
     public void setstar(String i) {
         star.set(i);
     }
+
     public StringProperty starProperty() {
         return star;
     }
@@ -86,9 +90,11 @@ public class ObjectPlanet {
     public String getid() {
         return id.get();
     }
+
     public void setid(String i) {
         id.set(i);
     }
+
     public StringProperty idProperty() {
         return id;
     }
@@ -96,9 +102,11 @@ public class ObjectPlanet {
     public Integer getidnumber() {
         return idnumber.get();
     }
+
     public void setidnumber(Integer i) {
         idnumber.set(i);
     }
+
     public IntegerProperty idnumberProperty() {
         return idnumber;
     }
@@ -187,14 +195,40 @@ public class ObjectPlanet {
         return owner;
     }
 
+    public String getownername() {
+        return ownername.get();
+    }
+
+    public void setownername(String s) {
+        ownername.set(s);
+    }
+
+    public StringProperty ownernameProperty() {
+        return ownername;
+    }
+
     public String getcontroller() {
         return controller.get();
     }
+
     public void setcontroller(String s) {
         controller.set(s);
     }
+
     public StringProperty controllerProperty() {
         return controller;
+    }
+
+    public String getcontrollerName() {
+        return controllerName.get();
+    }
+
+    public void setcontrollerName(String s) {
+        controllerName.set(s);
+    }
+
+    public StringProperty controllerNameProperty() {
+        return controllerName;
     }
 
     public String getorbitaldeposittiletypeone() {
@@ -269,82 +303,98 @@ public class ObjectPlanet {
         return orbitaldeposittilevaluethree;
     }
 
-    public String getoverallcolonizationdepositvalue() {
+    public Integer getoverallcolonizationdepositvalue() {
         return overallcolonizationdepositvalue.get();
     }
-    public void setoverallcolonizationdepositvalue(String s) {
+
+    public void setoverallcolonizationdepositvalue(Integer s) {
         overallcolonizationdepositvalue.set(s);
     }
-    public StringProperty overallcolonizationdepositvalueProperty() {
+
+    public IntegerProperty overallcolonizationdepositvalueProperty() {
         return overallcolonizationdepositvalue;
     }
 
-    public String getfoodvalue() {
+    public Integer getfoodvalue() {
         return foodvalue.get();
     }
-    public void setfoodvalue(String s) {
+
+    public void setfoodvalue(Integer s) {
         foodvalue.set(s);
     }
-    public StringProperty foodvalueProperty() {
+
+    public IntegerProperty foodvalueProperty() {
         return foodvalue;
     }
 
-    public String getorevalue() {
+    public Integer getorevalue() {
         return orevalue.get();
     }
-    public void setorevalue(String s) {
+
+    public void setorevalue(Integer s) {
         orevalue.set(s);
     }
-    public StringProperty orevalueProperty() {
+
+    public IntegerProperty orevalueProperty() {
         return orevalue;
     }
 
-    public String getenergyvalue() {
+    public Integer getenergyvalue() {
         return energyvalue.get();
     }
-    public void setenergyvalue(String s) {
+
+    public void setenergyvalue(Integer s) {
         energyvalue.set(s);
     }
-    public StringProperty energyvalueProperty() {
+
+    public IntegerProperty energyvalueProperty() {
         return energyvalue;
     }
 
-    public String getbiologyvalue() {
+    public Integer getbiologyvalue() {
         return biologyvalue.get();
     }
-    public void setbiologyvalue(String s) {
+
+    public void setbiologyvalue(Integer s) {
         biologyvalue.set(s);
     }
-    public StringProperty biologyvalueProperty() {
+
+    public IntegerProperty biologyvalueProperty() {
         return biologyvalue;
     }
 
-    public String getengineeringvalue() {
+    public Integer getengineeringvalue() {
         return engineeringvalue.get();
     }
-    public void setengineeringvalue(String s) {
+
+    public void setengineeringvalue(Integer s) {
         engineeringvalue.set(s);
     }
-    public StringProperty engineeringvalueProperty() {
+
+    public IntegerProperty engineeringvalueProperty() {
         return engineeringvalue;
     }
 
-    public String getphysicsvalue() {
+    public Integer getphysicsvalue() {
         return physicsvalue.get();
     }
-    public void setphysicsvalue(String s) {
+
+    public void setphysicsvalue(Integer s) {
         physicsvalue.set(s);
     }
-    public StringProperty physicsvalueProperty() {
+
+    public IntegerProperty physicsvalueProperty() {
         return physicsvalue;
     }
 
     public String getpopsstringprop() {
         return popsstringprop.get();
     }
+
     public void setpopsstringprop(String s) {
         popsstringprop.set(s);
     }
+
     public StringProperty popsstringpropProperty() {
         return popsstringprop;
     }
@@ -352,9 +402,11 @@ public class ObjectPlanet {
     public String getpopsnamesstringprop() {
         return popsnamesstringprop.get();
     }
+
     public void setpopsnamesstringprop(String s) {
         popsnamesstringprop.set(s);
     }
+
     public StringProperty popsnamesstringpropProperty() {
         return popsnamesstringprop;
     }
@@ -378,12 +430,15 @@ public class ObjectPlanet {
         findBiologyValue();
         findEngineeringValue();
         findPhysicsValue();
+        findOverallColonizationDepositValues();
+        findcontrollername();
+        findownername();
         //System.out.println(Arrays.toString(this.objectnodes));
     }
 
-    public void findpopsstringprop(){
+    public void findpopsstringprop() {
         List temparray = new ArrayList();
-        if(planettiles.length > 0) {
+        if (planettiles.length > 0) {
             for (int i = 0; i < planettiles.length; i++) {
                 if (!(planettiles[i].getpop().equals(""))) {
                     temparray.add(planettiles[i].getpop());
@@ -399,9 +454,9 @@ public class ObjectPlanet {
         }
     }
 
-    public void findpopsnamesstringprop(){
+    public void findpopsnamesstringprop() {
         //get names from id's
-        if(!(getpopsstringprop() == null)) {
+        if (!(getpopsstringprop() == null)) {
             String[] tempList = getpopsstringprop().replaceAll("\\[", "").replaceAll("]", "").split(",");
             for (int i = 0; i < tempList.length; i++) {
                 for (int j = 0; j < speciesarray.length; j++) {
@@ -410,7 +465,32 @@ public class ObjectPlanet {
                     }
                 }
             }
-            setpopsnamesstringprop(getpopsnamesstringprop().replaceAll("null,",""));
+            setpopsnamesstringprop(getpopsnamesstringprop().replaceAll("null,", ""));
+        }
+    }
+
+    public void findcontrollername() {
+        //get names from id's
+        if (!(getcontroller() == null)) {
+            String temp = getcontroller().replaceAll("\\[", "").replaceAll("]", "");
+                for (int j = 0; j < speciesarray.length; j++) {
+                        if (temp.trim().equals(speciesarray[j].getid().trim())) {
+                            setcontrollerName(speciesarray[j].getname());
+                            //System.out.println(speciesarray[j].getid().trim() + " | " + getcontrollername());
+                        }
+            }
+        }
+    }
+
+    public void findownername() {
+        //get names from id's
+        if (!(getowner() == null)) {
+            String temp = getowner().replaceAll("\\[", "").replaceAll("]", "");
+            for (int j = 0; j < speciesarray.length; j++) {
+                if (temp.trim().equals(speciesarray[j].getid().trim())) {
+                    setownername(speciesarray[j].getname());
+                }
+            }
         }
     }
 
@@ -487,6 +567,7 @@ public class ObjectPlanet {
         if (objectnodes.length > counter && objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodename.trim().equals("controller") && objectnodes[counter].nodelevel == 2) {
             temp = objectnodes[counter].getNodeValue();
         }
+        //System.out.println(temp);
         setcontroller(temp.replaceAll("\"", "").replaceAll("=", ""));
     }
 
@@ -574,17 +655,17 @@ public class ObjectPlanet {
 
         for (int i = 0; i < tilelist.size(); i++) {
             planettilestemp[i] = new ObjectTile();
-            planettilestemp[i].setTileObjectNode(tilelist.get(i).getChildren(),getid());
+            planettilestemp[i].setTileObjectNode(tilelist.get(i).getChildren(), getid());
         }
 
         if (planettilestemp.length > 0) {
-            planettiles = new ObjectTile[Integer.parseInt(planettilestemp[planettilestemp.length - 1].getid())+1];
+            planettiles = new ObjectTile[Integer.parseInt(planettilestemp[planettilestemp.length - 1].getid()) + 1];
             for (int i = 0; i < planettiles.length; i++) {
                 planettiles[i] = new ObjectTile();
                 planettiles[i].setid(Integer.toString(i));
             }
             for (int i = 0; i < planettilestemp.length; i++) {
-                    planettiles[Integer.parseInt(planettilestemp[i].getid())] = planettilestemp[i];
+                planettiles[Integer.parseInt(planettilestemp[i].getid())] = planettilestemp[i];
             }
         } else {
             planettiles = planettilestemp;
@@ -595,8 +676,8 @@ public class ObjectPlanet {
         Long stepL = 0L;
         Long baseL = 0L;
         Long totalL = 0L;
-        for(int i = 0; i < planettiles.length ; i++) {
-            if(planettiles[i].getglobaltileidtotal().trim().equals(getorbitaldeposittile().trim())) {
+        for (int i = 0; i < planettiles.length; i++) {
+            if (planettiles[i].getglobaltileidtotal().trim().equals(getorbitaldeposittile().trim())) {
                 setorbitaldeposittiletypeone(planettiles[i].getresourcetype(0));
                 setorbitaldeposittilevalueone(planettiles[i].getresourcequantity(0));
                 setorbitaldeposittiletypetwo(planettiles[i].getresourcetype(1));
@@ -608,90 +689,84 @@ public class ObjectPlanet {
         }
     }
 
-//    private void findOverallColonizationDepositValues(){
-//        //food,ore,energy,bio,eng,phys
-//        Integer[] temp = {0,0,0,0,0,0};
-//        for (int i = 0; i < planettiles.length; i++) {
-//            for (int j = 0; j < planettiles[i].getresourcetype().length ; j++) {
-//                System.out.println(planettiles[i].getresourcetype(j) + "\r\n");
-//                //temp = temp + planettiles[i].getid() + planettiles[i].getdeposit() + " | ";
-//            }
-//        }
-//    }
-
-    private void findFoodValue(){
-        Integer[] temp = {0,0,0,0,0,0};
+    private void findFoodValue() {
+        Integer[] temp = {0, 0, 0, 0, 0, 0};
         for (int i = 0; i < planettiles.length; i++) {
-            for (int j = 0; j < planettiles[i].getresourcetype().length ; j++) {
-                if(!(planettiles[i].getresourcetype(j)==null) && planettiles[i].getresourcetype(j).equals("food")){
-                    setfoodvalue(Integer.toString(Integer.parseInt(getfoodvalue()) + Integer.parseInt(planettiles[i].getresourcequantity(j).replaceAll(".000",""))));
+            for (int j = 0; j < planettiles[i].getresourcetype().length; j++) {
+                if (!(planettiles[i].getresourcetype(j) == null) && planettiles[i].getresourcetype(j).equals("food")) {
+                    setfoodvalue(getfoodvalue() + Integer.parseInt(planettiles[i].getresourcequantity(j).replaceAll(".000", "")));
                     //System.out.println(planettiles[i].getresourcetype(j) + " " + getfoodvalue());
                 }
             }
         }
     }
 
-    private void findEnergyValue(){
-        Integer[] temp = {0,0,0,0,0,0};
+    private void findEnergyValue() {
+        Integer[] temp = {0, 0, 0, 0, 0, 0};
         for (int i = 0; i < planettiles.length; i++) {
-            for (int j = 0; j < planettiles[i].getresourcetype().length ; j++) {
-                if(!(planettiles[i].getresourcetype(j)==null) && planettiles[i].getresourcetype(j).equals("energy")){
-                    setenergyvalue(Integer.toString(Integer.parseInt(getenergyvalue()) + Integer.parseInt(planettiles[i].getresourcequantity(j).replaceAll(".000",""))));
+            for (int j = 0; j < planettiles[i].getresourcetype().length; j++) {
+                if (!(planettiles[i].getresourcetype(j) == null) && planettiles[i].getresourcetype(j).equals("energy")) {
+                    setenergyvalue(getenergyvalue() + Integer.parseInt(planettiles[i].getresourcequantity(j).replaceAll(".000", "")));
                     //System.out.println(planettiles[i].getresourcetype(j) + " " + getenergyvalue());
                 }
             }
         }
     }
 
-    private void findMineralValue(){
-        Integer[] temp = {0,0,0,0,0,0};
+    private void findMineralValue() {
+        Integer[] temp = {0, 0, 0, 0, 0, 0};
         for (int i = 0; i < planettiles.length; i++) {
-            for (int j = 0; j < planettiles[i].getresourcetype().length ; j++) {
-                if(!(planettiles[i].getresourcetype(j)==null) && planettiles[i].getresourcetype(j).equals("minerals")){
-                    setorevalue(Integer.toString(Integer.parseInt(getorevalue()) + Integer.parseInt(planettiles[i].getresourcequantity(j).replaceAll(".000",""))));
+            for (int j = 0; j < planettiles[i].getresourcetype().length; j++) {
+                if (!(planettiles[i].getresourcetype(j) == null) && planettiles[i].getresourcetype(j).equals("minerals")) {
+                    setorevalue(getorevalue() + Integer.parseInt(planettiles[i].getresourcequantity(j).replaceAll(".000", "")));
                     //System.out.println(planettiles[i].getresourcetype(j) + " " + getorevalue());
                 }
             }
         }
     }
 
-    private void findBiologyValue(){
-        Integer[] temp = {0,0,0,0,0,0};
+    private void findBiologyValue() {
+        Integer[] temp = {0, 0, 0, 0, 0, 0};
         for (int i = 0; i < planettiles.length; i++) {
-            for (int j = 0; j < planettiles[i].getresourcetype().length ; j++) {
-                if(!(planettiles[i].getresourcetype(j)==null) && planettiles[i].getresourcetype(j).equals("society_research")){
-                    setbiologyvalue(Integer.toString(Integer.parseInt(getbiologyvalue()) + Integer.parseInt(planettiles[i].getresourcequantity(j).replaceAll(".000",""))));
+            for (int j = 0; j < planettiles[i].getresourcetype().length; j++) {
+                if (!(planettiles[i].getresourcetype(j) == null) && planettiles[i].getresourcetype(j).equals("society_research")) {
+                    setbiologyvalue(getbiologyvalue() + Integer.parseInt(planettiles[i].getresourcequantity(j).replaceAll(".000", "")));
                     //System.out.println(planettiles[i].getresourcetype(j) + " " + getbiologyvalue());
                 }
             }
         }
     }
 
-    private void findEngineeringValue(){
-        Integer[] temp = {0,0,0,0,0,0};
+    private void findEngineeringValue() {
+        Integer[] temp = {0, 0, 0, 0, 0, 0};
         for (int i = 0; i < planettiles.length; i++) {
-            for (int j = 0; j < planettiles[i].getresourcetype().length ; j++) {
-                if(!(planettiles[i].getresourcetype(j)==null) && planettiles[i].getresourcetype(j).equals("engineering_research")){
-                    setengineeringvalue(Integer.toString(Integer.parseInt(getengineeringvalue()) + Integer.parseInt(planettiles[i].getresourcequantity(j).replaceAll(".000",""))));
+            for (int j = 0; j < planettiles[i].getresourcetype().length; j++) {
+                if (!(planettiles[i].getresourcetype(j) == null) && planettiles[i].getresourcetype(j).equals("engineering_research")) {
+                    setengineeringvalue(getengineeringvalue() + Integer.parseInt(planettiles[i].getresourcequantity(j).replaceAll(".000", "")));
                     //System.out.println(planettiles[i].getresourcetype(j) + " " + getengineeringvalue());
                 }
             }
         }
     }
 
-    private void findPhysicsValue(){
-        Integer[] temp = {0,0,0,0,0,0};
+    private void findPhysicsValue() {
+        Integer[] temp = {0, 0, 0, 0, 0, 0};
         for (int i = 0; i < planettiles.length; i++) {
-            for (int j = 0; j < planettiles[i].getresourcetype().length ; j++) {
+            for (int j = 0; j < planettiles[i].getresourcetype().length; j++) {
 //                if(!(planettiles[i].getresourcetype(j)==null)) {
 //                    System.out.println(planettiles[i].getresourcetype(j));
 //                }
-                if(!(planettiles[i].getresourcetype(j)==null) && planettiles[i].getresourcetype(j).equals("physics_research")){
-                    setphysicsvalue(Integer.toString(Integer.parseInt(getphysicsvalue()) + Integer.parseInt(planettiles[i].getresourcequantity(j).replaceAll(".000",""))));
+                if (!(planettiles[i].getresourcetype(j) == null) && planettiles[i].getresourcetype(j).equals("physics_research")) {
+                    setphysicsvalue(getphysicsvalue() + Integer.parseInt(planettiles[i].getresourcequantity(j).replaceAll(".000", "")));
                     //System.out.println(planettiles[i].getresourcetype(j) + " " + getphysicsvalue());
                 }
             }
         }
+    }
+
+    private void findOverallColonizationDepositValues() {
+       int overallvalue =  getbiologyvalue() + getenergyvalue() + getfoodvalue() + getphysicsvalue() + getengineeringvalue() + getorevalue();
+        setoverallcolonizationdepositvalue(overallvalue);
     }
 
     @Override
