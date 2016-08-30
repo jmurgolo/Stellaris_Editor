@@ -8,13 +8,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import Stellaris.UtilitiesTable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static Stellaris.Main.*;

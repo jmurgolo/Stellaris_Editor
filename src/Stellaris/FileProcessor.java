@@ -33,13 +33,18 @@ public class FileProcessor {
     public static File openSaveFile(Stage primaryStage) throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
-        fileChooser.setInitialDirectory(new File("C:\\Stellaris Save Game Editor"));
+        File directorylocation = new File("C:\\Users\\jmm\\Documents\\Paradox Interactive\\Stellaris\\save games");
+        if(!directorylocation.canRead()) {
+            String currentDir = System.getProperty("user.home");
+            fileChooser.setInitialDirectory(new File(currentDir));
+        } else {
+            fileChooser.setInitialDirectory(directorylocation);
+        }
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("All Files", "*.*"));
         new FileChooser.ExtensionFilter("Text Files", "*.sav", "*.txt");
         File selectedFile = fileChooser.showOpenDialog(primaryStage);
         return selectedFile;
-        //TODO: handle file dialogue cancel/x out gracefully
     }
 
     public static File backupFile(File f) {
@@ -82,8 +87,6 @@ public class FileProcessor {
         }
 
         JProgressBar progressBar = main_Progress_Bar(0, filelinecount, "Processing Save File", pstage);
-
-        //TODO: fix file locations
 
         try {
             if (rd != null) {

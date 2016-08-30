@@ -1,11 +1,8 @@
 package Stellaris;
 
-import javafx.beans.property.LongProperty;
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import java.math.BigInteger;
 import java.util.Arrays;
 
 import static Stellaris.Utilities.addArrayCapacity;

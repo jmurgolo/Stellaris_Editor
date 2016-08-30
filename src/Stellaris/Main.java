@@ -8,13 +8,9 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.apache.commons.compress.archivers.ArchiveException;
 
-import javax.swing.*;
 import java.io.File;
-import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileLock;
 import java.nio.file.Path;
@@ -27,7 +23,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-import static Stellaris.Utilities.main_Progress_Bar;
 import static Stellaris.XML_Node.processSfe_arraylist;
 
 public class Main extends Application {
@@ -77,7 +72,6 @@ public class Main extends Application {
 
         //put the vbox in the top area of the BorderPane
         componentLayout.setTop(menuBar);
-        //VBox vbox = new VBox();
 
         //Add the BorderPane to the Scene
         Scene appScene = new Scene(componentLayout, 1280, 768);
@@ -97,43 +91,43 @@ public class Main extends Application {
 
         try {
             savefile = FileProcessor.openSaveFile(s);
-            FileProcessor.backupFile(savefile);
-            FileProcessor.unZipIt(savefile.getPath(), savefile.getPath().replace(savefile.getName(), ""));
-            File filetoprocess = new File(savefile.getPath().replace(savefile.getName(), "") + File.separator + "temp" + File.separator + "gamestate");
-            FileProcessor.createXmlFileAndDb(filetoprocess);
+            if(!(savefile == null)) {
+                FileProcessor.backupFile(savefile);
+                FileProcessor.unZipIt(savefile.getPath(), savefile.getPath().replace(savefile.getName(), ""));
+                File filetoprocess = new File(savefile.getPath().replace(savefile.getName(), "") + File.separator + "temp" + File.separator + "gamestate");
+                FileProcessor.createXmlFileAndDb(filetoprocess);
+                processSfe_arraylist();
+                FileProcessor.createTempFileofArray(1,10000);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        processSfe_arraylist();
-        FileProcessor.createTempFileofArray(1,10000);
     }
 
     private MenuBar getMenuBar(Stage primaryStage, BorderPane componentLayout){
         final Menu fileMenu = new Menu("File");
         MenuItem openMenuItem = new MenuItem("Open");
 
-        MenuItem saveMenuItem = new MenuItem("Save");
+        //MenuItem saveMenuItem = new MenuItem("Save");
 
         MenuItem exitMenuItem = new MenuItem("Exit");
         exitMenuItem.setOnAction(actionEvent -> shutdown());
 
-        fileMenu.getItems().addAll(openMenuItem, saveMenuItem, new SeparatorMenuItem(), exitMenuItem);
+        fileMenu.getItems().addAll(openMenuItem, new SeparatorMenuItem(), exitMenuItem);
         final Menu optionsMenu = new Menu("Options");
 
         openMenuItem.setOnAction((event) -> {
-            //TODO: fix error when x-ing out of file menu without selecting file
-            processSaveFile(primaryStage);
-            componentLayout.setCenter(DisplayEditor.creatTable());
+
+                processSaveFile(primaryStage);
+            if(!(savefile==null)) {
+                componentLayout.setCenter(DisplayEditor.creatTable());
+            }
         });
 
-        saveMenuItem.setOnAction((event) -> {
-            //TODO: fix error when x-ing out of file menu without selecting file
-            FileProcessor.zipIt(savefile);
-            //componentLayout.getChildren().add(EditorDisplay.creatTable());
-        });
-
-        //todo:why is this failing
-        //stellar_menu_item.setDisable(true);
+//        saveMenuItem.setOnAction((event) -> {
+//            FileProcessor.zipIt(savefile);
+//            //componentLayout.getChildren().add(EditorDisplay.creatTable());
+//        });
 
         final Menu aboutMenu = new Menu("Help");
         MenuBar menuBar = new MenuBar();
@@ -142,6 +136,7 @@ public class Main extends Application {
         return menuBar;
     }
 
+    //only one instance of program at a time
     private static boolean lockInstance(final String lockFile) {
         try {
             final File file = new File(lockFile);
@@ -176,8 +171,8 @@ public class Main extends Application {
         Platform.exit();
     }
 
-    public static <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {
-        Map<Object, Boolean> seen = new ConcurrentHashMap<>();
-        return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
-    }
+//    public static <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {
+//        Map<Object, Boolean> seen = new ConcurrentHashMap<>();
+//        return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
+//    }
 }
