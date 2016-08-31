@@ -27,6 +27,8 @@ public class DisplayEditor {
 
     public static BorderPane creatTable() {
 
+        countriesobjects.clear();
+
         getCountries();
         getSpecies();
         getPlanets();
