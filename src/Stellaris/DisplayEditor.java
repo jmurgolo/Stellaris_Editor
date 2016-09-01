@@ -1,11 +1,16 @@
 package Stellaris;
 
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -55,6 +60,67 @@ public class DisplayEditor {
 
         final Label label = new Label("Empire Scope");
         label.setFont(new Font("Arial", 20));
+
+        ContextMenu tableContextMenu = new ContextMenu();
+        table.setContextMenu(tableContextMenu);
+
+        MenuItem copyMenuItem = new MenuItem("Copy");
+        MenuItem filterMenuItem = new MenuItem("Filter");
+        MenuItem complexSortMenuItem = new MenuItem("Sort");
+        MenuItem setColumnVisibilityMenuItem = new MenuItem("Column Visibility");
+
+        copyMenuItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                // get cell
+                StringBuilder clipboardString = new StringBuilder();
+                ObservableList<TablePosition> positionList = table.getSelectionModel().getSelectedCells();
+                int prevRow = -1;
+
+                for (TablePosition position : positionList) {
+
+                    int row = position.getRow();
+                    int col = position.getColumn();
+
+                    Object cell = (Object) table.getColumns().get(col).getCellData(row);
+
+                    // null-check: provide empty string for nulls
+                    if (cell == null) {
+                        cell = "";
+                    }
+
+                    // determine whether we advance in a row (tab) or a column
+                    // (newline).
+                    if (prevRow == row) {
+
+                        clipboardString.append('\t');
+
+                    } else if (prevRow != -1) {
+
+                        clipboardString.append('\n');
+
+                    }
+
+                    // create string from cell
+                    String text = cell.toString();
+
+                    // add new item to clipboard
+                    clipboardString.append(text);
+
+                    // remember previous
+                    prevRow = row;
+                }
+
+                // create clipboard content
+                final ClipboardContent clipboardContent = new ClipboardContent();
+                clipboardContent.putString(clipboardString.toString());
+
+                // set clipboard content
+                Clipboard.getSystemClipboard().setContent(clipboardContent);
+            }
+        });
+        tableContextMenu.getItems().addAll(copyMenuItem,filterMenuItem,complexSortMenuItem,setColumnVisibilityMenuItem);
+        table.setContextMenu(tableContextMenu);
 
         table.setEditable(true);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
