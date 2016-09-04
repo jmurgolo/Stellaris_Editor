@@ -12,6 +12,7 @@ import static Stellaris.Main.speciesarray;
 public class ObjectPlanet {
 
     private StringProperty star = new SimpleStringProperty();
+    private StringProperty starname = new SimpleStringProperty();
     private StringProperty id = new SimpleStringProperty();
     private IntegerProperty idnumber = new SimpleIntegerProperty();
     private IntegerProperty size = new SimpleIntegerProperty();
@@ -46,6 +47,7 @@ public class ObjectPlanet {
     private StringProperty spaceport = new SimpleStringProperty();
     private StringProperty popsstringprop = new SimpleStringProperty();
     private StringProperty popsnamesstringprop = new SimpleStringProperty();
+
 
     public SaveFileElement[] objectnodes;
     public ObjectTile[] planettiles;
@@ -85,6 +87,18 @@ public class ObjectPlanet {
 
     public StringProperty starProperty() {
         return star;
+    }
+
+    public String getstarname() {
+        return starname.get();
+    }
+
+    public void setstarname(String i) {
+        starname.set(i);
+    }
+
+    public StringProperty starnameProperty() {
+        return starname;
     }
 
     public String getid() {

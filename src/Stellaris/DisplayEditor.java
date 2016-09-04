@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static Stellaris.Main.*;
+import static Stellaris.Main.stararray;
 
 /**
  * Created by jmm on 7/1/2016.
@@ -37,6 +38,7 @@ public class DisplayEditor {
         getCountries();
         getSpecies();
         getPlanets();
+        getStars();
 
         //must come last
         getPops();
@@ -125,8 +127,9 @@ public class DisplayEditor {
         table.setEditable(true);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         //table.getSelectionModel().setCellSelectionEnabled( true );
-        table.getSelectionModel().setSelectionMode( SelectionMode.MULTIPLE );
-        UtilitiesTable.installCopyPasteHandler(table);
+        table.getSelectionModel().setCellSelectionEnabled(true);
+        //table.getSelectionModel().setSelectionMode( SelectionMode.MULTIPLE );
+        //UtilitiesTable.installCopyPasteHandler(table);
 
         TableColumn idCol = new TableColumn("Id");
         idCol.setMaxWidth(450);
@@ -305,6 +308,25 @@ public class DisplayEditor {
         }
     }
 
+    private static void getStars(){
+        List<SaveFileElement> starlist = new ArrayList<>();
+        for (int i = 0; i < sfe_arraylist.length; i++) {
+            if (sfe_arraylist[i].nodeparent.trim().equals("galactic_object")) {
+                if (sfe_arraylist[i].openorclose.equals("open")) {
+                    starlist.add(sfe_arraylist[i]);
+                }
+            }
+        }
+
+        stararray = new ObjectStar[starlist.size()];
+
+        for (int i = 0; i < starlist.size(); i++) {
+            stararray[i] = new ObjectStar();
+            stararray[i].setStellarObjectNodes(starlist.get(i).getChildren());
+            //System.out.println("Start ------------------- " + Arrays.toString(planetarray[i].objectnodes));
+        }
+    }
+
     private static void getSelectedCountryStellarObjects(String countryname) {
         int i = 0;
         for (i = 0 ; i < countries.length; i++) {
@@ -344,28 +366,3 @@ public class DisplayEditor {
     }
 
 }// end class
-
-
-//    private static void getStars() {
-//
-//        List<SaveFileElement> starlist = new ArrayList<>();
-//        for (int i = 0; i < sfe_arraylist.length; i++) {
-//            if (sfe_arraylist[i].nodeparent.trim().equals("galactic_object")) {
-//                if (sfe_arraylist[i].openorclose.equals("open")) {
-//                    starlist.add(sfe_arraylist[i]);
-//                }
-//            }
-//        }
-//
-//        stararray = new ObjectStar[starlist.size()];
-//
-//        //get all the stars' nodes
-//        for (int i = 0; i < starlist.size(); i++) {
-//            stararray[i] = new ObjectStar();
-//            stararray[i].setStellarObjectNodes(starlist.get(i).getChildren());
-//        }
-//    }
-
-
-
-

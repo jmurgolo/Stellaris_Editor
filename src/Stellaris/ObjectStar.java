@@ -5,6 +5,10 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by jmm on 7/9/2016.
  */
@@ -14,20 +18,15 @@ public class ObjectStar {
     private int arrayend;
 
     private IntegerProperty id = new SimpleIntegerProperty();
-    private IntegerProperty size = new SimpleIntegerProperty();
     private StringProperty name = new SimpleStringProperty();
-    private StringProperty objectclass = new SimpleStringProperty();
-    private StringProperty objecttype = new SimpleStringProperty();
-    private int planet_size = 0;
+
+    private Integer[] planets;
+
     private SaveFileElement[] objectnodes;
 
     public Integer getid(){ return id.get(); }
     public void setid(Integer i){ id.set(i); }
     public IntegerProperty idProperty() { return id; }
-
-    public Integer getsize(){ return size.get(); }
-    public void setsize(Integer i){ size.set(i); }
-    public IntegerProperty sizeProperty() { return size; }
 
     public String getname(){
         return name.get();
@@ -35,26 +34,12 @@ public class ObjectStar {
     public void setname(String s){ name.set(s); }
     public StringProperty nameProperty() { return name; }
 
-    public String getobjectclass(){
-        return objectclass.get();
-    }
-    public void setobjectclass(String s){ objectclass.set(s); }
-    public StringProperty objectclassProperty() { return objectclass; }
-
-    public String getobjecttype(){
-        return objecttype.get();
-    }
-    public void setobjecttype(String s){ objecttype.set(s); }
-    public StringProperty objecttypeProperty() { return objecttype; }
-
     public void setStellarObjectNodes(SaveFileElement[] list) {
-
         objectnodes = list;
         findId();
-        findSize();
         findName();
-        findType();
-        findObjectClass();
+        findPlanets();
+        //System.out.println("Start ------------------- " + this.toString());
     }
 
     private void findId() {
@@ -92,65 +77,25 @@ public class ObjectStar {
         setname(temp.replaceAll("\"","").replaceAll("=",""));
     }
 
-    private void findObjectClass() {
+    private void findPlanets() {
 
-        String temp = "none";
-        int counter = 0;
-
-        while(!(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodelevel == 2 && (objectnodes[counter].nodename.trim().equals("star_class") || objectnodes[counter].nodename.trim().equals("planet_class")))){
-            if(objectnodes.length-1 == counter) {
-                break;
+        List<Integer> planetlist = new ArrayList<>();
+        for (int i = 0; i < objectnodes.length; i++) {
+            if (objectnodes[i].nodename.trim().equals("planet")) {
+                if (objectnodes[i].openorclose.equals("none")) {
+                    planetlist.add(Integer.parseInt(objectnodes[i].nodevalue.replace("=","").trim()));
+                }
             }
-            counter++;
         }
-        if(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodelevel == 2 && (objectnodes[counter].nodename.trim().equals("star_class") || objectnodes[counter].nodename.trim().equals("planet_class"))) {
-            temp = objectnodes[counter].getNodeValue();
-        }
-        setobjectclass(temp.replaceAll("\"","").replaceAll("=",""));
-    }
 
-    private void findSize() {
-
-        Integer temp = 0;
-        int counter = 0;
-
-        while(!(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodelevel == 2 && objectnodes[counter].nodename.trim().equals("planet_size"))){
-            if(objectnodes.length-1 == counter) {
-                break;
-            }
-            //System.out.println(objectnodes[counter].openorclose + " " + objectnodes[counter].nodelevel + " " + objectnodes[counter].nodename.trim());
-
-            counter++;
-        }
-        if(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodelevel == 2 && objectnodes[counter].nodename.trim().equals("planet_size")) {
-            temp = Integer.valueOf(objectnodes[counter].getNodeValue().trim().replace("=",""));
-        }
-        setsize(temp);
-    }
-
-    private void findType() {
-
-        String temp = "none";
-        int counter = 0;
-
-        while(!(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodelevel == 2 && (objectnodes[counter].nodename.trim().equals("type") || objectnodes[counter].nodename.trim().equals("planet_class")))){
-            if(objectnodes.length-1 == counter) {
-                break;
-            }
-            counter++;
-        }
-        if(objectnodes[counter].openorclose.equals("none") && objectnodes[counter].nodelevel == 2 && (objectnodes[counter].nodename.trim().equals("type") || objectnodes[counter].nodename.trim().equals("planet_class"))) {
-            temp = objectnodes[counter].getNodeValue();
-        }
-        setobjecttype(temp.replaceAll("\"","").replaceAll("=",""));
+        Integer planetlisttemp[] = new Integer[planetlist.size()];
+        planets = planetlisttemp;
     }
 
     public String toString() {
-        return "name" + " = " + name + " | "
-                + "id" + " =  " + id + " | "
+        return "id" + " =  " + id + " | "
                 + "name" + " =  " + name + " | "
-                + "objecttype" + " =  " + objecttype + " | "
-                + "objectclass" + " =  " + objectclass + " | "
+                + "planets = " + Arrays.toString(planets)
                 //+ "objectnodes" + " =  " + Arrays.toString(objectnodes) + " | "
                 + "\r\n";
     }

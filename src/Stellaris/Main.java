@@ -25,6 +25,8 @@ import java.util.function.Predicate;
 
 import static Stellaris.XML_Node.processSfe_arraylist;
 
+//todo: star system column, total for system column
+
 public class Main extends Application {
 
     //prevent multiple copies of application
