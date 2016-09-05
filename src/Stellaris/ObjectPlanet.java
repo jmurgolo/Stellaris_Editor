@@ -70,11 +70,6 @@ public class ObjectPlanet {
         setbiologyvalue(0);
         setengineeringvalue(0);
         setphysicsvalue(0);
-        //setpop                 ("");
-        //setorbitals            ("");
-        //setentity              ("");
-        //setprevent_anomaly     ("");
-        //setspaceport           ("");
     }
 
     public String getstar() {

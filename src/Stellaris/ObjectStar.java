@@ -9,18 +9,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static Stellaris.Main.planetarray;
+
 /**
  * Created by jmm on 7/9/2016.
  */
 public class ObjectStar {
 
-    private int arraystart;
-    private int arrayend;
-
     private IntegerProperty id = new SimpleIntegerProperty();
     private StringProperty name = new SimpleStringProperty();
 
-    private Integer[] planets;
+    private Integer[] planetsarray;
 
     private SaveFileElement[] objectnodes;
 
@@ -39,6 +38,7 @@ public class ObjectStar {
         findId();
         findName();
         findPlanets();
+        setPlanetsStar();
         //System.out.println("Start ------------------- " + this.toString());
     }
 
@@ -88,14 +88,25 @@ public class ObjectStar {
             }
         }
 
-        Integer planetlisttemp[] = new Integer[planetlist.size()];
-        planets = planetlisttemp;
+        planetsarray = new Integer[planetlist.size()];
+        for (int i = 0; i < planetsarray.length; i++) {
+            planetsarray[i] = planetlist.get(i);
+        }
+    }
+
+    private void setPlanetsStar() {
+
+        for(int i = 0 ; i < planetsarray.length ; i++) {
+            planetarray[planetsarray[i]].setstar(Integer.toString(getid()));
+            planetarray[planetsarray[i]].setstarname((getname()));
+
+        }
     }
 
     public String toString() {
         return "id" + " =  " + id + " | "
                 + "name" + " =  " + name + " | "
-                + "planets = " + Arrays.toString(planets)
+                + "planets = " + Arrays.toString(planetsarray)
                 //+ "objectnodes" + " =  " + Arrays.toString(objectnodes) + " | "
                 + "\r\n";
     }

@@ -38,9 +38,9 @@ public class DisplayEditor {
         getCountries();
         getSpecies();
         getPlanets();
-        getStars();
 
         //must come last
+        getStars(); //stars sets planet stars in planet objects
         getPops();
 
         for(int i = 0 ; i < planetarray.length ; i++){
@@ -126,10 +126,7 @@ public class DisplayEditor {
 
         table.setEditable(true);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        //table.getSelectionModel().setCellSelectionEnabled( true );
         table.getSelectionModel().setCellSelectionEnabled(true);
-        //table.getSelectionModel().setSelectionMode( SelectionMode.MULTIPLE );
-        //UtilitiesTable.installCopyPasteHandler(table);
 
         TableColumn idCol = new TableColumn("Id");
         idCol.setMaxWidth(450);
@@ -142,12 +139,11 @@ public class DisplayEditor {
         TableColumn nameCol = new TableColumn("Name");
         nameCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("objectname"));
 
+        TableColumn starnameCol = new TableColumn("Star");
+        starnameCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("starname"));
+
         TableColumn classCol = new TableColumn("Class");
         classCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, String>("objectclass"));
-
-//        TableColumn restileCol = new TableColumn("Orbital Resource Tile");
-//        restileCol.setEditable(true);
-//        restileCol.setCellValueFactory(new PropertyValueFactory<ObjectPlanet, Long>("orbitaldeposittileinteger"));
 
         TableColumn ownerCol = new TableColumn("Owner");
         ownerCol.setEditable(true);
@@ -220,7 +216,7 @@ public class DisplayEditor {
             getSelectedCountryStellarObjects(selectedCountry);
             ObservableList<ObjectPlanet> data = FXCollections.observableArrayList(countriesobjects);
             table.setItems(data);
-            table.getColumns().addAll(idCol, sizeCol, nameCol, classCol, ownerCol, controllerCol, resonetileCol, resvalonetileCol, restwotileCol, resvaltwotileCol, resthreetileCol, resvalthreetileCol, popsstringpropCol,allstringpropCol,foodsstringpropCol,energystringpropCol,mineralstringpropCol,biostringpropCol,engsstringpropCol,phystringpropCol);
+            table.getColumns().addAll(idCol, starnameCol, sizeCol, nameCol, classCol, ownerCol, controllerCol, resonetileCol, resvalonetileCol, restwotileCol, resvaltwotileCol, resthreetileCol, resvalthreetileCol, popsstringpropCol,allstringpropCol,foodsstringpropCol,energystringpropCol,mineralstringpropCol,biostringpropCol,engsstringpropCol,phystringpropCol);
         });
 
         VBox vbox = new VBox();
